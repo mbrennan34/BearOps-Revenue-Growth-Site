@@ -1,0 +1,3780 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)file:///C:/Users/marti/Downloads/enhanced-complete-onboarding%20(4).html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete 90-Day Onboarding System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary: #63b3ed;
+            --primary-dark: #3b82f6;
+            --secondary: #a5b4fc;
+            --success: #48bb78;
+            --warning: #fbbf24;
+            --danger: #fb7185;
+            --info: #06B6D4;
+            --bg-primary: #0A1628;
+            --bg-secondary: #1a2942;
+            --border: rgba(148, 163, 184, 0.4);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: rgba(10, 22, 40, 0.9);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #63b3ed 0%, #a5b4fc 30%, #fbb6ce 70%, #f6e05e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar-container {
+            background: rgba(99, 179, 237, 0.2);
+            height: 12px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #63b3ed, #a5b4fc);
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(99, 179, 237, 0.5);
+        }
+        
+        /* VIEW TABS */
+        .view-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: rgba(15, 23, 42, 0.92);
+            padding: 0.5rem;
+            border-radius: 20px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            border: 2px solid rgba(148, 163, 184, 0.4);
+        }
+        
+        .view-tab {
+            flex: 1;
+            padding: 1.25rem;
+            background: transparent;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            color: #cbd5f5;
+        }
+        
+        .view-tab:hover {
+            background: rgba(99, 179, 237, 0.1);
+            color: #63b3ed;
+        }
+        
+        .view-tab.active {
+            background: linear-gradient(135deg, #63b3ed, #3b82f6);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 179, 237, 0.3);
+        }
+        
+        .view-content {
+            display: none;
+        }
+        
+        .view-content.active {
+            display: block;
+        }
+        
+        /* ORIGINAL PROGRAM STYLES */
+        .phase-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .phase-btn {
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            color: #cbd5f5;
+        }
+        
+        .phase-btn:hover {
+            border-color: #63b3ed;
+            box-shadow: 0 4px 12px rgba(99, 179, 237, 0.3);
+            background: rgba(99, 179, 237, 0.1);
+        }
+        
+        .phase-btn.active {
+            background: linear-gradient(135deg, #63b3ed, #3b82f6);
+            color: white;
+            border-color: #63b3ed;
+            box-shadow: 0 4px 12px rgba(99, 179, 237, 0.4);
+        }
+        
+        .phase-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .phase-meta {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .week-card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+        }
+        
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .week-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #63b3ed, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .task-item:hover {
+            background: rgba(99, 179, 237, 0.15);
+            border-color: #63b3ed;
+        }
+        
+        .task-item.completed {
+            opacity: 0.6;
+        }
+        
+        .task-item.editing {
+            background: rgba(99, 179, 237, 0.2);
+            border: 2px solid #63b3ed;
+            cursor: default;
+        }
+        
+        .edit-task-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            opacity: 0;
+            transition: all 0.2s;
+            z-index: 10;
+            color: #cbd5f5;
+        }
+        
+        .task-item:hover .edit-task-btn {
+            opacity: 0.7;
+        }
+        
+        .edit-task-btn:hover {
+            opacity: 1 !important;
+            background: rgba(99, 179, 237, 0.3);
+            border-color: #63b3ed;
+            color: white;
+        }
+        
+        .task-title-input,
+        .task-description-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            border-radius: 0.375rem;
+            font-family: inherit;
+            font-size: inherit;
+            margin-bottom: 0.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            color: #ffffff;
+        }
+        
+        .task-title-input {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .task-description-input {
+            font-size: 0.875rem;
+            color: #cbd5f5;
+            min-height: 60px;
+            resize: vertical;
+        }
+        
+        .edit-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .edit-actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .save-edit-btn {
+            background: linear-gradient(135deg, #63b3ed, #3b82f6);
+            color: white;
+        }
+        
+        .save-edit-btn:hover {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            box-shadow: 0 4px 12px rgba(99, 179, 237, 0.4);
+        }
+        
+        .cancel-edit-btn {
+            background: rgba(148, 163, 184, 0.2);
+            color: #cbd5f5;
+        }
+        
+        .cancel-edit-btn:hover {
+            background: rgba(148, 163, 184, 0.3);
+            color: #ffffff;
+        }
+        
+        .reset-all-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #fb7185, #f43f5e);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(251, 113, 133, 0.4);
+            transition: all 0.2s;
+            z-index: 100;
+        }
+        
+        .reset-all-btn:hover {
+            background: linear-gradient(135deg, #f43f5e, #dc2626);
+            box-shadow: 0 12px 28px rgba(251, 113, 133, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            border-radius: 0.375rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            background: rgba(15, 23, 42, 0.6);
+        }
+        
+        .task-item.completed .checkbox {
+            background: #48bb78;
+            border-color: #48bb78;
+            color: white;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+        }
+        
+        .task-description {
+            font-size: 0.875rem;
+            color: #cbd5f5;
+        }
+        
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tag-essential { background: rgba(251, 113, 133, 0.2); color: #fb7185; border: 1px solid rgba(251, 113, 133, 0.4); }
+        .tag-training { background: rgba(99, 179, 237, 0.2); color: #63b3ed; border: 1px solid rgba(99, 179, 237, 0.4); }
+        .tag-certification { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(15, 23, 42, 0.92);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #63b3ed, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #cbd5f5;
+            margin-top: 0.5rem;
+        }
+        
+        /* CALENDAR VIEW STYLES */
+        .calendar-controls {
+            background: rgba(15, 23, 42, 0.92);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+        }
+        
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .control-group input,
+        .control-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+        
+        .calendar-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 0.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 0.25rem;
+        }
+        
+        .week-section {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .week-section-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 60px repeat(5, 1fr);
+            font-size: 0.875rem;
+        }
+        
+        .calendar-header {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            font-weight: 700;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .time-slot {
+            padding: 0.5rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: #6B7280;
+            font-weight: 600;
+        }
+        
+        .day-cell {
+            padding: 0.5rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            min-height: 60px;
+        }
+        
+        .calendar-event {
+            padding: 0.375rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .calendar-event:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .event-orientation { background: #DC2626; color: white; }
+        .event-training { background: #2563EB; color: white; }
+        .event-meeting { background: #059669; color: white; }
+        .event-certification { background: #D97706; color: white; }
+        .event-buddy { background: #7C3AED; color: white; }
+        .event-selfguided { background: #06B6D4; color: white; }
+        .event-milestone { background: #EC4899; color: white; }
+        
+        /* Completed events styling */
+        .event-completed {
+            background: #DC2626 !important;
+            color: white !important;
+            opacity: 0.5;
+            position: relative;
+        }
+        
+        .event-completed::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: white;
+        }
+        
+        /* Past day cells */
+        .day-cell-past {
+            background: #F9FAFB;
+            opacity: 0.6;
+        }
+        
+        /* TEAM TRACKING STYLES */
+        .team-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .team-stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .team-stat-card.success { border-left-color: var(--success); }
+        .team-stat-card.warning { border-left-color: var(--warning); }
+        .team-stat-card.danger { border-left-color: var(--danger); }
+        
+        .team-table-container {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .team-table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .team-table th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6B7280;
+            background: var(--bg-secondary);
+            text-transform: uppercase;
+        }
+        
+        .team-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .team-table tbody tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .team-table tbody tr:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-role {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+        
+        .progress-bar-wrapper {
+            background: var(--bg-secondary);
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+            width: 150px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 999px;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            padding: 0.375rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-on-track { background: #D1FAE5; color: #059669; }
+        .status-at-risk { background: #FEE2E2; color: #DC2626; }
+        .status-needs-attention { background: #FEF3C7; color: #D97706; }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--bg-secondary); color: #ffffff; }
+        .btn-icon {
+            padding: 0.5rem;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .phase-nav {
+                grid-template-columns: 1fr 1fr;
+            }
+            .view-tabs {
+                flex-direction: column;
+            }
+            .calendar-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="headerTitle">90-Day Onboarding System</h1>
+            <p id="headerSubtitle">Complete program • Calendar view • Team tracking</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="mainProgress" style="width: 0%"></div>
+            </div>
+            <p id="progressText" style="margin-top: 0.5rem;">0% Complete • 0/59 Tasks</p>
+        </div>
+        
+        <!-- View Tabs -->
+        <div class="view-tabs">
+            <button class="view-tab" onclick="switchView(&#39;program&#39;, event)">
+                📋 My Program
+            </button>
+            <button class="view-tab active" onclick="switchView(&#39;calendar&#39;, event)">
+                📅 Calendar View
+            </button>
+            <button class="view-tab" onclick="switchView(&#39;team&#39;, event)">
+                👥 Team Tracking
+            </button>
+        </div>
+        
+        <!-- ========================================== -->
+        <!-- PROGRAM VIEW (ORIGINAL FUNCTIONALITY) -->
+        <!-- ========================================== -->
+        <div class="view-content" id="programView">
+            
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="currentDay">Day 0</div>
+                    <div class="stat-label">Current Day</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completedTasks">0/59</div>
+                    <div class="stat-label">Tasks Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="certCount">0/8</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentPhase">Preboarding</div>
+                    <div class="stat-label">Current Phase</div>
+                </div>
+            </div>
+            
+            <!-- Phase Navigation -->
+            <div class="phase-nav">
+                <div class="phase-btn active" onclick="showPhase(&#39;preboarding&#39;, event)">
+                    <div class="phase-title">📋 Preboarding</div>
+                    <div class="phase-meta">Before Day 1</div>
+                </div>
+                <div class="phase-btn" onclick="showPhase(&#39;days1-30&#39;, event)">
+                    <div class="phase-title">🎯 Days 1-30</div>
+                    <div class="phase-meta">Foundation</div>
+                </div>
+                <div class="phase-btn" onclick="showPhase(&#39;days31-60&#39;, event)">
+                    <div class="phase-title">🚀 Days 31-60</div>
+                    <div class="phase-meta">Application</div>
+                </div>
+                <div class="phase-btn" onclick="showPhase(&#39;days61-90&#39;, event)">
+                    <div class="phase-title">👑 Days 61-90</div>
+                    <div class="phase-meta">Mastery</div>
+                </div>
+            </div>
+            
+            <!-- PREBOARDING PHASE -->
+            <div class="content-section active" id="preboarding">
+                <h2 style="margin-bottom: 1.5rem;">Preboarding: Before Your First Day</h2>
+                
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Pre-Day 1 Essentials</h3>
+                        <span class="week-progress" data-week="preboard">0/8 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 1)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Review welcome email &amp; schedule</div>
+                                <div class="task-description">Read your personalized welcome email, review first-week schedule, and note important dates</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 2)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Complete equipment &amp; access setup</div>
+                                <div class="task-description">Set up laptop, email, VPN, security badges, and access to all required systems</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 3)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Watch company culture &amp; mission video</div>
+                                <div class="task-description">15-minute introduction to company values, history, and what makes us unique</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 4)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Review org chart &amp; team bios</div>
+                                <div class="task-description">Familiarize yourself with leadership, your team, and key stakeholders</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 5)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Meet your onboarding buddy (virtual intro)</div>
+                                <div class="task-description">15-minute video call with assigned peer mentor to establish rapport</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 6)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Complete pre-work: Industry research</div>
+                                <div class="task-description">Research top 3 competitors and current industry trends (1 hour)</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 7)" data-points="5">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Access self-paced learning portal</div>
+                                <div class="task-description">Optional: Get ahead with product videos and methodology modules</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 8)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Set 30/60/90 day goals with manager</div>
+                                <div class="task-description">Pre-Day 1 call to align expectations and customize your plan</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- DAYS 1-30 PHASE -->
+            <div class="content-section" id="days1-30">
+                <h2 style="margin-bottom: 1.5rem;">Days 1-30: Foundation &amp; Learning</h2>
+                
+                <!-- Week 1 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Week 1: Orientation &amp; Immersion</h3>
+                        <span class="week-progress" data-week="week1">0/5 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 9)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Complete Day 1 orientation &amp; compliance training</div>
+                                <div class="task-description">HR policies, benefits, code of conduct, security training</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 10)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Complete product onboarding &amp; demo</div>
+                                <div class="task-description">Full product walkthrough, features, architecture, use cases</div>
+                                <span class="tag tag-essential">Essential</span>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 11)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">CRM setup and basic training</div>
+                                <div class="task-description">Salesforce/HubSpot login, navigation, fields, your pipeline</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 12)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Shadow 5 customer calls with buddy</div>
+                                <div class="task-description">Observe discovery, demos, objection handling - take notes</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 13)" data-points="10">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Meet cross-functional team leaders</div>
+                                <div class="task-description">30-min 1:1s with Product, Marketing, CS, Engineering leads</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+                
+                <!-- Week 2 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Week 2: Knowledge Building &amp; Certification</h3>
+                        <span class="week-progress" data-week="week2">0/5 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 14)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Study ICP &amp; buyer personas</div>
+                                <div class="task-description">Ideal customers, decision-makers, buying committees, pain points</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 15)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Learn competitive landscape &amp; battle cards</div>
+                                <div class="task-description">Top 5 competitors, differentiation, win/loss patterns</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 16)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Review sales methodology (MEDDIC/SPICED)</div>
+                                <div class="task-description">Qualification framework, deal stages, exit criteria</div>
+                                <span class="tag tag-essential">Essential</span>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 17)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 CERTIFICATION: Week 2 Knowledge Assessment</div>
+                                <div class="task-description">Product (85%+), ICP quiz (90%+), CRM proficiency test</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 18)" data-points="5">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Weekly 1:1 &amp; feedback session</div>
+                                <div class="task-description">Share feedback, discuss blockers, adjust pace if needed</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+                
+                <!-- Weeks 3-4 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Weeks 3-4: Active Practice &amp; First Wins</h3>
+                        <span class="week-progress" data-week="week3-4">0/8 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 19)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">AI Role-play: 3 discovery call simulations</div>
+                                <div class="task-description">Practice with AI providing real-time feedback</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 20)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Record &amp; submit practice demo</div>
+                                <div class="task-description">15-min product demo with manager feedback</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 21)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">First solo call with manager listening</div>
+                                <div class="task-description">Discovery or qualification call with live coaching</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 22)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Access sales enablement library</div>
+                                <div class="task-description">Battle cards, pitch decks, templates, objection guides</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 23)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Book first 3 qualified meetings (SDR)</div>
+                                <div class="task-description">Set meetings for AE team with qualification notes</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 24)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Co-sell first opportunity (AE)</div>
+                                <div class="task-description">Joint discovery call with senior AE coaching</div>
+                                <span class="tag tag-essential">Essential</span>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 25)" data-points="15">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Present 10-min learning share to team</div>
+                                <div class="task-description">Share insights from first month: competitive research or best practices</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 26)" data-points="100">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 30-DAY REVIEW &amp; MILESTONE</div>
+                                <div class="task-description">Formal checkpoint: assess progress, feedback, adjust goals</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- DAYS 31-60 PHASE -->
+            <div class="content-section" id="days31-60">
+                <h2 style="margin-bottom: 1.5rem;">Days 31-60: Application &amp; Growth</h2>
+                
+                <!-- Weeks 5-6 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Weeks 5-6: Independent Execution</h3>
+                        <span class="week-progress" data-week="week5-6">0/7 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 27)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Run 5 discovery calls independently</div>
+                                <div class="task-description">Full qualification using MEDDIC/SPICED</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 28)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Deliver 3 product demos</div>
+                                <div class="task-description">Customized demos based on discovery</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 29)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Book 10-15 qualified meetings (SDR)</div>
+                                <div class="task-description">Ramp toward full quota, 70%+ show rate</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 30)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Advanced CRM training &amp; automation</div>
+                                <div class="task-description">Workflows, sequences, reporting, forecasting</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 31)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Conduct 3 customer interviews</div>
+                                <div class="task-description">Learn about buying journey, pain points, outcomes</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 32)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Shadow different department</div>
+                                <div class="task-description">Spend day with Product, CS, or Marketing</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 33)" data-points="5">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Bi-weekly manager 1:1</div>
+                                <div class="task-description">Review calls, discuss strategy, address gaps</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+                
+                <!-- Weeks 7-8 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Weeks 7-8: Skills Advancement &amp; Certification</h3>
+                        <span class="week-progress" data-week="week7-8">0/10 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 34)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Objection handling training</div>
+                                <div class="task-description">Common objections, reframing, competitive responses</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 35)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Negotiation &amp; closing techniques</div>
+                                <div class="task-description">Value pricing, contract negotiation, closing frameworks</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 36)" data-points="25">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Multi-threading strategies</div>
+                                <div class="task-description">Build champion networks, navigate buying committees</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 37)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 CERTIFICATION: Live Discovery Role-Play</div>
+                                <div class="task-description">Scored assessment demonstrating MEDDIC mastery (85%+)</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 38)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 CERTIFICATION: Demo Delivery Assessment</div>
+                                <div class="task-description">Custom demo to panel, handle objections, ROI (85%+)</div>
+                                <span class="tag tag-certification">Certification</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 39)" data-points="40">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Build pipeline 3x quota</div>
+                                <div class="task-description">Qualified opportunities at various stages</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 40)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Optimize prospecting cadence (SDR)</div>
+                                <div class="task-description">A/B test messaging, timing, channels</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 41)" data-points="20">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Participate in forecast meetings</div>
+                                <div class="task-description">Present pipeline, discuss strategies</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 42)" data-points="5">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Stay Interview: Day 45 Check-in</div>
+                                <div class="task-description">HR check-in at critical turnover moment</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 43)" data-points="100">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 60-DAY REVIEW &amp; CHECKPOINT</div>
+                                <div class="task-description">Comprehensive review: skills, pipeline, goals refinement</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- DAYS 61-90 PHASE -->
+            <div class="content-section" id="days61-90">
+                <h2 style="margin-bottom: 1.5rem;">Days 61-90: Mastery &amp; Independence</h2>
+                
+                <!-- Weeks 9-11 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Weeks 9-11: Full Autonomy &amp; Results</h3>
+                        <span class="week-progress" data-week="week9-11">0/7 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 44)" data-points="100">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Close your first deal end-to-end</div>
+                                <div class="task-description">Complete sales cycle from discovery to closed-won</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 45)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Reach 50-75% of monthly quota</div>
+                                <div class="task-description">Trajectory toward full quota in Month 4</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 46)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Hit 100% meeting quota (SDR)</div>
+                                <div class="task-description">Consistently meet/exceed targets</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 47)" data-points="40">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Execute account-based strategy</div>
+                                <div class="task-description">Multi-threaded approach with 3-5 target accounts</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 48)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Win competitive displacement deal</div>
+                                <div class="task-description">Successfully compete vs incumbent</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 49)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Conduct win/loss analysis on 3 deals</div>
+                                <div class="task-description">Document what worked, what didn't, improvements</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 50)" data-points="5">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Weekly performance &amp; coaching</div>
+                                <div class="task-description">Call reviews, deal strategies, skill development</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+                
+                <!-- Week 12 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3 class="week-title">Week 12: Final Certifications &amp; Graduation</h3>
+                        <span class="week-progress" data-week="week12">0/9 completed</span>
+                    </div>
+                    
+                    <ul class="task-list">
+                        <li class="task-item" onclick="toggleTask(this, 51)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 CERTIFICATION: Sales Methodology Mastery</div>
+                                <div class="task-description">Comprehensive MEDDIC/SPICED assessment (85%+)</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 52)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🏆 CERTIFICATION: Advanced Demo &amp; Technical</div>
+                                <div class="task-description">Custom flows, technical deep-dives, ROI calculations</div>
+                                <span class="tag tag-certification">Certification</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 53)" data-points="40">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Lead internal training session</div>
+                                <div class="task-description">Share learnings, best practices, case study</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 54)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Become buddy for next cohort</div>
+                                <div class="task-description">Mentor incoming new hire</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 55)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Collaborate on marketing campaign</div>
+                                <div class="task-description">Provide field feedback on messaging, targeting</div>
+                                <span class="tag tag-training">Training</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 56)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Propose 1-2 process improvements</div>
+                                <div class="task-description">Suggest improvements to onboarding or sales process</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 57)" data-points="30">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">Create Q4 development plan</div>
+                                <div class="task-description">Identify 2-3 skills for continued growth</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 58)" data-points="200">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">👑 90-DAY FINAL REVIEW &amp; GRADUATION</div>
+                                <div class="task-description">Manager review, peer feedback, metrics, career pathing</div>
+                                <span class="tag tag-certification">Certification</span>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                        
+                        <li class="task-item" onclick="toggleTask(this, 59)" data-points="50">
+                            <div class="checkbox"></div>
+                            <div class="task-content">
+                                <div class="task-title">🎉 Team celebration &amp; recognition</div>
+                                <div class="task-description">Public acknowledgment, fully ramped status</div>
+                                <span class="tag tag-essential">Essential</span>
+                            </div>
+                        <button class="edit-task-btn" title="Edit Task">✏️</button></li>
+                    </ul>
+                </div>
+            </div>
+            
+        <button id="resetAllBtn" class="reset-all-btn" title="Reset all task customizations to original text">🔄 Reset All Edits</button></div>
+        
+        <!-- ========================================== -->
+        <!-- CALENDAR VIEW -->
+        <!-- ========================================== -->
+        <div class="view-content active" id="calendarView">
+            
+            <div class="calendar-controls">
+                <div class="control-group">
+                    <label>Select New Hire</label>
+                    <select id="calendarHireSelect" onchange="loadHireData()">
+                        <option value="">-- Select Team Member --</option>
+                        <option value="1">Sarah Johnson (AE)</option>
+                        <option value="2">Michael Rodriguez (SDR)</option>
+                        <option value="3">Emily Chen (AE)</option>
+                        <option value="4">James Thompson (SE)</option>
+                        <option value="5">Maria Garcia (CSM)</option>
+                        <option value="6">David Lee (SDR)</option>
+                        <option value="new">-- Enter New Person --</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Name (or select above)</label>
+                    <input type="text" id="calendarHireName" placeholder="Enter name">
+                </div>
+                <div class="control-group">
+                    <label>Start Date</label>
+                    <input type="date" id="calendarStartDate">
+                </div>
+                <div class="control-group">
+                    <label>Role</label>
+                    <select id="calendarRole">
+                        <option value="AE">Account Executive</option>
+                        <option value="SDR">SDR</option>
+                        <option value="CSM">CSM</option>
+                        <option value="SE">Sales Engineer</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="generateCalendar()">📅 Generate Full Calendar</button>
+                </div>
+            </div>
+            
+            <div class="calendar-legend">
+                <div class="legend-item">
+                    <div class="legend-color event-orientation"></div>
+                    <span>Orientation</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-training"></div>
+                    <span>Training</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-meeting"></div>
+                    <span>1:1 Meetings</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-certification"></div>
+                    <span>Certification</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-buddy"></div>
+                    <span>Buddy Time</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-milestone"></div>
+                    <span>Milestone</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color event-completed" style="opacity: 0.5;"></div>
+                    <span>✓ Completed (Past Events)</span>
+                </div>
+            </div>
+            
+            <div id="calendarContainer">
+                <p style="text-align: center; color: #6B7280; padding: 4rem;">
+                    Click "Generate Calendar" to see your 90-day schedule
+                </p>
+            </div>
+            
+        </div>
+        
+        <!-- ========================================== -->
+        <!-- TEAM TRACKING VIEW -->
+        <!-- ========================================== -->
+        <div class="view-content" id="teamView">
+            
+            <div class="team-stats-grid">
+                <div class="team-stat-card">
+                    <div class="stat-label">Active New Hires</div>
+                    <div class="stat-value" id="teamActiveCount">6</div>
+                </div>
+                <div class="team-stat-card success">
+                    <div class="stat-label">On Track</div>
+                    <div class="stat-value" id="teamOnTrack">4</div>
+                    <div class="stat-meta" style="font-size: 0.875rem; color: #6B7280; margin-top: 0.25rem;">67% of team</div>
+                </div>
+                <div class="team-stat-card warning">
+                    <div class="stat-label">Needs Attention</div>
+                    <div class="stat-value" id="teamNeedsAttention">1</div>
+                    <div class="stat-meta" style="font-size: 0.875rem; color: #6B7280; margin-top: 0.25rem;">Behind schedule</div>
+                </div>
+                <div class="team-stat-card danger">
+                    <div class="stat-label">At Risk</div>
+                    <div class="stat-value" id="teamAtRisk">1</div>
+                    <div class="stat-meta" style="font-size: 0.875rem; color: #6B7280; margin-top: 0.25rem;">Requires intervention</div>
+                </div>
+            </div>
+            
+            <div class="team-table-container">
+                <div class="team-table-header">
+                    <h3>Team Progress Overview</h3>
+                    <button class="btn btn-primary" onclick="addNewHire()">➕ Add New Hire</button>
+                </div>
+                
+                <table class="team-table">
+                    <thead>
+                        <tr>
+                            <th>New Hire</th>
+                            <th>Start Date</th>
+                            <th>Current Day</th>
+                            <th>Progress</th>
+                            <th>Certs</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamTableBody"><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">SJ</div>
+                            <div>
+                                <div class="user-name">Sarah Johnson</div>
+                                <div class="user-role">AE</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-11-19</td>
+                    <td>Day 28</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 76%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">76%</div>
+                    </td>
+                    <td>3/8</td>
+                    <td>
+                        <span class="status-badge status-on-track">
+                            On Track
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(1)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;Sarah Johnson&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(1, &#39;Sarah Johnson&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">MR</div>
+                            <div>
+                                <div class="user-name">Michael Rodriguez</div>
+                                <div class="user-role">SDR</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-11-19</td>
+                    <td>Day 28</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 71%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">71%</div>
+                    </td>
+                    <td>2/8</td>
+                    <td>
+                        <span class="status-badge status-on-track">
+                            On Track
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(2)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;Michael Rodriguez&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(2, &#39;Michael Rodriguez&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">EC</div>
+                            <div>
+                                <div class="user-name">Emily Chen</div>
+                                <div class="user-role">AE</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-11-27</td>
+                    <td>Day 20</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 45%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">45%</div>
+                    </td>
+                    <td>1/8</td>
+                    <td>
+                        <span class="status-badge status-on-track">
+                            On Track
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(3)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;Emily Chen&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(3, &#39;Emily Chen&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">JT</div>
+                            <div>
+                                <div class="user-name">James Thompson</div>
+                                <div class="user-role">SE</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-12-04</td>
+                    <td>Day 13</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 28%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">28%</div>
+                    </td>
+                    <td>1/8</td>
+                    <td>
+                        <span class="status-badge status-needs-attention">
+                            Needs Attention
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(4)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;James Thompson&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(4, &#39;James Thompson&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">MG</div>
+                            <div>
+                                <div class="user-name">Maria Garcia</div>
+                                <div class="user-role">CSM</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-10-29</td>
+                    <td>Day 49</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 82%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">82%</div>
+                    </td>
+                    <td>4/8</td>
+                    <td>
+                        <span class="status-badge status-on-track">
+                            On Track
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(5)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;Maria Garcia&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(5, &#39;Maria Garcia&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr><tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">DL</div>
+                            <div>
+                                <div class="user-name">David Lee</div>
+                                <div class="user-role">SDR</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2025-11-19</td>
+                    <td>Day 28</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: 45%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">45%</div>
+                    </td>
+                    <td>1/8</td>
+                    <td>
+                        <span class="status-badge status-at-risk">
+                            At Risk
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(6)" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail(&#39;David Lee&#39;)" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(6, &#39;David Lee&#39;)" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                </tr></tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        // ========================================
+        // PROGRAM VIEW LOGIC
+        // ========================================
+        
+        let completedTasks = new Set();
+        let totalTasks = 59; // Full program
+        let certifications = 0;
+        
+        function toggleTask(element, taskId) {
+            const checkbox = element.querySelector('.checkbox');
+            const points = parseInt(element.dataset.points) || 10;
+            
+            if (element.classList.contains('completed')) {
+                element.classList.remove('completed');
+                checkbox.textContent = '';
+                completedTasks.delete(taskId);
+                if (element.querySelector('.tag-certification')) {
+                    certifications--;
+                }
+            } else {
+                element.classList.add('completed');
+                checkbox.textContent = '✓';
+                completedTasks.add(taskId);
+                if (element.querySelector('.tag-certification')) {
+                    certifications++;
+                }
+            }
+            
+            updateProgress();
+            updateWeekProgress();
+            saveProgress();
+        }
+        
+        function updateProgress() {
+            const percentage = Math.round((completedTasks.size / totalTasks) * 100);
+            
+            document.getElementById('mainProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = 
+                `${percentage}% Complete • ${completedTasks.size}/${totalTasks} Tasks`;
+            
+            document.getElementById('completedTasks').textContent = `${completedTasks.size}/${totalTasks}`;
+            document.getElementById('certCount').textContent = `${certifications}/8`;
+            
+            // Update current day based on progress
+            const day = Math.round((percentage / 100) * 90);
+            document.getElementById('currentDay').textContent = day > 0 ? `Day ${day}` : 'Day 0';
+            
+            // Update phase
+            let phase = 'Preboarding';
+            if (percentage >= 90) phase = 'Graduated!';
+            else if (percentage >= 73) phase = 'Days 61-90';
+            else if (percentage >= 44) phase = 'Days 31-60';
+            else if (percentage >= 14) phase = 'Days 1-30';
+            document.getElementById('currentPhase').textContent = phase;
+        }
+        
+        function updateWeekProgress() {
+            // Define task ranges for each week
+            const weekRanges = {
+                'preboard': [1, 8],
+                'week1': [9, 13],
+                'week2': [14, 18],
+                'week3-4': [19, 26],
+                'week5-6': [27, 33],
+                'week7-8': [34, 43],
+                'week9-11': [44, 50],
+                'week12': [51, 59]
+            };
+            
+            // Update each week's progress
+            Object.entries(weekRanges).forEach(([weekKey, [start, end]]) => {
+                const weekEl = document.querySelector(`[data-week="${weekKey}"]`);
+                if (weekEl) {
+                    const total = end - start + 1;
+                    const completed = Array.from(completedTasks).filter(id => id >= start && id <= end).length;
+                    weekEl.textContent = `${completed}/${total} completed`;
+                }
+            });
+        }
+        
+        function saveProgress() {
+            localStorage.setItem('onboardingProgress', JSON.stringify({
+                completedTasks: Array.from(completedTasks),
+                certifications: certifications
+            }));
+        }
+        
+        function loadProgress() {
+            const saved = localStorage.getItem('onboardingProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                completedTasks = new Set(data.completedTasks || []);
+                certifications = data.certifications || 0;
+                
+                // Restore UI
+                completedTasks.forEach(taskId => {
+                    const items = document.querySelectorAll('.task-item');
+                    items.forEach(item => {
+                        const onClick = item.getAttribute('onclick');
+                        if (onClick && onClick.includes(`toggleTask(this, ${taskId})`)) {
+                            item.classList.add('completed');
+                            item.querySelector('.checkbox').textContent = '✓';
+                        }
+                    });
+                });
+                
+                updateProgress();
+                updateWeekProgress();
+            }
+            
+            // Load custom task edits
+            loadTaskCustomizations();
+        }
+        
+        // ========================================
+        // TASK EDITING FUNCTIONALITY
+        // ========================================
+        
+        let taskCustomizations = {};
+        
+        function loadTaskCustomizations() {
+            const saved = localStorage.getItem('taskCustomizations');
+            if (saved) {
+                taskCustomizations = JSON.parse(saved);
+                applyTaskCustomizations();
+            }
+        }
+        
+        function saveTaskCustomizations() {
+            localStorage.setItem('taskCustomizations', JSON.stringify(taskCustomizations));
+        }
+        
+        function applyTaskCustomizations() {
+            Object.entries(taskCustomizations).forEach(([taskId, data]) => {
+                const taskItem = document.querySelector(`[onclick*="toggleTask(this, ${taskId})"]`);
+                if (taskItem) {
+                    const titleEl = taskItem.querySelector('.task-title');
+                    const descEl = taskItem.querySelector('.task-description');
+                    if (titleEl && data.title) titleEl.textContent = data.title;
+                    if (descEl && data.description) descEl.textContent = data.description;
+                }
+            });
+        }
+        
+        function editTask(event, button, taskId) {
+            event.stopPropagation(); // Prevent task toggle
+            
+            const taskItem = button.closest('.task-item');
+            if (taskItem.classList.contains('editing')) return;
+            
+            const titleEl = taskItem.querySelector('.task-title');
+            const descEl = taskItem.querySelector('.task-description');
+            const tags = taskItem.querySelector('.tag');
+            
+            const originalTitle = titleEl.textContent;
+            const originalDesc = descEl.textContent;
+            
+            // Store original values
+            taskItem.dataset.originalTitle = originalTitle;
+            taskItem.dataset.originalDesc = originalDesc;
+            
+            // Hide tags temporarily
+            if (tags) tags.style.display = 'none';
+            
+            // Replace with input fields
+            titleEl.innerHTML = `<input type="text" class="task-title-input" value="${originalTitle}" onclick="event.stopPropagation()">`;
+            descEl.innerHTML = `<textarea class="task-description-input" onclick="event.stopPropagation()">${originalDesc}</textarea>`;
+            
+            // Add save/cancel buttons
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'edit-actions';
+            actionsDiv.innerHTML = `
+                <button class="save-edit-btn" onclick="saveTaskEdit(event, ${taskId})">✓ Save</button>
+                <button class="cancel-edit-btn" onclick="cancelTaskEdit(event, ${taskId})">✕ Cancel</button>
+            `;
+            descEl.after(actionsDiv);
+            
+            // Mark as editing
+            taskItem.classList.add('editing');
+            button.style.display = 'none';
+            
+            // Focus on title input
+            const titleInput = taskItem.querySelector('.task-title-input');
+            titleInput.focus();
+            titleInput.select();
+        }
+        
+        function saveTaskEdit(event, taskId) {
+            event.stopPropagation();
+            
+            const taskItem = document.querySelector(`[onclick*="toggleTask(this, ${taskId})"]`);
+            const titleInput = taskItem.querySelector('.task-title-input');
+            const descInput = taskItem.querySelector('.task-description-input');
+            const editActions = taskItem.querySelector('.edit-actions');
+            const titleEl = taskItem.querySelector('.task-title');
+            const descEl = taskItem.querySelector('.task-description');
+            const tags = taskItem.querySelector('.tag');
+            const editBtn = taskItem.querySelector('.edit-task-btn');
+            
+            // Get new values
+            const newTitle = titleInput.value.trim();
+            const newDesc = descInput.value.trim();
+            
+            if (!newTitle) {
+                alert('Task title cannot be empty');
+                titleInput.focus();
+                return;
+            }
+            
+            // Save to storage
+            taskCustomizations[taskId] = {
+                title: newTitle,
+                description: newDesc
+            };
+            saveTaskCustomizations();
+            
+            // Update display
+            titleEl.textContent = newTitle;
+            descEl.textContent = newDesc;
+            
+            // Remove edit UI
+            editActions.remove();
+            taskItem.classList.remove('editing');
+            if (tags) tags.style.display = '';
+            if (editBtn) editBtn.style.display = '';
+            
+            showNotification('✅ Task updated successfully!');
+        }
+        
+        function cancelTaskEdit(event, taskId) {
+            event.stopPropagation();
+            
+            const taskItem = document.querySelector(`[onclick*="toggleTask(this, ${taskId})"]`);
+            const titleEl = taskItem.querySelector('.task-title');
+            const descEl = taskItem.querySelector('.task-description');
+            const editActions = taskItem.querySelector('.edit-actions');
+            const tags = taskItem.querySelector('.tag');
+            const editBtn = taskItem.querySelector('.edit-task-btn');
+            
+            // Restore original values
+            titleEl.textContent = taskItem.dataset.originalTitle;
+            descEl.textContent = taskItem.dataset.originalDesc;
+            
+            // Remove edit UI
+            editActions.remove();
+            taskItem.classList.remove('editing');
+            if (tags) tags.style.display = '';
+            if (editBtn) editBtn.style.display = '';
+        }
+        
+        function resetAllCustomizations() {
+            if (!confirm('⚠️ RESET ALL CUSTOMIZATIONS\n\nThis will restore all tasks to their original text.\n\nYour completed progress will NOT be affected.\n\nAre you sure?')) {
+                return;
+            }
+            
+            // Clear customizations
+            taskCustomizations = {};
+            localStorage.removeItem('taskCustomizations');
+            
+            // Reload page to reset all tasks
+            location.reload();
+        }
+        
+        // Add edit buttons to all tasks on page load
+        function addEditButtonsToTasks() {
+            document.querySelectorAll('.task-item').forEach(taskItem => {
+                if (taskItem.querySelector('.edit-task-btn')) return; // Already has button
+                
+                const onClick = taskItem.getAttribute('onclick');
+                if (onClick) {
+                    const match = onClick.match(/toggleTask\(this,\s*(\d+)\)/);
+                    if (match) {
+                        const taskId = match[1];
+                        const editBtn = document.createElement('button');
+                        editBtn.className = 'edit-task-btn';
+                        editBtn.innerHTML = '✏️';
+                        editBtn.title = 'Edit Task';
+                        editBtn.onclick = function(e) { editTask(e, this, taskId); };
+                        taskItem.appendChild(editBtn);
+                    }
+                }
+            });
+        }
+        
+        function showPhase(phaseId, evt) {
+            document.querySelectorAll('.phase-btn').forEach(btn => btn.classList.remove('active'));
+            if (evt && evt.target) {
+                evt.target.closest('.phase-btn').classList.add('active');
+            }
+            
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(phaseId).classList.add('active');
+        }
+        
+        // ========================================
+        // VIEW SWITCHING
+        // ========================================
+        
+        function switchView(viewName, evt) {
+            // Update tabs
+            document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+            if (evt && evt.target) {
+                evt.target.classList.add('active');
+            } else {
+                // Fallback: find the tab by viewName
+                const tabs = document.querySelectorAll('.view-tab');
+                tabs.forEach(tab => {
+                    if (tab.textContent.toLowerCase().includes(viewName)) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+            
+            // Update content
+            document.querySelectorAll('.view-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(viewName + 'View').classList.add('active');
+            
+            // Load data for the view
+            if (viewName === 'team') {
+                renderTeamTable();
+            }
+        }
+        
+        // ========================================
+        // CALENDAR VIEW LOGIC
+        // ========================================
+        
+        function getNextMonday() {
+            const today = new Date();
+            const day = today.getDay();
+            const diff = day === 0 ? 1 : (8 - day);
+            const nextMonday = new Date(today);
+            nextMonday.setDate(today.getDate() + diff);
+            return nextMonday.toISOString().split('T')[0];
+        }
+        
+        document.getElementById('calendarStartDate').value = getNextMonday();
+        
+        // Complete 90-day schedule with all events
+        const COMPLETE_SCHEDULE = {
+            // PREBOARDING
+            '-7': [
+                { time: '10:00 AM', duration: 15, title: 'Welcome Email Sent', type: 'selfguided' }
+            ],
+            '-5': [
+                { time: '2:00 PM', duration: 30, title: 'Pre-Day 1 Call with Manager', type: 'meeting' }
+            ],
+            '-3': [
+                { time: '9:00 AM', duration: 60, title: 'Equipment & Access Setup', type: 'selfguided' }
+            ],
+            '-2': [
+                { time: '3:00 PM', duration: 30, title: 'Buddy Introduction Call', type: 'buddy' }
+            ],
+            
+            // WEEK 1: Days 1-5
+            '1': [
+                { time: '9:00 AM', duration: 120, title: 'New Hire Orientation', type: 'orientation' },
+                { time: '12:00 PM', duration: 60, title: 'Team Lunch', type: 'meeting' },
+                { time: '1:00 PM', duration: 90, title: 'IT & Systems Setup', type: 'training' },
+                { time: '3:00 PM', duration: 60, title: 'Office Tour', type: 'orientation' },
+                { time: '4:00 PM', duration: 30, title: 'Day 1 Debrief', type: 'meeting' }
+            ],
+            '2': [
+                { time: '9:00 AM', duration: 120, title: 'Product Training Part 1', type: 'training' },
+                { time: '11:00 AM', duration: 60, title: 'Customer Personas Workshop', type: 'training' },
+                { time: '1:00 PM', duration: 90, title: 'CRM Deep Dive', type: 'training' },
+                { time: '3:00 PM', duration: 60, title: 'Buddy Check-in', type: 'buddy' }
+            ],
+            '3': [
+                { time: '9:00 AM', duration: 120, title: 'Product Training Part 2', type: 'training' },
+                { time: '11:00 AM', duration: 60, title: 'Competitive Landscape', type: 'training' },
+                { time: '1:00 PM', duration: 120, title: 'Shadow Customer Calls', type: 'buddy' },
+                { time: '3:30 PM', duration: 30, title: 'Call Debrief', type: 'meeting' }
+            ],
+            '4': [
+                { time: '9:00 AM', duration: 90, title: 'Sales Methodology (MEDDIC)', type: 'training' },
+                { time: '11:00 AM', duration: 60, title: 'Meet VP Sales', type: 'meeting' },
+                { time: '1:00 PM', duration: 90, title: 'Discovery Framework', type: 'training' },
+                { time: '3:00 PM', duration: 60, title: 'Sales Enablement Tools', type: 'selfguided' }
+            ],
+            '5': [
+                { time: '9:00 AM', duration: 90, title: 'Demo Certification Prep', type: 'training' },
+                { time: '11:00 AM', duration: 60, title: 'Meet Cross-Functional Teams', type: 'meeting' },
+                { time: '1:00 PM', duration: 60, title: 'Week 1 Review', type: 'meeting' },
+                { time: '3:00 PM', duration: 90, title: 'Weekly Reflection', type: 'selfguided' }
+            ],
+            
+            // WEEK 2: Days 8-12
+            '8': [
+                { time: '9:00 AM', duration: 120, title: 'Value Prop Workshop', type: 'training' },
+                { time: '11:00 AM', duration: 90, title: 'Industry Deep Dive', type: 'training' },
+                { time: '2:00 PM', duration: 120, title: 'Shadow More Calls', type: 'buddy' }
+            ],
+            '9': [
+                { time: '9:00 AM', duration: 90, title: 'Objection Handling Training', type: 'training' },
+                { time: '11:00 AM', duration: 90, title: 'Case Studies Review', type: 'training' },
+                { time: '2:00 PM', duration: 120, title: 'Practice Demo Session', type: 'training' }
+            ],
+            '10': [
+                { time: '9:00 AM', duration: 180, title: '🏆 Week 2 Certification Exam', type: 'certification' },
+                { time: '1:00 PM', duration: 60, title: 'Certification Review', type: 'meeting' },
+                { time: '3:00 PM', duration: 60, title: 'Buddy Time', type: 'buddy' }
+            ],
+            '11': [
+                { time: '9:00 AM', duration: 120, title: 'Advanced Product Features', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'ROI & Business Case Training', type: 'training' }
+            ],
+            '12': [
+                { time: '10:00 AM', duration: 60, title: 'Weekly Manager 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'AI Role-Play Practice', type: 'training' }
+            ],
+            
+            // WEEK 3: Days 15-19
+            '15': [
+                { time: '9:00 AM', duration: 90, title: 'Advanced Product Training', type: 'training' },
+                { time: '11:00 AM', duration: 120, title: '🎯 First Solo Call (Manager Listening)', type: 'milestone' },
+                { time: '2:00 PM', duration: 60, title: 'Call Debrief & Coaching', type: 'meeting' }
+            ],
+            '16': [
+                { time: '9:00 AM', duration: 120, title: 'Pricing & Packaging', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Contract & Legal Training', type: 'training' }
+            ],
+            '17': [
+                { time: '9:00 AM', duration: 90, title: 'Demo Practice #2', type: 'training' },
+                { time: '11:00 AM', duration: 90, title: 'Technical Q&A Session', type: 'training' },
+                { time: '2:00 PM', duration: 120, title: 'Customer Interview Assignment', type: 'selfguided' }
+            ],
+            '18': [
+                { time: '9:00 AM', duration: 120, title: 'Security & Compliance Training', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Implementation Overview', type: 'training' }
+            ],
+            '19': [
+                { time: '10:00 AM', duration: 60, title: 'Manager 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'Role-Play Session with Team', type: 'training' }
+            ],
+            
+            // WEEK 4: Days 22-26
+            '22': [
+                { time: '9:00 AM', duration: 120, title: 'Territory Planning Workshop', type: 'training' },
+                { time: '1:00 PM', duration: 120, title: '🎯 Co-Sell First Opportunity', type: 'milestone' },
+                { time: '3:00 PM', duration: 60, title: 'Co-Sell Debrief', type: 'meeting' }
+            ],
+            '23': [
+                { time: '9:00 AM', duration: 90, title: 'Account Research Best Practices', type: 'training' },
+                { time: '11:00 AM', duration: 90, title: 'LinkedIn & Social Selling', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Email Sequencing Workshop', type: 'training' }
+            ],
+            '24': [
+                { time: '9:00 AM', duration: 90, title: 'Advanced CRM Features', type: 'training' },
+                { time: '11:00 AM', duration: 90, title: 'Marketing Alignment Session', type: 'meeting' },
+                { time: '2:00 PM', duration: 60, title: 'Prepare Learning Share', type: 'selfguided' }
+            ],
+            '25': [
+                { time: '9:00 AM', duration: 120, title: 'Forecasting & Pipeline Management', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Deal Review Process', type: 'training' }
+            ],
+            '26': [
+                { time: '10:00 AM', duration: 60, title: 'Weekly 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 60, title: 'Present Learning Share to Team', type: 'milestone' }
+            ],
+            
+            // DAY 30 MILESTONE
+            '30': [
+                { time: '9:00 AM', duration: 120, title: '🎯 30-DAY REVIEW & MILESTONE', type: 'milestone' },
+                { time: '2:00 PM', duration: 60, title: '30-Day Team Celebration', type: 'milestone' }
+            ],
+            
+            // WEEK 5: Days 32-35
+            '32': [
+                { time: '9:00 AM', duration: 180, title: 'Independent Discovery Calls (2)', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Call Review Session', type: 'meeting' }
+            ],
+            '33': [
+                { time: '9:00 AM', duration: 120, title: 'Advanced Qualification Techniques', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Value Engineering Workshop', type: 'training' }
+            ],
+            '34': [
+                { time: '9:00 AM', duration: 120, title: 'Champion Building Strategies', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Executive Engagement Prep', type: 'training' }
+            ],
+            '35': [
+                { time: '9:00 AM', duration: 120, title: '🎯 First Product Demo (Solo)', type: 'milestone' },
+                { time: '2:00 PM', duration: 90, title: 'Advanced Prospecting Techniques', type: 'training' }
+            ],
+            
+            // WEEK 6: Days 38-40
+            '38': [
+                { time: '10:00 AM', duration: 60, title: 'Manager 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'Shadow Customer Success Team', type: 'training' }
+            ],
+            '39': [
+                { time: '9:00 AM', duration: 120, title: 'Discovery Calls (3)', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Call Recording Review', type: 'meeting' }
+            ],
+            '40': [
+                { time: '9:00 AM', duration: 90, title: 'Negotiation Fundamentals', type: 'training' },
+                { time: '11:00 AM', duration: 120, title: 'Run Multiple Discovery Calls', type: 'training' },
+                { time: '2:00 PM', duration: 60, title: 'Pipeline Review with Manager', type: 'meeting' }
+            ],
+            
+            // WEEK 7: Days 43-45
+            '43': [
+                { time: '9:00 AM', duration: 120, title: 'Advanced Demo Techniques', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Deliver Demo #2', type: 'training' }
+            ],
+            '44': [
+                { time: '9:00 AM', duration: 120, title: 'Objection Handling: Price & Timing', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Competitive Displacement Tactics', type: 'training' }
+            ],
+            '45': [
+                { time: '10:00 AM', duration: 60, title: '⚠️ Stay Interview - Day 45', type: 'meeting' },
+                { time: '2:00 PM', duration: 60, title: 'Career Development Discussion', type: 'meeting' }
+            ],
+            
+            // WEEK 8: Days 47-50
+            '47': [
+                { time: '9:00 AM', duration: 120, title: 'Complex Objection Handling', type: 'training' },
+                { time: '1:00 PM', duration: 120, title: 'Multi-Threading Workshop', type: 'training' }
+            ],
+            '48': [
+                { time: '9:00 AM', duration: 120, title: 'Economic Buyer Navigation', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Power Mapping Exercise', type: 'training' }
+            ],
+            '49': [
+                { time: '9:00 AM', duration: 120, title: 'Deal Acceleration Strategies', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Urgency Creation Techniques', type: 'training' }
+            ],
+            '50': [
+                { time: '9:00 AM', duration: 180, title: 'Live Role-Play Certification Prep', type: 'training' },
+                { time: '2:00 PM', duration: 60, title: 'Buddy Graduation Session', type: 'buddy' }
+            ],
+            
+            // WEEK 9: Days 52-54
+            '52': [
+                { time: '10:00 AM', duration: 60, title: 'Manager 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'Mock Certification Practice', type: 'training' }
+            ],
+            '54': [
+                { time: '9:00 AM', duration: 120, title: '🏆 CERT: Live Discovery Role-Play', type: 'certification' },
+                { time: '2:00 PM', duration: 60, title: 'Certification Debrief', type: 'meeting' }
+            ],
+            '55': [
+                { time: '9:00 AM', duration: 120, title: 'Advanced CRM: Automation & Workflows', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Reporting & Analytics Training', type: 'training' }
+            ],
+            
+            // DAY 56 & 60
+            '56': [
+                { time: '9:00 AM', duration: 150, title: '🏆 CERT: Demo Delivery Assessment', type: 'certification' },
+                { time: '12:00 PM', duration: 60, title: 'Certification Celebration', type: 'milestone' }
+            ],
+            '59': [
+                { time: '10:00 AM', duration: 60, title: 'Bi-Weekly 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 90, title: 'Forecast Meeting Participation', type: 'training' }
+            ],
+            '60': [
+                { time: '9:00 AM', duration: 120, title: '🎯 60-DAY CHECKPOINT', type: 'milestone' },
+                { time: '2:00 PM', duration: 60, title: '60-Day Team Share', type: 'milestone' }
+            ],
+            
+            // WEEK 10: Days 62-65
+            '62': [
+                { time: '9:00 AM', duration: 240, title: 'Full Sales Cycle Practice', type: 'training' }
+            ],
+            '63': [
+                { time: '9:00 AM', duration: 120, title: 'Contract Negotiation Deep Dive', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Procurement Navigation', type: 'training' }
+            ],
+            '64': [
+                { time: '9:00 AM', duration: 120, title: 'Legal Review Process', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Redlining Best Practices', type: 'training' }
+            ],
+            '65': [
+                { time: '9:00 AM', duration: 180, title: 'Account-Based Strategy Session', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Executive Engagement Workshop', type: 'training' }
+            ],
+            
+            // WEEK 11: Days 68-70
+            '68': [
+                { time: '9:00 AM', duration: 120, title: 'C-Level Selling Strategies', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Board-Level Presentations', type: 'training' }
+            ],
+            '69': [
+                { time: '9:00 AM', duration: 120, title: 'Strategic Account Planning', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'White Space Analysis', type: 'training' }
+            ],
+            '70': [
+                { time: '10:00 AM', duration: 60, title: 'Manager 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'Win/Loss Analysis Workshop', type: 'training' }
+            ],
+            
+            // WEEK 12: Days 73-77
+            '73': [
+                { time: '9:00 AM', duration: 180, title: 'Competitive Displacement Practice', type: 'training' }
+            ],
+            '74': [
+                { time: '9:00 AM', duration: 120, title: 'RFP Response Best Practices', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Vendor Selection Navigation', type: 'training' }
+            ],
+            '75': [
+                { time: '9:00 AM', duration: 120, title: 'Complex Deal Structures', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Multi-Year Contracts', type: 'training' }
+            ],
+            '77': [
+                { time: '9:00 AM', duration: 120, title: 'Advanced Negotiation Workshop', type: 'training' },
+                { time: '2:00 PM', duration: 120, title: '🎯 Close First Deal (Target)', type: 'milestone' }
+            ],
+            
+            // WEEK 13: Days 80-84
+            '80': [
+                { time: '10:00 AM', duration: 60, title: 'Weekly 1:1', type: 'meeting' },
+                { time: '2:00 PM', duration: 90, title: 'Sales Psychology Workshop', type: 'training' }
+            ],
+            '81': [
+                { time: '9:00 AM', duration: 120, title: 'Influence & Persuasion Techniques', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Trust Building Strategies', type: 'training' }
+            ],
+            '82': [
+                { time: '9:00 AM', duration: 120, title: 'Final Certification Prep', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Mock Final Exams', type: 'training' }
+            ],
+            '84': [
+                { time: '9:00 AM', duration: 150, title: '🏆 CERT: Sales Methodology Mastery', type: 'certification' },
+                { time: '2:00 PM', duration: 120, title: '🏆 CERT: Advanced Demo & Technical', type: 'certification' }
+            ],
+            
+            // FINAL WEEK: Days 86-90
+            '86': [
+                { time: '9:00 AM', duration: 120, title: 'Lead Internal Training Session', type: 'milestone' },
+                { time: '2:00 PM', duration: 90, title: 'Marketing Collaboration Project', type: 'training' }
+            ],
+            '87': [
+                { time: '10:00 AM', duration: 60, title: 'Final 1:1 Before Graduation', type: 'meeting' },
+                { time: '2:00 PM', duration: 120, title: 'Create Q4 Development Plan', type: 'selfguided' }
+            ],
+            '88': [
+                { time: '9:00 AM', duration: 120, title: 'Process Improvement Workshop', type: 'training' },
+                { time: '2:00 PM', duration: 90, title: 'Prepare Graduation Presentation', type: 'selfguided' }
+            ],
+            '89': [
+                { time: '9:00 AM', duration: 90, title: 'Meet Your Mentee (Next Cohort)', type: 'milestone' },
+                { time: '2:00 PM', duration: 120, title: 'Process Improvement Proposals', type: 'milestone' }
+            ],
+            '90': [
+                { time: '9:00 AM', duration: 180, title: '👑 90-DAY FINAL REVIEW & GRADUATION', type: 'milestone' },
+                { time: '1:00 PM', duration: 120, title: '🎉 GRADUATION CELEBRATION', type: 'milestone' }
+            ]
+        };
+        
+        // Load hire data when selected from dropdown
+        function loadHireData() {
+            const select = document.getElementById('calendarHireSelect');
+            const selectedId = select.value;
+            
+            if (selectedId === 'new') {
+                // Clear fields for new entry
+                document.getElementById('calendarHireName').value = '';
+                document.getElementById('calendarHireName').readOnly = false;
+                document.getElementById('calendarStartDate').value = getNextMonday();
+                document.getElementById('calendarRole').value = 'AE';
+            } else if (selectedId) {
+                // Load existing hire data
+                const hire = sampleTeam.find(h => h.id == selectedId);
+                if (hire) {
+                    document.getElementById('calendarHireName').value = hire.name;
+                    document.getElementById('calendarHireName').readOnly = true;
+                    document.getElementById('calendarStartDate').value = hire.startDate;
+                    document.getElementById('calendarRole').value = hire.role;
+                }
+            }
+        }
+        
+        function generateCalendar() {
+            const hireName = document.getElementById('calendarHireName').value;
+            const startDateStr = document.getElementById('calendarStartDate').value;
+            const role = document.getElementById('calendarRole').value;
+            
+            if (!hireName || !startDateStr) {
+                alert('Please select a team member or enter a name and start date');
+                return;
+            }
+            
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            
+            const container = document.getElementById('calendarContainer');
+            container.innerHTML = '';
+            
+            // Generate all 13 weeks (Preboarding + 12 weeks)
+            const weekConfigs = [
+                { week: 0, title: 'Preboarding Week', days: '-7 to -1', dayOffset: -7 },
+                { week: 1, title: 'Week 1 - Orientation & Immersion', days: '1-5', dayOffset: 0 },
+                { week: 2, title: 'Week 2 - Knowledge Building & Certification', days: '8-12', dayOffset: 7 },
+                { week: 3, title: 'Week 3 - Active Practice', days: '15-19', dayOffset: 14 },
+                { week: 4, title: 'Week 4 - First Wins & 30-Day Review', days: '22-30', dayOffset: 21 },
+                { week: 5, title: 'Week 5 - Independent Execution', days: '32-35', dayOffset: 31 },
+                { week: 6, title: 'Week 6 - Skill Development', days: '38-40', dayOffset: 37 },
+                { week: 7, title: 'Week 7 - Advanced Techniques', days: '43-45', dayOffset: 42 },
+                { week: 8, title: 'Week 8 - Certifications & 60-Day Checkpoint', days: '47-60', dayOffset: 46 },
+                { week: 9, title: 'Week 9 - Full Sales Cycle', days: '62-65', dayOffset: 61 },
+                { week: 10, title: 'Week 10 - Strategic Accounts', days: '68-70', dayOffset: 67 },
+                { week: 11, title: 'Week 11 - Complex Deals', days: '73-77', dayOffset: 72 },
+                { week: 12, title: 'Week 12 - Final Certifications & Graduation', days: '80-90', dayOffset: 79 }
+            ];
+            
+            weekConfigs.forEach(config => {
+                const weekSection = document.createElement('div');
+                weekSection.className = 'week-section';
+                
+                const weekStart = addDays(startDate, config.dayOffset);
+                const weekEnd = addDays(weekStart, 4);
+                
+                weekSection.innerHTML = `
+                    <div class="week-section-header">
+                        ${config.title}
+                        <div style="font-size: 1rem; opacity: 0.95; margin-top: 0.25rem;">
+                            ${formatDate(weekStart)} - ${formatDate(weekEnd)} • Days ${config.days}
+                        </div>
+                    </div>
+                `;
+                
+                const grid = document.createElement('div');
+                grid.className = 'calendar-grid';
+                
+                // Header row
+                grid.innerHTML = `
+                    <div class="calendar-header">Time</div>
+                    <div class="calendar-header">Monday<br>${formatDateShort(weekStart)}</div>
+                    <div class="calendar-header">Tuesday<br>${formatDateShort(addDays(weekStart, 1))}</div>
+                    <div class="calendar-header">Wednesday<br>${formatDateShort(addDays(weekStart, 2))}</div>
+                    <div class="calendar-header">Thursday<br>${formatDateShort(addDays(weekStart, 3))}</div>
+                    <div class="calendar-header">Friday<br>${formatDateShort(addDays(weekStart, 4))}</div>
+                `;
+                
+                // Time slots
+                const timeSlots = ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM'];
+                
+                for (let slot of timeSlots) {
+                    const row = document.createElement('div');
+                    row.style.display = 'contents';
+                    
+                    const timeCell = document.createElement('div');
+                    timeCell.className = 'time-slot';
+                    timeCell.textContent = slot;
+                    row.appendChild(timeCell);
+                    
+                    // 5 days (Mon-Fri)
+                    for (let dayOffset = 0; dayOffset < 5; dayOffset++) {
+                        const dayCell = document.createElement('div');
+                        dayCell.className = 'day-cell';
+                        
+                        // Calculate day number
+                        const currentDate = addDays(weekStart, dayOffset);
+                        const daysSinceStart = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+                        const dayNumber = daysSinceStart + 1;
+                        
+                        // Get events for this day from COMPLETE_SCHEDULE
+                        const dayKey = config.week === 0 ? String(dayNumber - 8) : String(dayNumber);
+                        const events = COMPLETE_SCHEDULE[dayKey] || [];
+                        
+                        // Add events that fall in this time slot
+                        events.forEach(event => {
+                            const eventHour = parseInt(event.time.split(':')[0]);
+                            const isPM = event.time.includes('PM');
+                            const slotHour = slot.includes('PM') && !slot.includes('12') ? 
+                                           parseInt(slot.split(' ')[0]) + 12 : 
+                                           parseInt(slot.split(' ')[0]);
+                            
+                            let eventHour24 = eventHour;
+                            if (isPM && eventHour !== 12) eventHour24 = eventHour + 12;
+                            if (!isPM && eventHour === 12) eventHour24 = 0;
+                            
+                            if (eventHour24 === slotHour) {
+                                const eventDiv = document.createElement('div');
+                                
+                                // Determine if event is completed (in the past)
+                                const eventDateTime = new Date(currentDate);
+                                eventDateTime.setHours(eventHour24, 0, 0, 0);
+                                const isCompleted = eventDateTime < new Date();
+                                
+                                // Add completed styling
+                                if (isCompleted) {
+                                    eventDiv.className = `calendar-event event-completed`;
+                                } else {
+                                    eventDiv.className = `calendar-event event-${event.type}`;
+                                }
+                                
+                                eventDiv.innerHTML = `
+                                    <div style="font-size: 0.65rem; opacity: 0.9;">${event.time}</div>
+                                    <div>${isCompleted ? '✓ ' : ''}${event.title}</div>
+                                `;
+                                eventDiv.title = `${event.title} (${event.duration} min)${isCompleted ? ' - COMPLETED' : ''}`;
+                                dayCell.appendChild(eventDiv);
+                            }
+                        });
+                        
+                        row.appendChild(dayCell);
+                    }
+                    
+                    grid.appendChild(row);
+                }
+                
+                weekSection.appendChild(grid);
+                
+                // Add week completion banner if all events in week are completed
+                // weekStart and weekEnd already declared above
+                const allEventsCompleted = weekEnd < new Date();
+                
+                if (allEventsCompleted) {
+                    const completionBanner = document.createElement('div');
+                    completionBanner.style.cssText = 'background: linear-gradient(135deg, #DC2626, #B91C1C); color: white; padding: 1rem; text-align: center; font-weight: 700; font-size: 0.875rem;';
+                    completionBanner.innerHTML = '✓ WEEK COMPLETED';
+                    weekSection.appendChild(completionBanner);
+                }
+                
+                container.appendChild(weekSection);
+            });
+            
+            // Export Options Section
+            const exportSection = document.createElement('div');
+            exportSection.style.cssText = 'background: linear-gradient(135deg, var(--success), #059669); color: white; padding: 2rem; border-radius: 0.75rem; text-align: center; margin-top: 2rem;';
+            exportSection.innerHTML = `
+                <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+                    ✅ Calendar Generated Successfully!
+                </div>
+                <div style="font-size: 1rem; margin-bottom: 1.5rem;">
+                    ${hireName} (${role}) • Starting ${formatDate(startDate)}
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" style="background: white; color: #059669; font-weight: 700; padding: 1rem 2rem;" onclick="downloadICS('${hireName}', '${startDateStr}')">
+                        📅 Download .ICS File
+                    </button>
+                    <button class="btn" style="background: white; color: #059669; font-weight: 700; padding: 1rem 2rem;" onclick="exportToPowerPoint('${hireName}', '${startDateStr}', '${role}')">
+                        📊 Export to PowerPoint
+                    </button>
+                    <button class="btn" style="background: white; color: #059669; font-weight: 700; padding: 1rem 2rem;" onclick="pushToOutlook('${hireName}', '${startDateStr}')">
+                        📧 Push to Outlook Calendar
+                    </button>
+                    <button class="btn" style="background: white; color: #059669; font-weight: 700; padding: 1rem 2rem;" onclick="pushToGoogleCalendar('${hireName}', '${startDateStr}')">
+                        📗 Push to Google Calendar
+                    </button>
+                    <button class="btn" style="background: white; color: #059669; font-weight: 700; padding: 1rem 2rem;" onclick="window.print()">
+                        🖨️ Print Calendar
+                    </button>
+                </div>
+                <div style="font-size: 0.875rem; margin-top: 1rem; opacity: 0.9;">
+                    💡 Export to PowerPoint for presentations • Auto-push to Outlook/Google • Download .ICS for any calendar
+                </div>
+            `;
+            container.appendChild(exportSection);
+        }
+        
+        // Generate and download ICS/iCal file
+        function downloadICS(hireName, startDateStr) {
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            let icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//90-Day Onboarding System//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:${hireName} - 90-Day Onboarding
+X-WR-TIMEZONE:UTC
+X-WR-CALDESC:Complete 90-day onboarding schedule for ${hireName}
+
+`;
+            
+            // Generate all events from COMPLETE_SCHEDULE
+            Object.entries(COMPLETE_SCHEDULE).forEach(([dayKey, events]) => {
+                const dayNumber = parseInt(dayKey);
+                const eventDate = addDays(startDate, dayNumber - 1);
+                
+                events.forEach(event => {
+                    const eventStartTime = parseTime(event.time);
+                    const eventStart = new Date(eventDate);
+                    eventStart.setHours(eventStartTime.hours, eventStartTime.minutes, 0, 0);
+                    
+                    const eventEnd = new Date(eventStart);
+                    eventEnd.setMinutes(eventEnd.getMinutes() + event.duration);
+                    
+                    const uid = `${dayKey}-${event.time.replace(/[^0-9]/g, '')}-${Math.random().toString(36).substr(2, 9)}@onboarding.system`;
+                    
+                    icsContent += `BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${formatICSDate(new Date())}
+DTSTART:${formatICSDate(eventStart)}
+DTEND:${formatICSDate(eventEnd)}
+SUMMARY:${event.title}
+DESCRIPTION:${hireName}'s Onboarding - Day ${dayNumber}\\n${event.title}\\nDuration: ${event.duration} minutes\\nType: ${event.type}
+LOCATION:Company Office / Virtual
+STATUS:CONFIRMED
+SEQUENCE:0
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder: ${event.title}
+END:VALARM
+END:VEVENT
+
+`;
+                });
+            });
+            
+            icsContent += `END:VCALENDAR`;
+            
+            // Create download
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${hireName.replace(/\s/g, '_')}_90Day_Onboarding.ics`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification(`✅ Calendar file downloaded! Import it into Google Calendar, Outlook, or Apple Calendar.`);
+        }
+        
+        // Parse time string to hours/minutes
+        function parseTime(timeStr) {
+            const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+            if (!match) return { hours: 9, minutes: 0 };
+            
+            let hours = parseInt(match[1]);
+            const minutes = parseInt(match[2]);
+            const isPM = match[3].toUpperCase() === 'PM';
+            
+            if (isPM && hours !== 12) hours += 12;
+            if (!isPM && hours === 12) hours = 0;
+            
+            return { hours, minutes };
+        }
+        
+        // Format date for ICS file
+        function formatICSDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            
+            return `${year}${month}${day}T${hours}${minutes}${seconds}`;
+        }
+        
+        // Copy Google Calendar link
+        function copyGoogleCalendarLink(hireName, startDateStr) {
+            const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            
+            // Create link for first event (Day 1 Orientation) as example
+            const firstEvent = COMPLETE_SCHEDULE['1'][0];
+            const eventStart = new Date(startDate);
+            const startTime = parseTime(firstEvent.time);
+            eventStart.setHours(startTime.hours, startTime.minutes, 0, 0);
+            
+            const eventEnd = new Date(eventStart);
+            eventEnd.setMinutes(eventEnd.getMinutes() + firstEvent.duration);
+            
+            const dates = `${formatGoogleDate(eventStart)}/${formatGoogleDate(eventEnd)}`;
+            const text = encodeURIComponent(`${hireName} - ${firstEvent.title}`);
+            const details = encodeURIComponent(`90-Day Onboarding - Day 1\n${firstEvent.title}\nDuration: ${firstEvent.duration} minutes`);
+            
+            const url = `${baseUrl}&text=${text}&dates=${dates}&details=${details}`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification(`✅ Google Calendar link copied! Paste it in your browser to add the first event. Download the .ICS file for all events.`);
+            }).catch(() => {
+                alert('Link: ' + url);
+            });
+        }
+        
+        // Format date for Google Calendar
+        function formatGoogleDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            
+            return `${year}${month}${day}T${hours}${minutes}${seconds}`;
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10B981, #059669);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                font-weight: 600;
+                max-width: 400px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+        
+        // ========================================
+        // POWERPOINT EXPORT
+        // ========================================
+        
+        async function exportToPowerPoint(hireName, startDateStr, role) {
+            showProgressModal('Creating PowerPoint presentation...');
+            
+            try {
+                // Load PptxGenJS library dynamically
+                if (typeof PptxGenJS === 'undefined') {
+                    await loadPptxGenJS();
+                }
+                
+                const startDate = new Date(startDateStr + 'T00:00:00');
+                const pptx = new PptxGenJS();
+                
+                // Set presentation properties
+                pptx.author = 'Onboarding System';
+                pptx.company = 'Your Company';
+                pptx.subject = `90-Day Onboarding Plan for ${hireName}`;
+                pptx.title = `${hireName} - 90-Day Onboarding`;
+                
+                // Define color mapping to match HTML
+                const eventColors = {
+                    'orientation': 'DC2626',    // Red
+                    'training': '2563EB',       // Blue
+                    'meeting': '059669',        // Green
+                    'certification': 'D97706',  // Orange
+                    'buddy': '7C3AED',         // Purple
+                    'selfguided': '06B6D4',    // Cyan
+                    'milestone': 'EC4899',     // Pink
+                    'completed': 'DC2626'      // Red (faded in HTML)
+                };
+                
+                // SLIDE 1: Title Slide
+                const titleSlide = pptx.addSlide();
+                titleSlide.background = { color: '0066FF' };
+                
+                titleSlide.addText(`${hireName}`, {
+                    x: 0.5,
+                    y: 1.5,
+                    w: 9,
+                    h: 1,
+                    fontSize: 44,
+                    bold: true,
+                    color: 'FFFFFF',
+                    align: 'center'
+                });
+                
+                titleSlide.addText('90-Day Onboarding Journey', {
+                    x: 0.5,
+                    y: 2.7,
+                    w: 9,
+                    h: 0.6,
+                    fontSize: 32,
+                    color: 'FFFFFF',
+                    align: 'center'
+                });
+                
+                titleSlide.addText(`${role} • Starting ${formatDate(startDate)}`, {
+                    x: 0.5,
+                    y: 3.5,
+                    w: 9,
+                    h: 0.5,
+                    fontSize: 20,
+                    color: 'FFFFFF',
+                    align: 'center'
+                });
+                
+                titleSlide.addText('Complete Visual Schedule', {
+                    x: 0.5,
+                    y: 5,
+                    w: 9,
+                    h: 0.4,
+                    fontSize: 16,
+                    color: 'FFFFFF',
+                    align: 'center',
+                    italic: true
+                });
+                
+                // SLIDE 2: Legend
+                updateProgressModal('Creating color legend...');
+                const legendSlide = pptx.addSlide();
+                legendSlide.addText('Calendar Color Guide', {
+                    x: 0.5,
+                    y: 0.3,
+                    w: 9,
+                    h: 0.6,
+                    fontSize: 32,
+                    bold: true,
+                    color: '0066FF'
+                });
+                
+                const legendItems = [
+                    { color: 'DC2626', label: 'Orientation' },
+                    { color: '2563EB', label: 'Training' },
+                    { color: '059669', label: '1:1 Meetings' },
+                    { color: 'D97706', label: 'Certification' },
+                    { color: '7C3AED', label: 'Buddy Time' },
+                    { color: '06B6D4', label: 'Self-Guided' },
+                    { color: 'EC4899', label: 'Milestone' }
+                ];
+                
+                let legendY = 1.5;
+                legendItems.forEach((item, idx) => {
+                    const row = Math.floor(idx / 2);
+                    const col = idx % 2;
+                    const x = 1 + (col * 4.5);
+                    const y = legendY + (row * 0.8);
+                    
+                    // Color box
+                    legendSlide.addShape(pptx.ShapeType.rect, {
+                        x: x,
+                        y: y,
+                        w: 0.5,
+                        h: 0.5,
+                        fill: { color: item.color },
+                        line: { color: 'FFFFFF', width: 0 }
+                    });
+                    
+                    // Label
+                    legendSlide.addText(item.label, {
+                        x: x + 0.7,
+                        y: y + 0.05,
+                        w: 3,
+                        h: 0.4,
+                        fontSize: 18,
+                        color: '333333',
+                        bold: true
+                    });
+                });
+                
+                legendSlide.addText('Each week shows a visual calendar grid with color-coded events matching your schedule.', {
+                    x: 1,
+                    y: 5.5,
+                    w: 8,
+                    h: 1,
+                    fontSize: 14,
+                    color: '666666',
+                    align: 'center',
+                    italic: true
+                });
+                
+                // Generate weekly calendar slides (visual grid format)
+                updateProgressModal('Creating weekly calendar grids...');
+                
+                const weekConfigs = [
+                    { week: 0, title: 'Preboarding Week', days: '-7 to -1', dayOffset: -7 },
+                    { week: 1, title: 'Week 1 - Orientation & Immersion', days: '1-5', dayOffset: 0 },
+                    { week: 2, title: 'Week 2 - Knowledge Building', days: '8-12', dayOffset: 7 },
+                    { week: 3, title: 'Week 3 - Active Practice', days: '15-19', dayOffset: 14 },
+                    { week: 4, title: 'Week 4 - First Wins & 30-Day Review', days: '22-30', dayOffset: 21 },
+                    { week: 5, title: 'Week 5 - Independent Execution', days: '32-35', dayOffset: 31 },
+                    { week: 6, title: 'Week 6 - Skill Development', days: '38-40', dayOffset: 37 },
+                    { week: 7, title: 'Week 7 - Advanced Techniques', days: '43-45', dayOffset: 42 },
+                    { week: 8, title: 'Week 8 - Certifications & 60-Day Review', days: '47-60', dayOffset: 46 },
+                    { week: 9, title: 'Week 9 - Full Sales Cycle', days: '62-65', dayOffset: 61 },
+                    { week: 10, title: 'Week 10 - Strategic Accounts', days: '68-70', dayOffset: 67 },
+                    { week: 11, title: 'Week 11 - Complex Deals', days: '73-77', dayOffset: 72 },
+                    { week: 12, title: 'Week 12 - Final Certifications & Graduation', days: '80-90', dayOffset: 79 }
+                ];
+                
+                weekConfigs.forEach((config, weekIndex) => {
+                    const weekSlide = pptx.addSlide();
+                    const weekStart = addDays(startDate, config.dayOffset);
+                    const weekEnd = addDays(weekStart, 4);
+                    
+                    // Week title
+                    weekSlide.addText(config.title, {
+                        x: 0.3,
+                        y: 0.2,
+                        w: 9.4,
+                        h: 0.4,
+                        fontSize: 20,
+                        bold: true,
+                        color: 'FFFFFF',
+                        fill: { color: '0066FF' },
+                        align: 'center'
+                    });
+                    
+                    weekSlide.addText(`${formatDateShort(weekStart)} - ${formatDateShort(weekEnd)} • Days ${config.days}`, {
+                        x: 0.3,
+                        y: 0.65,
+                        w: 9.4,
+                        h: 0.25,
+                        fontSize: 11,
+                        color: '666666',
+                        align: 'center'
+                    });
+                    
+                    // Create calendar grid (matching HTML design)
+                    const gridStartY = 1.0;
+                    const gridStartX = 0.3;
+                    const timeColWidth = 0.7;
+                    const dayColWidth = 1.84;
+                    const rowHeight = 0.55;
+                    const headerHeight = 0.35;
+                    
+                    // Header row - Days of week
+                    const dayHeaders = ['Time', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                    dayHeaders.forEach((day, idx) => {
+                        weekSlide.addShape(pptx.ShapeType.rect, {
+                            x: gridStartX + (idx === 0 ? 0 : timeColWidth + (idx - 1) * dayColWidth),
+                            y: gridStartY,
+                            w: idx === 0 ? timeColWidth : dayColWidth,
+                            h: headerHeight,
+                            fill: { color: 'F3F4F6' },
+                            line: { color: 'E5E7EB', width: 1 }
+                        });
+                        
+                        const dayDate = idx > 0 ? formatDateShort(addDays(weekStart, idx - 1)) : '';
+                        weekSlide.addText(day + (dayDate ? `\n${dayDate}` : ''), {
+                            x: gridStartX + (idx === 0 ? 0 : timeColWidth + (idx - 1) * dayColWidth),
+                            y: gridStartY + 0.02,
+                            w: idx === 0 ? timeColWidth : dayColWidth,
+                            h: headerHeight,
+                            fontSize: 9,
+                            bold: true,
+                            color: '374151',
+                            align: 'center',
+                            valign: 'middle'
+                        });
+                    });
+                    
+                    // Time slots and events
+                    const timeSlots = ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM'];
+                    
+                    timeSlots.forEach((timeSlot, timeIdx) => {
+                        const rowY = gridStartY + headerHeight + (timeIdx * rowHeight);
+                        
+                        // Time column
+                        weekSlide.addShape(pptx.ShapeType.rect, {
+                            x: gridStartX,
+                            y: rowY,
+                            w: timeColWidth,
+                            h: rowHeight,
+                            fill: { color: 'FFFFFF' },
+                            line: { color: 'E5E7EB', width: 1 }
+                        });
+                        
+                        weekSlide.addText(timeSlot, {
+                            x: gridStartX,
+                            y: rowY,
+                            w: timeColWidth,
+                            h: rowHeight,
+                            fontSize: 8,
+                            color: '6B7280',
+                            align: 'center',
+                            valign: 'middle',
+                            bold: true
+                        });
+                        
+                        // Day columns
+                        for (let dayIdx = 0; dayIdx < 5; dayIdx++) {
+                            const cellX = gridStartX + timeColWidth + (dayIdx * dayColWidth);
+                            
+                            // Day cell background
+                            weekSlide.addShape(pptx.ShapeType.rect, {
+                                x: cellX,
+                                y: rowY,
+                                w: dayColWidth,
+                                h: rowHeight,
+                                fill: { color: 'FFFFFF' },
+                                line: { color: 'E5E7EB', width: 1 }
+                            });
+                            
+                            // Get events for this day and time
+                            const currentDate = addDays(weekStart, dayIdx);
+                            const daysSinceStart = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+                            const dayNumber = daysSinceStart + 1;
+                            const dayKey = config.week === 0 ? String(dayNumber - 8) : String(dayNumber);
+                            const events = COMPLETE_SCHEDULE[dayKey] || [];
+                            
+                            // Filter events for this time slot
+                            const slotHour = timeSlot.includes('PM') && !timeSlot.includes('12') ? 
+                                           parseInt(timeSlot.split(' ')[0]) + 12 : 
+                                           parseInt(timeSlot.split(' ')[0]);
+                            
+                            events.forEach(event => {
+                                const eventHour = parseInt(event.time.split(':')[0]);
+                                const isPM = event.time.includes('PM');
+                                let eventHour24 = eventHour;
+                                if (isPM && eventHour !== 12) eventHour24 = eventHour + 12;
+                                if (!isPM && eventHour === 12) eventHour24 = 0;
+                                
+                                if (eventHour24 === slotHour) {
+                                    // Check if completed
+                                    const eventDateTime = new Date(currentDate);
+                                    eventDateTime.setHours(eventHour24, 0, 0, 0);
+                                    const isCompleted = eventDateTime < new Date();
+                                    
+                                    // Add event box
+                                    const eventColor = isCompleted ? eventColors['completed'] : eventColors[event.type];
+                                    const opacity = isCompleted ? 50 : 100;
+                                    
+                                    weekSlide.addShape(pptx.ShapeType.rect, {
+                                        x: cellX + 0.05,
+                                        y: rowY + 0.05,
+                                        w: dayColWidth - 0.1,
+                                        h: rowHeight - 0.1,
+                                        fill: { color: eventColor, transparency: 100 - opacity },
+                                        line: { color: eventColor, width: 0 }
+                                    });
+                                    
+                                    // Event title
+                                    const eventTitle = isCompleted ? `✓ ${event.title}` : event.title;
+                                    weekSlide.addText(eventTitle, {
+                                        x: cellX + 0.1,
+                                        y: rowY + 0.1,
+                                        w: dayColWidth - 0.2,
+                                        h: rowHeight - 0.2,
+                                        fontSize: 7,
+                                        color: 'FFFFFF',
+                                        bold: true,
+                                        valign: 'middle',
+                                        breakLine: true
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    
+                    // Add week completion banner if needed
+                    const allEventsCompleted = weekEnd < new Date();
+                    if (allEventsCompleted) {
+                        weekSlide.addShape(pptx.ShapeType.rect, {
+                            x: 0.3,
+                            y: 6.8,
+                            w: 9.4,
+                            h: 0.4,
+                            fill: { color: 'DC2626' },
+                            line: { color: 'DC2626', width: 0 }
+                        });
+                        
+                        weekSlide.addText('✓ WEEK COMPLETED', {
+                            x: 0.3,
+                            y: 6.8,
+                            w: 9.4,
+                            h: 0.4,
+                            fontSize: 14,
+                            color: 'FFFFFF',
+                            bold: true,
+                            align: 'center',
+                            valign: 'middle'
+                        });
+                    }
+                    
+                    // Add page number
+                    weekSlide.addText(`Week ${config.week === 0 ? 'Pre' : config.week} | Page ${weekIndex + 3}`, {
+                        x: 8.5,
+                        y: 7.2,
+                        w: 1.2,
+                        h: 0.3,
+                        fontSize: 9,
+                        color: '999999',
+                        align: 'right'
+                    });
+                });
+                
+                // MILESTONE SLIDE
+                updateProgressModal('Adding milestones slide...');
+                
+                const milestoneSlide = pptx.addSlide();
+                milestoneSlide.addText('Key Milestones & Checkpoints', {
+                    x: 0.5,
+                    y: 0.3,
+                    w: 9,
+                    h: 0.6,
+                    fontSize: 28,
+                    bold: true,
+                    color: '0066FF'
+                });
+                
+                const milestones = [
+                    { day: 'Day 10', event: '🏆 Week 2 Certification', desc: 'Product knowledge & CRM proficiency', color: 'D97706' },
+                    { day: 'Day 30', event: '🎯 30-Day Review', desc: 'Comprehensive progress assessment', color: 'EC4899' },
+                    { day: 'Day 45', event: '⚠️ Stay Interview', desc: 'Critical retention check-in', color: '059669' },
+                    { day: 'Day 54', event: '🏆 Discovery Certification', desc: 'Live role-play assessment', color: 'D97706' },
+                    { day: 'Day 56', event: '🏆 Demo Certification', desc: 'Custom demo delivery', color: 'D97706' },
+                    { day: 'Day 60', event: '🎯 60-Day Checkpoint', desc: 'Skills mastery evaluation', color: 'EC4899' },
+                    { day: 'Day 84', event: '🏆 Final Certifications', desc: 'Methodology & technical mastery', color: 'D97706' },
+                    { day: 'Day 90', event: '👑 Graduation', desc: 'Fully ramped celebration!', color: 'EC4899' }
+                ];
+                
+                let yPos = 1.2;
+                milestones.forEach(milestone => {
+                    // Colored sidebar
+                    milestoneSlide.addShape(pptx.ShapeType.rect, {
+                        x: 0.5,
+                        y: yPos,
+                        w: 0.15,
+                        h: 0.6,
+                        fill: { color: milestone.color },
+                        line: { width: 0 }
+                    });
+                    
+                    // Main box
+                    milestoneSlide.addShape(pptx.ShapeType.rect, {
+                        x: 0.65,
+                        y: yPos,
+                        w: 8.85,
+                        h: 0.6,
+                        fill: { color: 'F9FAFB' },
+                        line: { color: 'E5E7EB', width: 1 }
+                    });
+                    
+                    milestoneSlide.addText(milestone.day, {
+                        x: 0.85,
+                        y: yPos + 0.1,
+                        w: 1.2,
+                        h: 0.4,
+                        fontSize: 13,
+                        bold: true,
+                        color: '0066FF'
+                    });
+                    
+                    milestoneSlide.addText(milestone.event, {
+                        x: 2.3,
+                        y: yPos + 0.1,
+                        w: 3.5,
+                        h: 0.4,
+                        fontSize: 13,
+                        bold: true,
+                        color: '333333'
+                    });
+                    
+                    milestoneSlide.addText(milestone.desc, {
+                        x: 6,
+                        y: yPos + 0.1,
+                        w: 3.2,
+                        h: 0.4,
+                        fontSize: 10,
+                        color: '666666'
+                    });
+                    
+                    yPos += 0.7;
+                });
+                
+                // FINAL SLIDE: Next Steps
+                const finalSlide = pptx.addSlide();
+                finalSlide.background = { color: '10B981' };
+                
+                finalSlide.addText('Ready to Begin Your Journey?', {
+                    x: 0.5,
+                    y: 2,
+                    w: 9,
+                    h: 0.8,
+                    fontSize: 36,
+                    bold: true,
+                    color: 'FFFFFF',
+                    align: 'center'
+                });
+                
+                finalSlide.addText('✓ Review your visual calendar\n✓ Import events to your calendar\n✓ Reach out to your buddy\n✓ Prepare for Day 1', {
+                    x: 2,
+                    y: 3.2,
+                    w: 6,
+                    h: 2,
+                    fontSize: 18,
+                    color: 'FFFFFF',
+                    align: 'center',
+                    lineSpacing: 32
+                });
+                
+                finalSlide.addText(`We're excited to have you, ${hireName.split(' ')[0]}! 🎉`, {
+                    x: 0.5,
+                    y: 5.5,
+                    w: 9,
+                    h: 0.6,
+                    fontSize: 22,
+                    color: 'FFFFFF',
+                    align: 'center',
+                    italic: true
+                });
+                
+                // Save the presentation
+                updateProgressModal('Generating PowerPoint file...');
+                
+                await pptx.writeFile({ fileName: `${hireName.replace(/\s/g, '_')}_90Day_Onboarding_Calendar.pptx` });
+                
+                closeProgressModal();
+                showNotification(`✅ PowerPoint calendar created! Check your downloads folder.`);
+                
+            } catch (error) {
+                console.error('PowerPoint generation error:', error);
+                closeProgressModal();
+                showNotification(`❌ Error creating PowerPoint: ${error.message}`);
+            }
+        }
+        
+        // Load PptxGenJS library dynamically
+        function loadPptxGenJS() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+        
+        // ========================================
+        // AUTOMATED OUTLOOK CALENDAR PUSH
+        // ========================================
+        
+        let outlookAccessToken = null;
+        
+        async function pushToOutlook(hireName, startDateStr) {
+            // Check if we have an access token
+            if (!outlookAccessToken) {
+                await authenticateOutlook();
+                return;
+            }
+            
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            const events = [];
+            
+            // Collect all events from COMPLETE_SCHEDULE
+            Object.entries(COMPLETE_SCHEDULE).forEach(([dayKey, dayEvents]) => {
+                const dayNumber = parseInt(dayKey);
+                const eventDate = addDays(startDate, dayNumber - 1);
+                
+                dayEvents.forEach(event => {
+                    const eventStartTime = parseTime(event.time);
+                    const eventStart = new Date(eventDate);
+                    eventStart.setHours(eventStartTime.hours, eventStartTime.minutes, 0, 0);
+                    
+                    const eventEnd = new Date(eventStart);
+                    eventEnd.setMinutes(eventEnd.getMinutes() + event.duration);
+                    
+                    events.push({
+                        subject: `${hireName} - ${event.title}`,
+                        body: {
+                            contentType: 'HTML',
+                            content: `<h3>90-Day Onboarding - Day ${dayNumber}</h3>
+                                     <p><strong>${event.title}</strong></p>
+                                     <p>Duration: ${event.duration} minutes</p>
+                                     <p>Type: ${event.type}</p>
+                                     <p>New hire: ${hireName}</p>`
+                        },
+                        start: {
+                            dateTime: eventStart.toISOString(),
+                            timeZone: 'UTC'
+                        },
+                        end: {
+                            dateTime: eventEnd.toISOString(),
+                            timeZone: 'UTC'
+                        },
+                        location: {
+                            displayName: 'Company Office / Virtual'
+                        },
+                        isReminderOn: true,
+                        reminderMinutesBeforeStart: 15,
+                        categories: ['Onboarding', hireName]
+                    });
+                });
+            });
+            
+            // Show progress
+            showProgressModal(`Pushing ${events.length} events to Outlook...`);
+            
+            // Batch create events (max 20 per batch for Graph API)
+            const batchSize = 20;
+            let created = 0;
+            
+            for (let i = 0; i < events.length; i += batchSize) {
+                const batch = events.slice(i, i + batchSize);
+                
+                try {
+                    await createOutlookEventBatch(batch);
+                    created += batch.length;
+                    updateProgressModal(`Created ${created} of ${events.length} events...`);
+                } catch (error) {
+                    console.error('Batch failed:', error);
+                    closeProgressModal();
+                    showNotification(`❌ Error pushing to Outlook: ${error.message}`);
+                    return;
+                }
+            }
+            
+            closeProgressModal();
+            showNotification(`✅ Successfully pushed ${events.length} events to Outlook Calendar!`);
+        }
+        
+        async function authenticateOutlook() {
+            const clientId = 'YOUR_AZURE_APP_CLIENT_ID'; // Replace with your Azure AD app client ID
+            const redirectUri = window.location.origin + window.location.pathname;
+            const scope = 'Calendars.ReadWrite offline_access';
+            
+            // MSAL (Microsoft Authentication Library) OAuth flow
+            const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?` +
+                `client_id=${clientId}` +
+                `&response_type=token` +
+                `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+                `&scope=${encodeURIComponent(scope)}` +
+                `&response_mode=fragment`;
+            
+            // Open popup for authentication
+            const popup = window.open(authUrl, 'Outlook Auth', 'width=500,height=600');
+            
+            // Listen for token
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'outlook_token') {
+                    outlookAccessToken = event.data.token;
+                    popup.close();
+                    showNotification('✅ Outlook authenticated! Click "Push to Outlook" again to sync events.');
+                }
+            });
+            
+            showNotification('🔐 Please sign in with your Microsoft account in the popup window...');
+        }
+        
+        async function createOutlookEventBatch(events) {
+            const response = await fetch('https://graph.microsoft.com/v1.0/$batch', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${outlookAccessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    requests: events.map((event, index) => ({
+                        id: index.toString(),
+                        method: 'POST',
+                        url: '/me/events',
+                        body: event,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }))
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to create events in Outlook');
+            }
+            
+            return await response.json();
+        }
+        
+        // ========================================
+        // AUTOMATED GOOGLE CALENDAR PUSH
+        // ========================================
+        
+        let googleAccessToken = null;
+        
+        async function pushToGoogleCalendar(hireName, startDateStr) {
+            // Check if we have an access token
+            if (!googleAccessToken) {
+                await authenticateGoogle();
+                return;
+            }
+            
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            const events = [];
+            
+            // Collect all events from COMPLETE_SCHEDULE
+            Object.entries(COMPLETE_SCHEDULE).forEach(([dayKey, dayEvents]) => {
+                const dayNumber = parseInt(dayKey);
+                const eventDate = addDays(startDate, dayNumber - 1);
+                
+                dayEvents.forEach(event => {
+                    const eventStartTime = parseTime(event.time);
+                    const eventStart = new Date(eventDate);
+                    eventStart.setHours(eventStartTime.hours, eventStartTime.minutes, 0, 0);
+                    
+                    const eventEnd = new Date(eventStart);
+                    eventEnd.setMinutes(eventEnd.getMinutes() + event.duration);
+                    
+                    events.push({
+                        summary: `${hireName} - ${event.title}`,
+                        description: `90-Day Onboarding - Day ${dayNumber}\n${event.title}\nDuration: ${event.duration} minutes\nType: ${event.type}\nNew hire: ${hireName}`,
+                        start: {
+                            dateTime: eventStart.toISOString(),
+                            timeZone: 'UTC'
+                        },
+                        end: {
+                            dateTime: eventEnd.toISOString(),
+                            timeZone: 'UTC'
+                        },
+                        location: 'Company Office / Virtual',
+                        reminders: {
+                            useDefault: false,
+                            overrides: [
+                                { method: 'popup', minutes: 15 }
+                            ]
+                        },
+                        colorId: '9' // Blue color
+                    });
+                });
+            });
+            
+            // Show progress
+            showProgressModal(`Pushing ${events.length} events to Google Calendar...`);
+            
+            // Create events one by one (Google Calendar API doesn't have batch endpoint)
+            let created = 0;
+            
+            for (const event of events) {
+                try {
+                    await createGoogleEvent(event);
+                    created++;
+                    if (created % 10 === 0) {
+                        updateProgressModal(`Created ${created} of ${events.length} events...`);
+                    }
+                } catch (error) {
+                    console.error('Event creation failed:', error);
+                    closeProgressModal();
+                    showNotification(`❌ Error pushing to Google Calendar: ${error.message}`);
+                    return;
+                }
+            }
+            
+            closeProgressModal();
+            showNotification(`✅ Successfully pushed ${events.length} events to Google Calendar!`);
+        }
+        
+        async function authenticateGoogle() {
+            const clientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com'; // Replace with your Google OAuth client ID
+            const redirectUri = window.location.origin + window.location.pathname;
+            const scope = 'https://www.googleapis.com/auth/calendar.events';
+            
+            // Google OAuth flow
+            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+                `client_id=${clientId}` +
+                `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+                `&response_type=token` +
+                `&scope=${encodeURIComponent(scope)}`;
+            
+            // Open popup for authentication
+            const popup = window.open(authUrl, 'Google Auth', 'width=500,height=600');
+            
+            // Listen for token
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'google_token') {
+                    googleAccessToken = event.data.token;
+                    popup.close();
+                    showNotification('✅ Google authenticated! Click "Push to Google Calendar" again to sync events.');
+                }
+            });
+            
+            showNotification('🔐 Please sign in with your Google account in the popup window...');
+        }
+        
+        async function createGoogleEvent(event) {
+            const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${googleAccessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(event)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to create event in Google Calendar');
+            }
+            
+            return await response.json();
+        }
+        
+        // ========================================
+        // PROGRESS MODAL
+        // ========================================
+        
+        function showProgressModal(message) {
+            const modal = document.createElement('div');
+            modal.id = 'progressModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 3rem; border-radius: 1rem; text-align: center; min-width: 400px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+                    <div id="progressMessage" style="font-size: 1.25rem; font-weight: 600; color: #ffffff;">${message}</div>
+                    <div style="margin-top: 1.5rem; width: 100%; background: #E5E7EB; height: 8px; border-radius: 999px; overflow: hidden;">
+                        <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #0066FF, #6B46C1); transition: width 0.3s;"></div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function updateProgressModal(message) {
+            const messageEl = document.getElementById('progressMessage');
+            if (messageEl) messageEl.textContent = message;
+        }
+        
+        function closeProgressModal() {
+            const modal = document.getElementById('progressModal');
+            if (modal) modal.remove();
+        }
+        
+        function formatDateShort(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}`;
+        }
+        
+        function addDays(date, days) {
+            const result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}`;
+        }
+        
+        // ========================================
+        // TEAM TRACKING LOGIC
+        // ========================================
+        
+        // Generate dynamic dates based on current date
+        function getRecentStartDate(daysAgo) {
+            const today = new Date();
+            today.setDate(today.getDate() - daysAgo);
+            return today.toISOString().split('T')[0];
+        }
+        
+        const sampleTeam = [
+            { id: 1, name: 'Sarah Johnson', role: 'AE', startDate: getRecentStartDate(28), currentDay: 28, progress: 76, certs: 3, status: 'on-track' },
+            { id: 2, name: 'Michael Rodriguez', role: 'SDR', startDate: getRecentStartDate(28), currentDay: 28, progress: 71, certs: 2, status: 'on-track' },
+            { id: 3, name: 'Emily Chen', role: 'AE', startDate: getRecentStartDate(20), currentDay: 20, progress: 45, certs: 1, status: 'on-track' },
+            { id: 4, name: 'James Thompson', role: 'SE', startDate: getRecentStartDate(13), currentDay: 13, progress: 28, certs: 1, status: 'needs-attention' },
+            { id: 5, name: 'Maria Garcia', role: 'CSM', startDate: getRecentStartDate(49), currentDay: 49, progress: 82, certs: 4, status: 'on-track' },
+            { id: 6, name: 'David Lee', role: 'SDR', startDate: getRecentStartDate(28), currentDay: 28, progress: 45, certs: 1, status: 'at-risk' }
+        ];
+        
+        function renderTeamTable() {
+            const tbody = document.getElementById('teamTableBody');
+            tbody.innerHTML = '';
+            
+            sampleTeam.forEach(hire => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="user-cell">
+                            <div class="user-avatar">${getInitials(hire.name)}</div>
+                            <div>
+                                <div class="user-name">${hire.name}</div>
+                                <div class="user-role">${hire.role}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${hire.startDate}</td>
+                    <td>Day ${hire.currentDay}</td>
+                    <td>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-fill" style="width: ${hire.progress}%"></div>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6B7280;">${hire.progress}%</div>
+                    </td>
+                    <td>${hire.certs}/8</td>
+                    <td>
+                        <span class="status-badge status-${hire.status}">
+                            ${hire.status.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-icon" onclick="viewDetails(${hire.id})" title="View Details">👁️</button>
+                            <button class="btn btn-secondary btn-icon" onclick="sendEmail('${hire.name}')" title="Email">💬</button>
+                            <button class="btn btn-secondary btn-icon" onclick="deleteHire(${hire.id}, '${hire.name}')" title="Delete User" style="background: #FEE2E2; color: #DC2626;">🗑️</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Update stats
+            updateTeamStats();
+        }
+        
+        function deleteHire(hireId, hireName) {
+            // Confirm deletion
+            const confirmMsg = `⚠️ DELETE USER\n\nAre you sure you want to delete ${hireName}?\n\nThis will:\n• Remove them from the team\n• Delete all their progress data\n• Remove them from the calendar dropdown\n\nThis action cannot be undone.`;
+            
+            if (!confirm(confirmMsg)) {
+                return;
+            }
+            
+            // Find index
+            const index = sampleTeam.findIndex(h => h.id === hireId);
+            
+            if (index === -1) {
+                alert('Error: User not found');
+                return;
+            }
+            
+            // Remove from array
+            const deletedUser = sampleTeam.splice(index, 1)[0];
+            
+            // Update calendar dropdown
+            const calendarSelect = document.getElementById('calendarHireSelect');
+            if (calendarSelect) {
+                const option = calendarSelect.querySelector(`option[value="${hireId}"]`);
+                if (option) {
+                    option.remove();
+                }
+            }
+            
+            // Re-render table
+            renderTeamTable();
+            
+            // Show success message
+            showDeleteNotification(`✅ ${deletedUser.name} has been removed from the team.`);
+        }
+        
+        function showDeleteNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #EF4444, #DC2626);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        function updateTeamStats() {
+            const active = sampleTeam.length;
+            const onTrack = sampleTeam.filter(h => h.status === 'on-track').length;
+            const needsAttention = sampleTeam.filter(h => h.status === 'needs-attention').length;
+            const atRisk = sampleTeam.filter(h => h.status === 'at-risk').length;
+            
+            document.getElementById('teamActiveCount').textContent = active;
+            document.getElementById('teamOnTrack').textContent = onTrack;
+            document.getElementById('teamNeedsAttention').textContent = needsAttention;
+            document.getElementById('teamAtRisk').textContent = atRisk;
+        }
+        
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        }
+        
+        function viewDetails(hireId) {
+            const hire = sampleTeam.find(h => h.id === hireId);
+            alert(`Viewing details for ${hire.name}\n\nProgress: ${hire.progress}%\nCurrent Day: ${hire.currentDay}\nCertifications: ${hire.certs}/8\nStatus: ${hire.status}`);
+        }
+        
+        function sendEmail(name) {
+            window.location.href = `mailto:?subject=Check-in with ${name}`;
+        }
+        
+        function addNewHire() {
+            alert('Add New Hire form would open here');
+        }
+        
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            renderTeamTable();
+            addEditButtonsToTasks();
+            
+            // Add reset all button to program view
+            const programView = document.getElementById('programView');
+            if (programView && !document.getElementById('resetAllBtn')) {
+                const resetBtn = document.createElement('button');
+                resetBtn.id = 'resetAllBtn';
+                resetBtn.className = 'reset-all-btn';
+                resetBtn.innerHTML = '🔄 Reset All Edits';
+                resetBtn.onclick = resetAllCustomizations;
+                resetBtn.title = 'Reset all task customizations to original text';
+                programView.appendChild(resetBtn);
+            }
+        });
+    </script>
+
+
+</body></html>

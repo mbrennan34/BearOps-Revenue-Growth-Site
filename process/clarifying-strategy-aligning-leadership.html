@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarifying Strategy & Aligning the Leadership Team | BearOps Revenue Framework</title>
+    <style>
+        :root {
+            /* BearOps Design System */
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.96);
+            --border-color: rgba(148, 163, 184, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            
+            /* Purpose Theme - Gold */
+            --purpose-gold: #f59e0b;
+            --purpose-gold-soft: rgba(245, 158, 11, 0.16);
+            --purpose-gold-glow: rgba(245, 158, 11, 0.4);
+            
+            /* Status Colors */
+            --success-green: #22c55e;
+            --warning-yellow: #fbbf24;
+            --error-red: #ef4444;
+            --info-blue: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: radial-gradient(circle at top left, #1f2937 0%, #020617 55%, #000 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Dot Pattern Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--purpose-gold);
+            transform: translateX(-4px);
+        }
+
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 60px 50px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--purpose-gold-soft) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pillar-badge {
+            background: var(--purpose-gold-soft);
+            color: var(--purpose-gold);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--purpose-gold) 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .problem-statement {
+            background: rgba(239, 68, 68, 0.12);
+            border-left: 4px solid var(--error-red);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .problem-statement::before {
+            content: '⚠';
+            position: absolute;
+            top: 25px;
+            left: -15px;
+            background: var(--error-red);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .problem-statement strong {
+            color: var(--error-red);
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .problem-statement p {
+            color: #fecaca;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--purpose-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--purpose-gold);
+            margin-bottom: 5px;
+        }
+
+        .stat-subtext {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 14px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-button:hover {
+            background: var(--purpose-gold-soft);
+            color: var(--purpose-gold);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--purpose-gold) 0%, #fbbf24 100%);
+            color: #000;
+            box-shadow: 0 4px 12px var(--purpose-gold-glow);
+        }
+
+        .tab-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* Three Pillars Grid */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .pillar-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purpose-gold), #fbbf24);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--purpose-gold);
+            box-shadow: 0 12px 32px rgba(245, 158, 11, 0.25);
+        }
+
+        .pillar-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .pillar-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--purpose-gold);
+        }
+
+        .pillar-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .pillar-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pillar-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .pillar-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--purpose-gold);
+            font-weight: bold;
+        }
+
+        /* Framework Overview */
+        .framework-overview {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .framework-overview h3 {
+            color: var(--purpose-gold);
+            margin-top: 0;
+        }
+
+        /* Components Grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .component-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            border-color: var(--purpose-gold);
+            transform: translateY(-2px);
+        }
+
+        .component-number {
+            background: var(--purpose-gold);
+            color: #000;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .component-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .component-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Deliverables Section */
+        .deliverables-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .deliverables-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+
+        .deliverable-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .deliverable-item:hover {
+            border-color: var(--purpose-gold);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .deliverable-icon {
+            background: linear-gradient(135deg, var(--purpose-gold), #fbbf24);
+            color: #000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .deliverable-content {
+            flex: 1;
+        }
+
+        .deliverable-content strong {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .deliverable-content p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin: 40px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 22px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: linear-gradient(180deg, var(--purpose-gold), transparent);
+        }
+
+        .timeline-marker {
+            background: linear-gradient(135deg, var(--purpose-gold), #fbbf24);
+            color: #000;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 5px;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purpose-gold), #fbbf24);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purpose-gold);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--purpose-gold);
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle {
+            color: var(--purpose-gold);
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Assessment Quiz */
+        .assessment-quiz {
+            background: rgba(168, 85, 247, 0.08);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 15px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .quiz-option:hover {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--text-primary);
+        }
+
+        .quiz-option.selected {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.2);
+            color: #a855f7;
+        }
+
+        .quiz-result {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .quiz-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--purpose-gold);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .quiz-recommendation {
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Frame */
+        .cta-frame {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.08) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .cta-frame h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--purpose-gold) 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-frame p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .cta-frame-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .tab-nav {
+                flex-direction: column;
+            }
+
+            .pillars-grid,
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-link" onclick="history.back(); return false;">Back to BearOps Framework</a>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="pillar-badge">Component 1: Strategic Clarity & Leadership Alignment</div>
+                <h1>Clarifying Strategy & Aligning the Leadership Team</h1>
+                <p class="hero-subtitle">Define WHO you are, WHERE you're going, and HOW you'll win. Get leadership aligned on purpose, vision, and strategy before you scale.</p>
+                
+                                <div class="problem-statement">
+                    <strong>The Problem We Solve:</strong>
+                    <p>Most leadership teams have vague answers to fundamental questions: "Who are we for?" becomes "mid-market SaaS." "Why do we win?" becomes "great product." "Where are we going?" becomes "grow revenue." 
+That's not strategy...it's hope. Without brutal clarity, every deal feels custom, every hire is a debate, and scaling means chaos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-button active" onclick="switchTab('three-pillars', event)">
+                <span class="tab-icon"></span>
+                The 3 Pillars
+            </button>
+            <button class="tab-button" onclick="switchTab('components', event)">
+                <span class="tab-icon"></span>
+                9 Components
+            </button>
+            <button class="tab-button" onclick="switchTab('assessment', event)">
+                <span class="tab-icon">✓</span>
+                Self-Assessment
+            </button>
+            <button class="tab-button" onclick="switchTab('deliverables', event)">
+                <span class="tab-icon"></span>
+                What You Get
+            </button>
+            <button class="tab-button" onclick="switchTab('faq', event)">
+                <span class="tab-icon">💬</span>
+                FAQ
+            </button>
+        </div>
+
+        <!-- Three Pillars Tab -->
+        <div id="three-pillars" class="tab-content active">
+            <div class="card">
+                <h2>The 3 Strategic Pillars</h2>
+                <p>Every scaling company needs to answer three fundamental questions. We've organized the entire VTO framework around these pillars.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <!-- Pillar 1: WHO ARE WE -->
+                <div class="pillar-card">
+                    <span class="pillar-icon"></span>
+                    <h4>WHO ARE WE?</h4>
+                    <p>Define your company's identity and values before you scale. If your team can't articulate why you exist beyond making money, you'll struggle to attract talent and customers who believe what you believe.</p>
+                    
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">What We Build:</h5>
+                    <ul class="pillar-list">
+                        <li><strong>Core Purpose</strong> – Your "WHY" using Simon Sinek's Golden Circle</li>
+                        <li><strong>Core Values</strong> – 3-5 non-negotiable behaviors that define your culture</li>
+                    </ul>
+
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">AI Generators:</h5>
+                    <ul class="pillar-list">
+                        <li>AI Purpose Generator (3 statement options)</li>
+                        <li>AI Values Generator (suggested behaviors)</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2: WHERE ARE WE GOING -->
+                <div class="pillar-card">
+                    <span class="pillar-icon"></span>
+                    <h4>WHERE ARE WE GOING?</h4>
+                    <p>Create a vivid, measurable vision that cascades from 10 years to this quarter. Without this clarity, every team sets different goals and you lose alignment at scale.</p>
+                    
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">What We Build:</h5>
+                    <ul class="pillar-list">
+                        <li><strong>10-Year BHAG</strong> – Your mountain top target (Jim Collins framework)</li>
+                        <li><strong>3-Year Picture</strong> – Vivid vision of future state (Cameron Herold)</li>
+                        <li><strong>1-Year Goals</strong> – 3-7 SMART measurable objectives</li>
+                    </ul>
+
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">AI Generators:</h5>
+                    <ul class="pillar-list">
+                        <li>AI BHAG Generator (4 BHAG types)</li>
+                        <li>AI Picture Generator (vivid vision builder)</li>
+                        <li>AI Goals Generator (SMART goal suggestions)</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3: HOW DO WE WIN -->
+                <div class="pillar-card">
+                    <span class="pillar-icon"></span>
+                    <h4>HOW DO WE WIN?</h4>
+                    <p>Define your ICP, strategic bets, and competitive positioning. This is where most companies stay vague. "We sell to mid-market" isn't an ICP. "We're better" isn't positioning.</p>
+                    
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">What We Build:</h5>
+                    <ul class="pillar-list">
+                        <li><strong>ICP / Target Market</strong> – Who succeeds wildly with you</li>
+                        <li><strong>Strategic Bets</strong> – 3-5 major resource investments</li>
+                        <li><strong>Differentiation</strong> – Why choose you (April Dunford framework)</li>
+                    </ul>
+
+                    <h5 style="color: var(--purpose-gold); margin: 20px 0 12px; font-size: 1rem;">AI Generators:</h5>
+                    <ul class="pillar-list">
+                        <li>AI ICP Recommender (market analysis)</li>
+                        <li>AI Strategic Bets Generator (investment priorities)</li>
+                        <li>AI Positioning Advisor (competitive differentiation)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <h3>Why This Structure Works</h3>
+                <p>The 3 pillars create a logical flow for your leadership workshop:</p>
+                <ol style="margin: 20px 0; padding-left: 30px; color: var(--text-secondary); line-height: 2;">
+                    <li><strong>WHO</strong> establishes identity and culture (foundation)</li>
+                    <li><strong>WHERE</strong> sets the vision and goals (direction)</li>
+                    <li><strong>HOW</strong> defines the strategy to get there (execution)</li>
+                </ol>
+                <p>Each pillar builds on the previous one. You can't define strategic bets (HOW) until you know your 1-year goals (WHERE). You can't set meaningful goals until you know your purpose (WHO).</p>
+            </div>
+        </div>
+
+        <!-- 9 Components Tab -->
+        <div id="components" class="tab-content">
+            <div class="card">
+                <h2>All 9 Framework Components</h2>
+                <p>The complete workshop toolkit with interactive builders, AI generators, and proven frameworks.</p>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Pre-Workshop Foundation</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">1</div>
+                    <div class="deliverable-content">
+                        <strong>Pre-Assessment with AI Strategic Advisor</strong>
+                        <p>Company context, current state survey (VTO status, alignment, purpose clarity, values recognition), and top 3 strategic pain points. AI generates personalized recommendations.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">2</div>
+                    <div class="deliverable-content">
+                        <strong>Leadership Alignment Wall (Lucid Integration)</strong>
+                        <p>Facilitator scores alignment across 6 dimensions (Purpose, Values, BHAG, 3Y Picture, ICP, 1Y Goals). Visual heat map shows green/yellow/red. Auto-generates VTO agenda and executive summary.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Pillar 1: WHO ARE WE? 🎯</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">3</div>
+                    <div class="deliverable-content">
+                        <strong>Core Purpose Builder</strong>
+                        <p>Simon Sinek's Golden Circle framework, AI Purpose Generator (3 statement options), purpose templates (Impact/Transform/Legacy), validation checklist, and examples from Patagonia, Tesla, Stripe.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">4</div>
+                    <div class="deliverable-content">
+                        <strong>Core Values Workshop</strong>
+                        <p>AI Values Generator, 3-5 values builder with behaviors matrix, permission-to-play vs core distinction, and examples from Amazon, Netflix, Zappos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Pillar 2: WHERE ARE WE GOING? 🚀</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">5</div>
+                    <div class="deliverable-content">
+                        <strong>10-Year BHAG Builder</strong>
+                        <p>Jim Collins framework, 4 BHAG types (Target/Competitive/Role Model/Transformation), AI BHAG Generator, and examples from Microsoft, Amazon, SpaceX.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">6</div>
+                    <div class="deliverable-content">
+                        <strong>3-Year Picture (Vivid Vision)</strong>
+                        <p>Cameron Herold methodology, AI Picture Generator, picture builder (revenue, team, culture, customers), and "write as if it's already happened" narrative builder.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">7</div>
+                    <div class="deliverable-content">
+                        <strong>1-Year Goals Framework</strong>
+                        <p>SMART goals builder, AI Goals Generator, 3-7 measurable objectives with metrics/targets/owners, and examples of revenue, team, and product goals.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Pillar 3: HOW DO WE WIN? 🏆</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">8</div>
+                    <div class="deliverable-content">
+                        <strong>ICP / Target Market Definition</strong>
+                        <p>AI ICP Recommender, target market builder (industry, company size, geography, pain points), buying behavior analysis, and market segment selection.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">9</div>
+                    <div class="deliverable-content">
+                        <strong>Strategic Bets & Differentiation</strong>
+                        <p>AI Strategic Bets Generator for 3-5 major investments, April Dunford "Obviously Awesome" positioning framework, AI Positioning Advisor, and complete positioning statement builder with examples from Slack, Superhuman, Notion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Plus: Alignment & Communication Tools</h3>
+                <div class="components-grid">
+                    <div class="component-card">
+                        <div class="component-number">+</div>
+                        <h4>Strategic Frameworks Library</h4>
+                        <p>Reference guides for all methodologies used in the workshop</p>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-number">+</div>
+                        <h4>Alignment Dashboard</h4>
+                        <p>Track completion and alignment scores across all sections</p>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-number">+</div>
+                        <h4>Communication Planner</h4>
+                        <p>Templates for cascading your VTO to the entire team</p>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-number">+</div>
+                        <h4>Export & Next Steps</h4>
+                        <p>Generate final VTO document, board deck, and implementation roadmap</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Self-Assessment Tab -->
+        <div id="assessment" class="tab-content">
+            <div class="card">
+                <h2>Is Your Strategy Clear?</h2>
+                <p>Answer these 6 questions to evaluate your current strategic clarity. Be honest—this is for your benefit.</p>
+            </div>
+
+            <div class="assessment-quiz">
+                <div class="quiz-question">
+                    <h4>1. Can your sales team clearly articulate your ideal customer profile without looking it up?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q1', 3)">Yes, everyone can describe our ICP consistently</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q1', 2)">Somewhat, but there's variation in answers</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q1', 0)">No, or we don't have a defined ICP</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>2. Do you have a documented process for qualifying and disqualifying opportunities?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q2', 3)">Yes, with clear criteria that reps actually use</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q2', 2)">We have something, but it's not consistently applied</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q2', 0)">No formal qualification framework</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>3. When you lose deals, do you know specifically why you lost to competitors?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q3', 3)">Yes, we track loss reasons and have battle cards</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q3', 2)">Sometimes, but it's anecdotal</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q3', 0)">Not really, or we assume it's price</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>4. Is your win rate above 30% for qualified opportunities?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q4', 3)">Yes, consistently above 30%</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q4', 2)">We're between 20-30%</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q4', 0)">Below 20%, or we don't track this</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>5. Can you clearly explain your GTM motion and why it's right for your stage?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q5', 3)">Yes, we have a clear channel strategy with data</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q5', 2)">We're doing multiple things but not sure what works</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q5', 0)">We're throwing everything at the wall</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>6. Do your marketing and sales teams agree on who to target and messaging?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectOption(this, 'q6', 3)">Yes, strong alignment and shared language</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q6', 2)">Somewhat aligned, but gaps exist</div>
+                        <div class="quiz-option" onclick="selectOption(this, 'q6', 0)">No, or there's frequent tension</div>
+                    </div>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <div class="quiz-score" id="quizScore">0/18</div>
+                    <div class="quiz-recommendation" id="quizRecommendation"></div>
+                </div>
+
+                <button class="btn btn-primary" onclick="calculateScore()" style="width: 100%; margin-top: 30px;">
+                    Calculate My Score
+                </button>
+            </div>
+        </div>
+
+        <!-- Deliverables Tab -->
+        <div id="deliverables" class="tab-content">
+            <div class="card">
+                <h2>What You Walk Away With</h2>
+                <p>Unlike traditional consulting where you get a slide deck, we deliver working tools and documentation your team will actually use.</p>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Immediate Outputs (Day of Workshop)</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Complete Vision/Traction Organizer (VTO)</strong>
+                        <p>Your full strategic framework in one document: Purpose, Values, BHAG, 3Y Picture, 1Y Goals, ICP, Strategic Bets, and Positioning. Exported as PDF or interactive HTML.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Executive Summary for Board</strong>
+                        <p>Auto-generated 2-page summary of your strategic decisions with alignment heat map. Ready to present to investors or board.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Leadership Alignment Report</strong>
+                        <p>Where your team is green/yellow/red across all 6 dimensions. Identifies areas needing ongoing discussion or clarification.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>All Workshop Artifacts</strong>
+                        <p>Everything created during the workshop: Lucid board captures, AI-generated options, facilitator notes, team debates and decisions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deliverables-section">
+                <h3>Ongoing Access (Post-Workshop)</h3>
+                
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Interactive Framework Tool</strong>
+                        <p>Keep using the complete component1_2_complete.html tool. Update your VTO quarterly. Re-run alignment checks. Generate new AI suggestions as context changes.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Communication Templates</strong>
+                        <p>Email templates, town hall decks, and one-pagers to cascade your VTO to the entire company. Pre-written for different audiences (sales, marketing, product, CS).</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Implementation Roadmap</strong>
+                        <p>30/60/90 day plan for operationalizing your VTO. What decisions need to be made when. Who owns what. How to track progress.</p>
+                    </div>
+                </div>
+
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">✓</div>
+                    <div class="deliverable-content">
+                        <strong>Strategic Frameworks Library</strong>
+                        <p>All the methodologies we used (Golden Circle, BHAG types, Vivid Vision, April Dunford, etc.) as reference guides for your team.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.05)); border-color: rgba(245, 158, 11, 0.3);">
+                <h3 style="color: var(--purpose-gold);">The Real Value: Alignment</h3>
+                <p>The documents are just the output. The real value is getting your leadership team to actually agree on:</p>
+                <ul style="margin: 20px 0; padding-left: 30px; color: var(--text-secondary); line-height: 2;">
+                    <li>Who you're for and who you're NOT for (ICP)</li>
+                    <li>What you're betting on this year (Strategic Bets)</li>
+                    <li>Why customers should choose you (Positioning)</li>
+                    <li>Where you're going in 3-10 years (Vision)</li>
+                    <li>What you stand for beyond revenue (Purpose & Values)</li>
+                </ul>
+                <p>Without this alignment, you can't scale. Every hire requires founder approval. Every deal is custom. Every roadmap decision is a debate. You're stuck in founder-led sales and can't build systems.</p>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    Schedule a Workshop →
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="switchTab('faq'); return false;">
+                    Read FAQ
+                </a>
+            </div>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="faq" class="tab-content">
+            <div class="card">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about the Strategic Clarity & Leadership Alignment workshop.</p>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    How is this different from a normal strategy consulting engagement?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Traditional strategy consulting gives you a 60-slide deck after 8 weeks of interviews. We give you working tools, AI-powered generators, and completed frameworks in 1-2 days. You leave with artifacts you can actually use and update—not a PDF that sits in Google Drive.</p>
+                    <p>Plus, our focus is on leadership alignment, not just strategy definition. The best strategy in the world doesn't matter if your exec team isn't bought in.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Do we need to have our strategy figured out before the workshop?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No—that's the point. Most companies come to us with vague strategy ("sell to mid-market SaaS") and misaligned leadership (CEO thinks one thing, CRO thinks another). We use the workshop to create that clarity and alignment.</p>
+                    <p>The AI generators help accelerate decisions even if you're starting from scratch. That said, some pre-work helps: completing the Pre-Assessment and having 1-2 examples of customers who've succeeded wildly with you.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    How many people should attend the workshop?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Ideal: 3-7 people (founders + executive team). This usually includes: CEO, CRO/VP Sales, CMO/VP Marketing, CPO/VP Product, and sometimes CFO or Head of CS.</p>
+                    <p>Too small (just founders) and you miss critical perspectives. Too large (12+ people) and you can't make decisions. If you have a bigger team, do the workshop with executives and then do a separate alignment session with the broader leadership team.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    What if we already have a mission statement / values / strategy?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Perfect—we'll start there. The Pre-Assessment will show us where you have strong alignment (green) vs. weak alignment (yellow/red). We focus the workshop on the yellow/red areas.</p>
+                    <p>For example, if your purpose and values are solid but you're fuzzy on ICP and positioning, we'll spend 80% of time on Pillar 3 (HOW DO WE WIN) and just validate Pillar 1 (WHO ARE WE).</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Can we do this async / remote or does it need to be in-person?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>The workshop itself should be synchronous (live video or in-person). These are hard conversations—you need the debate, the whiteboarding, the "wait, what do you mean by that?" moments.</p>
+                    <p>That said, all the pre-work and follow-up can be async. The interactive tools work great remotely. And if you absolutely can't get everyone together, we can break it into 3-4 half-day sessions over a week.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    What's included in the AI generators?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We've built 8 Claude-powered advisors that accelerate decisions by suggesting options based on context:</p>
+                    <ul style="margin: 15px 0; padding-left: 25px; line-height: 1.8;">
+                        <li><strong>AI Purpose Generator:</strong> Generates 3 purpose statement options based on your problem/who/impact</li>
+                        <li><strong>AI Values Generator:</strong> Suggests 5-7 core values based on your industry and culture</li>
+                        <li><strong>AI BHAG Generator:</strong> Creates 10-year target options in 4 BHAG types</li>
+                        <li><strong>AI Picture Generator:</strong> Builds vivid 3-year vision narrative from your inputs</li>
+                        <li><strong>AI Goals Generator:</strong> Suggests SMART annual goals based on 3Y picture</li>
+                        <li><strong>AI ICP Recommender:</strong> Analyzes your wins and suggests ICP criteria</li>
+                        <li><strong>AI Strategic Bets Generator:</strong> Recommends 3-5 investment priorities</li>
+                        <li><strong>AI Positioning Advisor:</strong> Generates competitive positioning using April Dunford framework</li>
+                    </ul>
+                    <p>Think of these as having a strategic advisor in the room who's seen 100 companies do this before. The AI doesn't make decisions—you do—but it dramatically speeds up the process.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    How much does this cost?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our Strategic Clarity & Leadership Alignment workshop is $15K-25K depending on:</p>
+                    <ul style="margin: 15px 0; padding-left: 25px; line-height: 1.8;">
+                        <li>Company size and complexity</li>
+                        <li>Number of participants</li>
+                        <li>1-day intensive vs 2-day comprehensive format</li>
+                        <li>Amount of pre-work required</li>
+                        <li>In-person vs remote</li>
+                    </ul>
+                    <p>This includes: facilitation, all interactive tools, AI generator access, follow-up alignment check-ins, and ongoing tool access for updates.</p>
+                    <p>For context: traditional strategy consulting charges $50K-150K for similar work over 6-8 weeks. We deliver better outputs in 1-2 days because we use AI and interactive tools instead of PowerPoint.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    What if we realize we need to change our strategy in 6 months?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>That's normal—and exactly why we give you the interactive tools, not just a static document. Your VTO should be reviewed quarterly and updated as you learn.</p>
+                    <p>Some things shouldn't change (Purpose, Values, 10Y BHAG). Other things should evolve (1Y Goals, Strategic Bets, even ICP as you find product-market fit).</p>
+                    <p>You keep full access to the framework tools. Update your inputs, re-run alignment checks, use the AI generators again with new context. No need to pay for another workshop unless you want facilitation help.</p>
+                </div>
+            </div>
+
+            <div class="cta-buttons" style="margin-top: 40px;">
+                <a href="#" class="btn btn-primary">
+                    Schedule a Call
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="switchTab('three-pillars'); return false;">
+                    ← Back to 3 Pillars
+                </a>
+            </div>
+        </div>
+
+        <!-- CTA Frame -->
+        <div class="cta-frame">
+            <h2>Ready to Define Your Revenue Strategy?</h2>
+            <p>Let's get your leadership team aligned on WHO you're for, WHERE you're going, and HOW you'll win.</p>
+            
+            <div class="cta-frame-buttons">
+                <a href="#" class="btn btn-primary" style="font-size: 1.1rem; padding: 18px 36px;">
+                    <span>📅</span> Book Discovery Call
+                </a>
+                <a href="component 1- strategic clarity & leadership alignment _ bearops.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 18px 36px;" target="_blank">
+                    <span></span> Open Strategic Clarity Tool
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Quiz answers storage
+        let quizAnswers = {
+            q1: null,
+            q2: null,
+            q3: null,
+            q4: null,
+            q5: null,
+            q6: null
+        };
+
+        function selectOption(element, question, value) {
+            // Remove selected class from all options in this question
+            element.parentElement.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Store answer
+            quizAnswers[question] = value;
+        }
+
+        function calculateScore() {
+            // Check if all questions answered
+            const allAnswered = Object.values(quizAnswers).every(val => val !== null);
+
+            if (!allAnswered) {
+                alert('Please answer all questions before calculating your score.');
+                return;
+            }
+
+            // Calculate total score
+            const totalScore = Object.values(quizAnswers).reduce((sum, val) => sum + val, 0);
+            const maxScore = 18;
+
+            // Display result
+            const resultDiv = document.getElementById('quizResult');
+            const scoreDiv = document.getElementById('quizScore');
+            const recommendationDiv = document.getElementById('quizRecommendation');
+
+            scoreDiv.textContent = `${totalScore}/${maxScore}`;
+
+            let recommendation = '';
+            if (totalScore >= 15) {
+                recommendation = '🎉 Strong Strategic Clarity! You have most of the fundamentals in place. Consider this engagement to refine your frameworks and ensure you\'re optimizing for your next growth stage.';
+            } else if (totalScore >= 9) {
+                recommendation = '⚠️ Moderate Clarity with Gaps. You have some foundation but significant blind spots that are likely costing you deals and efficiency. This engagement would deliver immediate ROI by closing those gaps.';
+            } else {
+                recommendation = '🚨 Critical Need for Strategic Clarity. Your current approach is likely causing missed targets, team confusion, and wasted resources. This engagement should be your top priority—the foundation for everything else.';
+            }
+
+            recommendationDiv.textContent = recommendation;
+            resultDiv.classList.add('show');
+
+            // Scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function switchTab(tabId, event) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Add active class to clicked button (if event provided)
+            if (event) {
+                const button = event.target.closest('.tab-button');
+                if (button) {
+                    button.classList.add('active');
+                }
+            } else {
+                // If no event (called from link), find button by matching tab
+                const buttons = document.querySelectorAll('.tab-button');
+                buttons.forEach((button, index) => {
+                    const buttonTab = ['three-pillars', 'components', 'assessment', 'deliverables', 'faq'][index];
+                    if (buttonTab === tabId) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+        }
+
+        // Auto-open first FAQ item
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFAQ = document.querySelector('.faq-item');
+            if (firstFAQ) {
+                firstFAQ.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

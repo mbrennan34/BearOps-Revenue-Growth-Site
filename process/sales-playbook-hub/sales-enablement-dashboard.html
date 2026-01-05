@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Enablement Platform - BearOps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: rgba(10, 22, 40, 0.9);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #a5b4fc;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #63b3ed 0%, #a5b4fc 30%, #fbb6ce 70%, #f6e05e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #cbd5f5;
+            max-width: 750px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-bar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(99, 179, 237, 0.18), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .stats-bar:hover::before {
+            opacity: 1;
+        }
+
+        .stat {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #63b3ed 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #cbd5f5;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .module-card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .module-card.blue {
+            border-color: rgba(99, 179, 237, 0.6);
+        }
+
+        .module-card.blue::before {
+            background: radial-gradient(circle at top left, rgba(99, 179, 237, 0.18), transparent 70%);
+        }
+
+        .module-card.green {
+            border-color: rgba(72, 187, 120, 0.6);
+        }
+
+        .module-card.green::before {
+            background: radial-gradient(circle at top left, rgba(72, 187, 120, 0.18), transparent 70%);
+        }
+
+        .module-card.yellow {
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+
+        .module-card.yellow::before {
+            background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), transparent 70%);
+        }
+
+        .module-card.pink {
+            border-color: rgba(251, 182, 206, 0.6);
+        }
+
+        .module-card.pink::before {
+            background: radial-gradient(circle at top left, rgba(251, 113, 113, 0.18), transparent 70%);
+        }
+
+        .module-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .module-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(15, 23, 42, 0.9);
+            flex-shrink: 0;
+        }
+
+        .module-card.blue .module-icon {
+            background: radial-gradient(circle at 30% 20%, #f9a8d4 0%, #fb7185 35%, #3b82f6 100%);
+            color: #0b1120;
+        }
+
+        .module-card.green .module-icon {
+            background: radial-gradient(circle at 30% 20%, #e5e7eb 0%, #c4b5fd 40%, #4ade80 100%);
+            color: #020617;
+        }
+
+        .module-card.yellow .module-icon {
+            background: radial-gradient(circle at 30% 20%, #fed7aa 0%, #fb923c 35%, #facc15 100%);
+            color: #0b1120;
+        }
+
+        .module-card.pink .module-icon {
+            background: radial-gradient(circle at 30% 20%, #fbbf24 0%, #f97316 35%, #ec4899 100%);
+            color: #0b1120;
+        }
+
+        .module-title-group h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .module-card.blue h3 {
+            color: #63b3ed;
+        }
+
+        .module-card.green h3 {
+            color: #48bb78;
+        }
+
+        .module-card.yellow h3 {
+            color: #fbbf24;
+        }
+
+        .module-card.pink h3 {
+            color: #fb7185;
+        }
+
+        .module-subtitle {
+            color: rgba(203, 213, 245, 0.7);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .module-description {
+            color: #cbd5f5;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .module-features li {
+            padding: 6px 0;
+            color: #cbd5f5;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-features li::before {
+            content: '→';
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .module-card.blue .module-features li::before {
+            color: #63b3ed;
+        }
+
+        .module-card.green .module-features li::before {
+            color: #48bb78;
+        }
+
+        .module-card.yellow .module-features li::before {
+            color: #fbbf24;
+        }
+
+        .module-card.pink .module-features li::before {
+            color: #fb7185;
+        }
+
+        .module-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .module-card.blue .module-cta {
+            color: #63b3ed;
+            border-color: rgba(99, 179, 237, 0.6);
+            background: rgba(99, 179, 237, 0.1);
+        }
+
+        .module-card.green .module-cta {
+            color: #48bb78;
+            border-color: rgba(72, 187, 120, 0.6);
+            background: rgba(72, 187, 120, 0.1);
+        }
+
+        .module-card.yellow .module-cta {
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.6);
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .module-card.pink .module-cta {
+            color: #fb7185;
+            border-color: rgba(251, 113, 113, 0.6);
+            background: rgba(251, 113, 113, 0.1);
+        }
+
+        .module-cta:hover {
+            transform: translateX(4px);
+            background: rgba(99, 179, 237, 0.2);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+            border: 1px solid;
+        }
+
+        .badge-essential {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+            border-color: rgba(72, 187, 120, 0.6);
+        }
+
+        .badge-advanced {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+
+        .badge-new {
+            background: rgba(251, 113, 113, 0.2);
+            color: #fb7185;
+            border-color: rgba(251, 113, 113, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #cbd5f5;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #a5b4fc;
+            letter-spacing: 0.08em;
+        }
+
+        .powered-by {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .stat-value {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">BearOps</div>
+            <h1 class="title">Sales Enablement Platform</h1>
+            <p class="subtitle">Build scalable revenue infrastructure before scaling teams with Interactive saleas tools and frameworks.</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-value" id="moduleCount">7</span>
+                <span class="stat-label">Interactive Modules</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">90</span>
+                <span class="stat-label">Day Framework</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="playbookCount">5+</span>
+                <span class="stat-label">Methodologies & Playbooks</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">100%</span>
+                <span class="stat-label">Customizable</span>
+            </div>
+        </div>
+
+        <div class="modules-grid">
+            <div class="module-card blue" onclick="window.location.href='onboarding-timeline.html'">
+                <span class="status-badge badge-essential">Essential</span>
+                <div class="module-header">
+                    <div class="module-icon"></div>
+                    <div class="module-title-group">
+                        <h3>Training & Onboarding</h3>
+                        <p class="module-subtitle">90-Day Framework</p>
+                    </div>
+                </div>
+                <p class="module-description">Interactive 90-day onboarding timeline with progress tracking, certifications, and role-specific learning paths.</p>
+                <ul class="module-features">
+                    <li>30/60/90 day milestone tracking</li>
+                    <li>Role-based learning paths</li>
+                    <li>Certification progress</li>
+                    <li>Interactive checklists</li>
+                </ul>
+                <a href="onboarding-timeline.html" class="module-cta">Launch Module →</a>
+            </div>
+
+            <div class="module-card green" onclick="window.location.href='sales-playbooks.html'">
+                <span class="status-badge badge-essential">Essential</span>
+                <div class="module-header">
+                    <div class="module-icon">📖</div>
+                    <div class="module-title-group">
+                        <h3>Sales Playbooks</h3>
+                        <p class="module-subtitle">Methodologies</p>
+                    </div>
+                </div>
+                <p class="module-description">MEDDIC,Miller Heiman qualification frameworks with interactive forms and deal scoring.</p>
+                <ul class="module-features">
+                    <li>Multiple methodology support</li>
+                    <li>Deal qualification scoring</li>
+                    <li>ICP persona mapping</li>
+                    <li>Objection handling library</li>
+                </ul>
+                <a href="sales-playbooks.html" class="module-cta">Launch Module →</a>
+            </div>
+
+            <div class="module-card green" onclick="window.location.href='positioning-messaging.html'">
+                <span class="status-badge badge-new">New</span>
+                <div class="module-header">
+                    <div class="module-icon">💬</div>
+                    <div class="module-title-group">
+                        <h3>Positioning & Messaging</h3>
+                        <p class="module-subtitle">Value Props</p>
+                    </div>
+                </div>
+                <p class="module-description">Generate value propositions, positioning statements, and trigger-based messaging for different personas.</p>
+                <ul class="module-features">
+                    <li>Persona-based messaging</li>
+                    <li>Trigger event library</li>
+                    <li>Value prop builder</li>
+                    <li>Competitive positioning</li>
+                </ul>
+                <a href="../../playbook/ai-triggers-com.html" class="module-cta">Launch Module →</a>
+            </div>
+
+            <div class="module-card yellow" onclick="window.location.href='team-alignment.html'">
+                <span class="status-badge badge-essential">Essential</span>
+                <div class="module-header">
+                    <div class="module-icon"></div>
+                    <div class="module-title-group">
+                        <h3>Team Framework Mapper</h3>
+                        <p class="module-subtitle">Enhanced Coaching</p>
+                    </div>
+                </div>
+                <p class="module-description">Comprehensive team management with AI-powered coaching recommendations, readiness tracking, and personality-based development plans.</p>
+                <ul class="module-features">
+                    <li>Individual competency tracking with progress monitoring</li>
+                    <li>AI coaching assistant</li>
+                    <li>1:1 Management & Development Planning</li>
+                    <li>Performance analytics</li>
+                </ul>
+                <a href="team-alignment.html" class="module-cta">Launch Module →</a>
+            </div>
+
+            <div class="module-card pink" onclick="window.location.href='discovery-framework.html'">
+                <span class="status-badge badge-advanced">Advanced</span>
+                <div class="module-header">
+                    <div class="module-icon"></div>
+                    <div class="module-title-group">
+                        <h3>Discovery Framework</h3>
+                        <p class="module-subtitle">Command of the Message Method</p>
+                    </div>
+                </div>
+                <p class="module-description">Command of Message methodology with guided question flows and automatic insights generation.</p>
+                <ul class="module-features">
+                    <li>Core Business Value Drivers</li>
+                    <li>Smart Discovery question prompts</li>
+                    <li>Automated MEDDICC build</li>
+                </ul>
+                <a href="com-discovery.html" class="module-cta">Launch Module →</a>
+            </div>
+    
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">BEAROPS</div>
+        <p>Building scalable revenue infrastructure for Series A/B funded startups</p>
+        <p class="powered-by">Empowering sales teams with operational discipline and proven frameworks</p>
+    </footer>
+
+    <script>
+        // Auto-count modules and update stats
+        function updateStats() {
+            // Count all module cards
+            const moduleCount = document.querySelectorAll('.module-card').length;
+            document.getElementById('moduleCount').textContent = moduleCount;
+            
+            // Count unique methodologies/playbooks by analyzing module titles and descriptions
+            const playbookKeywords = [
+                'MEDDIC', 'SPICED', 'BANT', '5-Phase', 'Value Prop',
+                'Demo', 'Discovery', 'Positioning', 'Coaching', 'Framework'
+            ];
+            
+            const modules = document.querySelectorAll('.module-card');
+            const foundPlaybooks = new Set();
+            
+            modules.forEach(module => {
+                const text = module.textContent;
+                playbookKeywords.forEach(keyword => {
+                    if (text.includes(keyword)) {
+                        foundPlaybooks.add(keyword);
+                    }
+                });
+            });
+            
+            const playbookCount = foundPlaybooks.size;
+            document.getElementById('playbookCount').textContent = playbookCount + '+';
+        }
+        
+        // Run on page load
+        updateStats();
+        
+        // Module card click handling
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'A') {
+                    const link = this.querySelector('.module-cta');
+                    if (link) window.location.href = link.getAttribute('href');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

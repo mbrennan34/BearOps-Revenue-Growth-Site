@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BearOps Outbound Engine OS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050b16;
+            --bg-alt: #020617;
+            --card-bg: rgba(15, 23, 42, 0.96);
+            --text: #f9fafb;
+            --muted: #94a3b8;
+            --border-subtle: rgba(148, 163, 184, 0.4);
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.18);
+            --accent-2: #22c55e;
+            --accent-2-soft: rgba(34, 197, 94, 0.16);
+            --danger: #f97373;
+            --shadow-card: 0 24px 60px rgba(15, 23, 42, 0.9);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: radial-gradient(circle at top left, #1f2937 0%, #020617 55%, #000 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .page-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 18px 60px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 40%, #1d4ed8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 14px 36px rgba(34, 197, 94, 0.5);
+        }
+
+        .brand-text h1 {
+            font-size: 1.35rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .brand-text p {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-link {
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 6px 12px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: rgba(15, 23, 42, 0.85);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            border-color: var(--accent);
+            background: rgba(37, 99, 235, 0.2);
+        }
+
+        .hero {
+            margin-bottom: 26px;
+            padding: 24px 20px 26px;
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at top left, rgba(96, 165, 250, 0.35), transparent 55%),
+                radial-gradient(circle at top right, rgba(34, 197, 94, 0.28), transparent 60%),
+                linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.7) 0, transparent 0.9px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 24px;
+            align-items: center;
+        }
+
+        .hero-kicker {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #bfdbfe;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 1.9rem;
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 span {
+            background: linear-gradient(135deg, #a855f7, #6366f1, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 0.95rem;
+            color: var(--muted);
+            max-width: 540px;
+            margin-bottom: 18px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.75rem;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            border-radius: 999px;
+            padding: 5px 9px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.8);
+            color: #e5e7eb;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge span {
+            font-size: 0.9em;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 11px 20px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #22c55e);
+            color: #f9fafb;
+            box-shadow: 0 16px 36px rgba(37, 99, 235, 0.6);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.75);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.9);
+            color: #e5e7eb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 64, 175, 0.5);
+            border-color: #6366f1;
+        }
+
+        .hero-metrics {
+            border-radius: 16px;
+            padding: 14px 14px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 0.78rem;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: var(--muted);
+        }
+
+        .metric-row strong {
+            color: #e5e7eb;
+        }
+
+        .metric-footnote {
+            font-size: 0.72rem;
+            color: rgba(148, 163, 184, 0.9);
+            margin-top: 6px;
+        }
+.accepted-applied-panel {
+    margin-top: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    padding: 12px 14px 13px;
+    background:
+        radial-gradient(circle at top left, var(--accent-soft), transparent 55%),
+        rgba(15, 23, 42, 0.98);
+    position: relative;
+    overflow: hidden;
+}
+
+.accepted-applied-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background: linear-gradient(135deg, rgba(148, 163, 184, 0.7), transparent 60%);
+    pointer-events: none;
+}
+
+.accepted-applied-inner {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8rem;
+}
+
+.accepted-applied-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e5e7eb;
+    margin-bottom: 6px;
+}
+
+.accepted-applied-pill span {
+    font-size: 0.9rem;
+}
+
+.accepted-applied-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    margin-bottom: 4px;
+}
+
+.accepted-applied-sub {
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.accepted-applied-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.accepted-applied-col-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(226, 232, 240, 0.9);
+    margin-bottom: 4px;
+}
+
+.accepted-applied-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--muted);
+}
+
+.accepted-applied-item {
+    display: flex;
+    gap: 4px;
+}
+
+.accepted-applied-bullet {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+.accepted-applied-footer {
+    margin-top: 8px;
+    font-size: 0.76rem;
+    color: var(--muted);
+    border-top: 1px dashed rgba(148, 163, 184, 0.5);
+    padding-top: 6px;
+}
+
+@media (max-width: 768px) {
+    .accepted-applied-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        .section {
+            margin-bottom: 26px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .section-header h3 {
+            font-size: 1.05rem;
+        }
+
+        .section-header p {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .pill-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #9ca3af;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        /* 4-column grid for modules section */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--border-subtle);
+            padding: 16px 16px 18px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.7), transparent 60%);
+        }
+
+        .card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-kicker {
+            font-size: 0.75rem;
+            color: #bfdbfe;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .card-title h4 {
+            font-size: 0.98rem;
+        }
+
+        .card-title span {
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .card ul {
+            margin-left: 18px;
+            font-size: 0.8rem;
+            color: #cbd5f5;
+        }
+
+        .card ul li {
+            margin-bottom: 4px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.73rem;
+            padding: 3px 8px;
+            color: #e5e7eb;
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .tag.accent {
+            border-color: #22c55e;
+            background: var(--accent-2-soft);
+            color: #bbf7d0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            font-size: 0.82rem;
+        }
+
+        .step-card {
+            border-radius: 14px;
+            border: 1px dashed rgba(148, 163, 184, 0.6);
+            padding: 10px 11px;
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .step-number {
+            font-size: 0.78rem;
+            color: #a5b4fc;
+            margin-bottom: 4px;
+        }
+
+        .step-title {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .principles {
+            display: grid;
+            grid-template-columns: 2.2fr 1.8fr;
+            gap: 18px;
+        }
+
+        .principles ul {
+            margin-left: 18px;
+            font-size: 0.82rem;
+            color: #cbd5f5;
+        }
+
+        .checklist {
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            padding: 12px 14px;
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.82rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .checklist-item span {
+            color: #22c55e;
+            margin-top: 2px;
+        }
+
+        footer {
+            margin-top: 24px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(31, 41, 55, 0.9);
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        footer a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #e5e7eb;
+        }
+
+        @media (max-width: 960px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+            .hero-metrics {
+                order: -1;
+            }
+            .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .steps-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .principles {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav {
+                justify-content: flex-start;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <div class="brand-text">
+                <h1>Outbound Engine OS</h1>
+                <p>Persona → Trigger → Sequence → Call &nbsp;·&nbsp; All in one place</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html" class="nav-link">Home</a>
+            <a href="./process/sales-playbook-hub/sales-playbook.html" class="nav-link">Playbook Hub</a>
+            <a href="./triggers-com.html" class="nav-link">Discovery &amp; Messaging Workspace</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <div class="hero-kicker">The full outbound stack in one place</div>
+                <h2>
+                    Persona → <span>Trigger</span> → Sequence → Call
+                </h2>
+                <p class="hero-sub">
+                    Discovery frameworks, messaging sequences, and live call support—all anchored
+                    to the same Persona + Trigger model. Now with AI-powered research.
+                </p>
+                <div class="hero-badges">
+                    <div class="badge"><span>🧠</span>Discovery</div>
+                    <div class="badge"><span>✉️</span>Messaging</div>
+                    <div class="badge"><span>☎️</span>Calls</div>
+                    <div class="badge"><span>🤖</span>AI Research</div>
+                </div>
+                <div class="hero-ctas">
+                    <a href="ai-triggers-com.html" class="btn btn-primary">
+                        🚀 Launch AI Module
+                    </a>
+                    <a href="./triggers-com.html" class="btn btn-secondary">
+                        Manual Workspace
+                    </a>
+                </div>
+            </div>
+            <div class="hero-metrics">
+                <div class="metric-row">
+                    <span>AI Research Time:</span>
+                    <strong>5 minutes</strong>
+                </div>
+                <div class="metric-row">
+                    <span>Discovery Generation:</span>
+                    <strong>2 minutes</strong>
+                </div>
+                <div class="metric-row">
+                    <span>Messaging Scripts:</span>
+                    <strong>1 minute</strong>
+                </div>
+                <div class="metric-row">
+                    <span>Total Setup:</span>
+                    <strong>~8 minutes</strong>
+                </div>
+                <div class="metric-footnote">
+                    vs. 2+ hours manual creation
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ICP FRAMEWORK -->
+    <section class="section">
+        <div class="section-header">
+
+            <div>
+                <div class="pill-label">Ideal Customer Profile</div>
+                <h3>Who this Outbound Engine is built for</h3>
+            </div>
+            <p>Anchor personas &amp; triggers to a clear ICP before you write a single email.</p>
+        </div>
+
+        <!-- ICP Snapshot -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="card-inner">
+                <div class="card-kicker">ICP Snapshot</div>
+                <div class="card-title">
+                    <span>🎯</span>
+                    <h4>Working definition</h4>
+                </div>
+                <p style="font-size:0.85rem; color:var(--muted);">
+                    <strong>[Your ICP here]</strong> – e.g. “UK&amp;I-based, 1,000+ FTE, regulated / public-interest
+                    organisations with formal buying committees, where a clear business case and measurable revenue
+                    impact are required to secure budget in the next 6–18 months.”
+                </p>
+                <div class="tag-row">
+                    <span class="tag accent">Tier 1 / Tier 2 / Tier 3</span>
+                    <span class="tag">Use-case aligned</span>
+                    <span class="tag">Budget &amp; timing fit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ICP Detail Cards -->
+        <div class="grid-3">
+            <!-- Firmographics -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">01 · Firmographics</div>
+                    <div class="card-title">
+                        <span>🏢</span>
+                        <h4>Company fit</h4>
+                    </div>
+                    <p>
+                        Define which <strong>types of organisations</strong> your outbound motion should focus on.
+                        This stops reps chasing logos that can’t or won’t buy.
+                    </p>
+                    <ul>
+                        <li>Industry / verticals you win in</li>
+                        <li>Employee bands (e.g. 200–1,000 / 1,000+)</li>
+                        <li>Regions you can sell into</li>
+                        <li>Revenue / funding thresholds</li>
+                        <li>Ownership: listed, PE-backed, private, public sector</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Must-have</span>
+                        <span class="tag">Nice-to-have</span>
+                        <span class="tag">Out of scope</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Buying Team & Tech -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">02 · Buying team &amp; tech</div>
+                    <div class="card-title">
+                        <span>🧑‍💼</span>
+                        <h4>Personas &amp; stack</h4>
+                    </div>
+                    <p>
+                        Document <strong>who sits in the deal</strong> and the <strong>tools they already use</strong>.
+                        This is the bridge between ICP and your Persona &amp; Trigger model.
+                    </p>
+                    <ul>
+                        <li>Economic buyers (e.g. CRO, COO, GC)</li>
+                        <li>Champions / power users</li>
+                        <li>Key blockers (IT, security, finance)</li>
+                        <li>Current tools / platforms you integrate or replace</li>
+                        <li>Tech stances (cloud-only, regulated, etc.)</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Primary personas</span>
+                        <span class="tag">Influencers</span>
+                        <span class="tag">Blockers</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Triggers & Disqualifiers -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">03 · Triggers &amp; disqualifiers</div>
+                    <div class="card-title">
+                        <span>⚡</span>
+                        <h4>When to lean in (or walk away)</h4>
+                    </div>
+                    <p>
+                        Make explicit which <strong>events</strong> make an account high priority – and which
+                        signals mean you should <strong>disqualify early</strong>.
+                    </p>
+                    <ul>
+                        <li>Positive triggers: new funding, new exec, new regulation, expansion, M&amp;A</li>
+                        <li>Negative triggers: no budget, no problem owner, DIY mindset</li>
+                        <li>Must-have conditions (e.g. minimum ARR, tech fit)</li>
+                        <li>Red flags that kill deals 9 times out of 10</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Trigger-led</span>
+                        <span class="tag">Scored in CRM</span>
+                        <span class="tag">Shared with SDRs</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- 4 PILLARS -->
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <div class="pill-label">Four core workspaces</div>
+                <h3>The Outbound Engine OS, inside your browser</h3>
+            </div>
+            <p>Start with AI (Module 01), then refine manually if needed.</p>
+        </div>
+
+        <div class="grid-4">
+            <!-- AI Module - NOW FIRST -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">Module 01</div>
+                    <div class="card-title">
+                        <span>🤖</span>
+                        <h4>AI Research &amp; Discovery</h4>
+                    </div>
+                    <p>
+                        Research accounts in 5 minutes, generate complete 6-pillar discovery,
+                        and create personalized outreach aligned with YOUR solutions.
+                    </p>
+                    <ul>
+                        <li>AI research prompts for company + persona intel.</li>
+                        <li>Auto-populate all 6 discovery pillars.</li>
+                        <li>Generate messaging &amp; scripts instantly.</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">5 min research</span>
+                        <span class="tag">Auto-generation</span>
+                        <span class="tag">10x faster</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Discovery Builder - NOW SECOND -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">Module 02</div>
+                    <div class="card-title">
+                        <span>🧠</span>
+                        <h4>Discovery Builder</h4>
+                    </div>
+                    <p>
+                        Capture how each persona thinks, what each trigger means for them,
+                        and how you'll run the conversation – before you write a single email.
+                    </p>
+                    <ul>
+                        <li>6-step discovery flow per persona + trigger.</li>
+                        <li>Current State → Problems → Impact → Root Cause → Criteria → Outcomes.</li>
+                        <li>Personalisation matrix to prioritise buying signals.</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Persona-led</span>
+                        <span class="tag">Trigger aware</span>
+                        <span class="tag">Coaching-ready</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Messaging - NOW THIRD -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">Module 03</div>
+                    <div class="card-title">
+                        <span>✉️</span>
+                        <h4>Messaging Library &amp; Sequences</h4>
+                    </div>
+                    <p>
+                        Design reusable templates mapped to personas and triggers, then
+                        view them as a full Outreach-style sequence from Step 1 to Breakup.
+                    </p>
+                    <ul>
+                        <li>Filter by Persona, Trigger, Channel / Step.</li>
+                        <li>Build 7–10 touch multi-channel cadences.</li>
+                        <li>Same library powers email, LinkedIn and call prep.</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Outreach-ready</span>
+                        <span class="tag">7–10 touch cadence</span>
+                        <span class="tag">Email · LI · Call</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Calls - NOW FOURTH -->
+            <article class="card">
+                <div class="card-inner">
+                    <div class="card-kicker">Module 04</div>
+                    <div class="card-title">
+                        <span>☎️</span>
+                        <h4>Call Prospecting Hub</h4>
+                    </div>
+                    <p>
+                        Run live calls from a dedicated call view, while staying anchored to
+                        the same personas, triggers and messaging themes.
+                    </p>
+                    <ul>
+                        <li>Command of the first 30 seconds.</li>
+                        <li>Openers reference the same triggers used in your sequences.</li>
+                        <li>Perfect for coaching SDRs and founders on live calls.</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag accent">Live call support</span>
+                        <span class="tag">Aligned to messaging</span>
+                        <span class="tag">OS, not just scripts</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <div class="pill-label">Four steps</div>
+                <h3>How it all connects</h3>
+            </div>
+            <p>AI-first workflow with manual control when needed</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">01 – Research</div>
+                <div class="step-title">🤖 AI Account Intel</div>
+                <div style="color: var(--muted);">
+                    Generate company + persona research in 5 min using AI prompts
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">02 – Discovery</div>
+                <div class="step-title">📊 Auto-Generate Framework</div>
+                <div style="color: var(--muted);">
+                    6 pillars populated automatically from research (or manual in Module 02)
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">03 – Messaging</div>
+                <div class="step-title">✉️ Create Sequences</div>
+                <div style="color: var(--muted);">
+                    AI generates emails + scripts, or build custom in Module 03
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">04 – Execute</div>
+                <div class="step-title">☎️ Run Calls</div>
+                <div style="color: var(--muted);">
+                    Use Module 04 with AI-generated scripts or your custom messaging
+                </div>
+            </div>
+        </div>
+    </section>
+<Section>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <span>✔</span>
+                    <div>Start with Module 01 (AI) for speed</div>
+                </div>
+                <div class="checklist-item">
+                    <span>✔</span>
+                    <div>Use Modules 02-03 for deep customization</div>
+                </div>
+                <div class="checklist-item">
+                    <span>✔</span>
+                    <div>Module 04 for live call execution</div>
+                </div>
+                <div class="checklist-item">
+                    <span>✔</span>
+                    <div>Sandler + SPIN + Challenger frameworks built-in</div>
+                </div>
+                <div class="checklist-item">
+                    <span>✔</span>
+                    <div>Copy to Outreach/Salesloft when ready</div>
+                </div>
+                <p style="margin-top:8px; color:var(--muted);">
+                    When all boxes are checked, you have a working outbound engine you can scale, coach and improve.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY THIS WORKS -->
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <div class="pill-label">Philosophy</div>
+                <h3>Why this approach works</h3>
+            </div>
+        </div>
+
+        <div class="principles">
+            <div>
+                <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 12px;">
+                    Every outbound motion starts with the same question: <em>"Who is the persona?"</em>
+                    and <em>"What trigger makes them care right now?"</em>
+                </p>
+                <ul>
+                    <li>AI generates baseline research, discovery, and messaging in 8 minutes</li>
+                    <li>Manual modules (02-03) let you refine and customize as needed</li>
+                    <li>Discovery frameworks are written as if you already have the meeting</li>
+                    <li>Templates are trigger narratives, not generic best practices</li>
+                    <li>Calls, LinkedIn, and emails all reuse the same core messaging</li>
+                </ul>
+ <!-- 🔽 INSERT NEW DESIGN BLOCK HERE -->
+        <div class="accepted-applied-panel">
+            <div class="accepted-applied-inner">
+                <div class="accepted-applied-pill">
+                    <span>🧩</span> <span>Outbound principle</span>
+                </div>
+                <div class="accepted-applied-title">“What is accepted is not applied.”</div>
+                <p class="accepted-applied-sub">
+                    Most teams don’t fail because they lack an outbound process. They fail because the team
+                    <strong>accepts</strong> the rules in a workshop and then <strong>ignores</strong> them in the day-to-day.
+                </p>
+
+                <div class="accepted-applied-grid">
+                    <div>
+                        <div class="accepted-applied-col-title">On paper</div>
+                        <div class="accepted-applied-list">
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>“We only go after ICP accounts.”</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>“We run 7–10 touch sequences.”</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>“Everything is logged in CRM.”</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>“Triggers drive our outreach.”</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="accepted-applied-col-title">In reality</div>
+                        <div class="accepted-applied-list">
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>Reps still chase any logo that replies.</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>Most prospects get 2 emails and 1 call.</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>Activity is backfilled at month-end.</span>
+                            </div>
+                            <div class="accepted-applied-item">
+                                <span class="accepted-applied-bullet">•</span>
+                                <span>No views or filters by trigger in tools.</span>
+                            </div>
+                        </div>
+         
+                </div>
+
+                <p class="accepted-applied-footer">
+                    The Outbound Engine OS forces the gap to close: if a rule matters, it lives in the persona + trigger
+                    model, the sequence templates, the call workspace, the CRM fields and the outbound scorecard.  
+                    Otherwise, it will be accepted in theory and ignored in practice.
+                </p>
+            </div>
+        </div>
+        <!-- 🔼 END BLOCK -->
+    </div>
+
+    
+
+    <!-- FOOTER -->
+    <footer>
+        <span>BearOps Outbound Engine OS · HTML Workspace</span>
+        <span>
+            Launch:&nbsp;<a href="ai-research-workflow.html">AI Research Module</a>
+            &nbsp;·&nbsp;
+            <a href="./triggers-com.html">Discovery &amp; Messaging Workspace</a>
+            &nbsp;·&nbsp;
+            Back:&nbsp;<a href="./process/sales-playbook-hub/sales-playbook.html">Playbook Hub</a>
+        </span>
+    </footer>
+</div>
+</body>
+</html>

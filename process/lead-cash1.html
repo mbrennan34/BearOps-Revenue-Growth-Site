@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head><title>BearOps L2C Framework</title>
+<style>
+body{font-family:Arial;background:#0A1628;color:#fff;padding:20px}
+.container{max-width:1200px;margin:auto}
+.header{text-align:center;padding:30px;background:rgba(10,22,40,0.9);border-radius:15px;margin-bottom:30px}
+.tagline{font-size:2rem;font-weight:bold;background:linear-gradient(135deg,#63b3ed,#a5b4fc,#fbb6ce);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap}
+.tab{padding:12px 20px;background:rgba(99,179,237,0.15);border:1px solid rgba(99,179,237,0.3);border-radius:8px;cursor:pointer;flex:1;min-width:120px;text-align:center}
+.tab:hover{background:rgba(99,179,237,0.25)}
+.tab.active{background:linear-gradient(135deg,#6366f1,#0ea5e9);color:#fff}
+.section{display:none}
+.section.active{display:block}
+.card{background:rgba(15,23,42,0.9);border-left:4px solid #63b3ed;border-radius:12px;padding:25px;margin:20px 0}
+.title{color:#63b3ed;font-size:1.4rem;margin-bottom:15px}
+ul{margin-left:20px;line-height:1.8}
+.btn{display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#6366f1,#0ea5e9);color:#fff;border-radius:999px;text-decoration:none;margin:20px 0}
+
+/* NEW: Gradient Pill Button for Lead Cash Builder */
+.lead-cash-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin: 20px 0;
+}
+
+.lead-cash-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+@media (max-width:768px){.nav{flex-direction:column}.tab{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+ <!-- Overlaid logo (doesn't change layout) -->
+        <img src="../assets/images/BearOps_Logo_Default.png">
+
+<h1 class="tagline">Lead-to-Cash Framework</h1>
+<p style="color:#cbd5f5">Build Scalable Revenue Engines</p>
+       <div class="header">
+            <a href="lead-cash-builder.html" class="lead-cash-btn">Lead Cash Builder</a>
+</div>
+
+<div class="nav">
+<div class="tab active" onclick="show('overview')">Overview</div>
+<div class="tab" onclick="show('stages')">5 Stages</div>
+<div class="tab" onclick="show('handoffs')">Handoffs</div>
+<div class="tab" onclick="show('metrics')">Metrics</div>
+<div class="tab" onclick="show('impl')">Implementation</div>
+<div class="tab" onclick="show('success')">Success</div>
+</div>
+
+<div id="overview" class="section active">
+<div class="card">
+<h2 class="title">What is Lead-to-Cash?</h2>
+<p>L2C is the complete process from customer interest to revenue collection. Companies with optimized L2C achieve <strong style="color:#48bb78">36% higher revenue growth</strong> and <strong style="color:#48bb78">28% more profitability</strong>.</p>
+<h3 style="color:#a5b4fc;margin-top:20px">Why It Matters</h3>
+<ul>
+<li><strong>Revenue Acceleration:</strong> Close deals 27% faster</li>
+<li><strong>Reduced Leakage:</strong> Cut errors by 40%</li>
+<li><strong>Better Win Rates:</strong> Increase wins 15-25%</li>
+<li><strong>Improved Cash Flow:</strong> Faster collections</li>
+<li><strong>Enhanced CX:</strong> 3.5x higher retention</li>
+</ul>
+<h3 style="color:#a5b4fc;margin-top:20px">5-Stage Model</h3>
+<ul>
+<li><strong>Stage 1:</strong> Lead Generation → Qualification (Marketing to Sales)</li>
+<li><strong>Stage 2:</strong> Qualification → Opportunity (SDR to AE)</li>
+<li><strong>Stage 3:</strong> Opportunity → Quote (Discovery to Engineering)</li>
+<li><strong>Stage 4:</strong> Quote → Closed-Won (Sales to Finance)</li>
+<li><strong>Stage 5:</strong> Closed-Won → Cash (Sales to CS/Finance)</li>
+</ul>
+</div>
+</div>
+
+<div id="stages" class="section">
+<div class="card">
+<h2 class="title">Stage 1: Marketing → Sales</h2>
+<h3 style="color:#a5b4fc">Entry Criteria</h3>
+<ul><li>Lead captured with minimum data</li><li>Lead source tracked</li><li>Added to automation</li></ul>
+<h3 style="color:#a5b4fc">Exit Criteria (MQL)</h3>
+<ul><li>Lead score 70+ points</li><li>Demographic fit confirmed</li><li>Engagement signal triggered</li><li>BANT indicators present</li></ul>
+<h3 style="color:#a5b4fc">Key Metrics</h3>
+<ul><li>MQL to SQL: 20-30%</li><li>Response time: <5 min (hot)</li><li>Acceptance: >80%</li></ul>
+</div>
+
+<div class="card">
+<h2 class="title">Stage 2-5 Details</h2>
+<p>Complete framework includes detailed entry/exit criteria, handoff protocols, metrics, technology requirements, and ownership for all 5 stages. Each stage doc is 20-30 pages.</p>
+</div>
+</div>
+
+<div id="handoffs" class="section">
+<div class="card">
+<h2 class="title">Critical Handoff Protocols</h2>
+<h3 style="color:#a5b4fc">Marketing → Sales</h3>
+<ul>
+<li><strong>SLA:</strong> <5 min (hot) or <24 hrs (warm)</li>
+<li><strong>Scoring:</strong> 40 pts demographic + 60 pts behavioral</li>
+<li><strong>Feedback:</strong> Accepted/rejected within 48 hrs</li>
+<li><strong>Target:</strong> 80%+ acceptance rate</li>
+</ul>
+
+<h3 style="color:#a5b4fc">Sales → Customer Success</h3>
+<ul>
+<li><strong>Pre-Close:</strong> CSM assigned at 70% probability</li>
+<li><strong>Handoff Doc:</strong> Pain points, goals, decision-makers, timeline, technical needs</li>
+<li><strong>Introduction:</strong> Within 24-48 hours of signature</li>
+<li><strong>Golden Rule:</strong> Customer never repeats info</li>
+<li><strong>Shared Metrics:</strong> Both own churn and expansion</li>
+</ul>
+
+<h3 style="color:#a5b4fc">Sales → Finance</h3>
+<ul>
+<li><strong>Automation:</strong> Closed-Won creates invoice</li>
+<li><strong>DSO Target:</strong> <45 days collection</li>
+</ul>
+</div>
+</div>
+
+<div id="metrics" class="section">
+<div class="card">
+<h2 class="title">Revenue-Focused Metrics</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-top:20px">
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">MQL to SQL</div>
+<div style="color:#48bb78">Target: 20-30%</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">(SQLs / MQLs) × 100</div>
+</div>
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">Pipeline Coverage</div>
+<div style="color:#48bb78">Target: 3-5x</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">Pipeline / Quota</div>
+</div>
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">Win Rate</div>
+<div style="color:#48bb78">Target: 20-30%</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">Won / Total Opps</div>
+</div>
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">CAC Payback</div>
+<div style="color:#48bb78">Target: <12 months</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">CAC / (ACV × Margin)</div>
+</div>
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">NRR</div>
+<div style="color:#48bb78">Target: 110%+</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">Retention + Expansion</div>
+</div>
+<div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px">
+<div style="color:#63b3ed;font-weight:bold">DSO</div>
+<div style="color:#48bb78">Target: <45 days</div>
+<div style="font-size:0.85em;color:#94a3b8;margin-top:8px">AR / Revenue × Days</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="impl" class="section">
+<div class="card">
+<h2 class="title">Implementation Roadmap</h2>
+<h3 style="color:#a5b4fc">Phase 1: Assess (Weeks 1-4)</h3>
+<ul><li>Map current process</li><li>Interview stakeholders</li><li>Identify leakage</li><li>Benchmark metrics</li></ul>
+<h3 style="color:#a5b4fc">Phase 2: Design (Weeks 5-8)</h3>
+<ul><li>Define 5-stage model</li><li>Establish SLAs</li><li>Design handoffs</li><li>Define metrics</li></ul>
+<h3 style="color:#a5b4fc">Phase 3: Pilot (Weeks 9-16)</h3>
+<ul><li>Test with one segment</li><li>Validate tracking</li><li>Iterate</li></ul>
+<h3 style="color:#a5b4fc">Phase 4: Scale (Weeks 17-24)</h3>
+<ul><li>Roll out broadly</li><li>Automate</li><li>Establish governance</li></ul>
+</div>
+</div>
+
+<div id="success" class="section">
+<div class="card">
+<h2 class="title">8 Success Factors</h2>
+<ul>
+<li><strong>Executive Sponsorship:</strong> CRO/CEO must champion</li>
+<li><strong>Unified Metrics:</strong> Shared outcomes</li>
+<li><strong>Single Source of Truth:</strong> CRM is record</li>
+<li><strong>Clear Ownership:</strong> Named stage owners</li>
+<li><strong>Transparent Communication:</strong> Regular meetings</li>
+<li><strong>Customer-Centric:</strong> Buyer-optimized</li>
+<li><strong>Data Quality:</strong> Clean CRM</li>
+<li><strong>Continuous Improvement:</strong> Regular reviews</li>
+</ul>
+</div>
+
+<div class="card">
+<h2 class="title">Avoid These Failures</h2>
+<ul>
+<li>Siloed optimization</li>
+<li>Metric overload (50+ KPIs)</li>
+<li>Technology-first approach</li>
+<li>No feedback loops</li>
+<li>Skipping documentation</li>
+<li>No governance</li>
+<li>Poor handoffs</li>
+<li>Ignoring change management</li>
+</ul>
+</div>
+
+<div class="card">
+<h2 class="title">BearOps Delivery</h2>
+<h3 style="color:#a5b4fc">Workshops</h3>
+<ul>
+<li><strong>Day 1:</strong> L2C Assessment - mapping, leakage analysis, benchmarks</li>
+<li><strong>Days 2-3:</strong> Future State Design - model definition, handoffs, metrics</li>
+</ul>
+<h3 style="color:#a5b4fc">Deliverables</h3>
+<ul>
+<li>Executive Playbook (10-15 pages)</li>
+<li>Process Documentation (20-30 pages/stage)</li>
+<li>Execution Playbooks (checklists)</li>
+<li>Metrics Dashboard Design</li>
+<li>90-Day Roadmap</li>
+<li>Governance Model</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align:center;margin:40px 0">
+<button class="btn" onclick="window.print()">📄 Download PDF</button>
+<a href="https://bearops.io/contact-us/" class="btn">📧 Schedule Assessment</a>
+</div>
+
+</div>
+<script>
+function show(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+event.target.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Library - Coming Soon - BearOps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600;800&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --success: #00d4aa;
+            --warning: #ffa400;
+            --surface: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Libre Franklin', sans-serif;
+            background: linear-gradient(135deg, var(--surface) 0%, #e8eef3 100%);
+            color: var(--primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--highlight), #d13550);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            text-align: left;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 16px;
+        }
+
+        .features h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .features ul {
+            list-style: none;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .features li::before {
+            content: '→';
+            color: var(--highlight);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📚</div>
+        <h1>Content Library</h1>
+        <p class="subtitle">Coming Soon</p>
+        <p>
+            The Content Library is currently under development. This module will provide a searchable repository of sales-ready content including battle cards, email templates, pitch decks, case studies, and objection handling guides.
+        </p>
+
+        <div class="features">
+            <h3>Planned Features</h3>
+            <ul>
+                <li>Filter by buyer stage & persona</li>
+                <li>Battle card templates</li>
+                <li>Email sequence library</li>
+                <li>Competitive positioning guides</li>
+                <li>Case study database</li>
+                <li>ROI calculator templates</li>
+            </ul>
+        </div>
+
+        <div class="btn-group">
+            <a href="sales-enablement-dashboard.html" class="btn btn-primary">Back to Dashboard</a>
+            <a href="sales-playbooks.html" class="btn btn-secondary">View Playbooks</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EOS People Analyzer – BearOps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050b16;
+      --bg-alt: #020617;
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --text: #f9fafb;
+      --muted: #94a3b8;
+      --border-subtle: rgba(148, 163, 184, 0.4);
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.14);
+      --danger: #f97373;
+      --danger-soft: rgba(248, 113, 113, 0.18);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    body[data-theme="light"] {
+      --bg: #f3f4f6;
+      --bg-alt: #e5e7eb;
+      --card-bg: #ffffff;
+      --text: #020617;
+      --muted: #6b7280;
+      --border-subtle: rgba(148, 163, 184, 0.7);
+      --accent: #16a34a;
+      --accent-soft: rgba(22, 163, 74, 0.12);
+      --danger: #b91c1c;
+      --danger-soft: rgba(248, 113, 113, 0.14);
+      --shadow-soft: 0 16px 35px rgba(15, 23, 42, 0.25);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(129, 140, 248, 0.18), transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.14), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    header.header {
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.28), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(168, 85, 247, 0.26), transparent 55%),
+        linear-gradient(135deg, #020617, #0f172a, #1e293b);
+      border-radius: 22px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-soft);
+      color: #e5e7eb;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-main {
+      max-width: 650px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .title-row h1 {
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      font-size: 0.9rem;
+      color: rgba(226, 232, 240, 0.9);
+    }
+
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 800px) {
+      .header {
+        flex-direction: column;
+      }
+      .header-meta { align-items: flex-start; }
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.7);
+      font-size: 0.74rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body[data-theme="light"] .pill {
+      background: rgba(249, 250, 251, 0.95);
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.75);
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    body[data-theme="light"] .theme-toggle {
+      background: rgba(249, 250, 251, 0.95);
+    }
+
+    .toggle-track {
+      width: 34px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      position: relative;
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      transition: transform 0.18s ease;
+    }
+
+    body[data-theme="light"] .toggle-knob {
+      transform: translateX(16px);
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .top-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 16px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .insights-card { flex: 1.2; min-width: 260px; }
+    .controls-card { flex: 1; min-width: 260px; }
+
+    .insight-banner {
+      padding: 10px 12px;
+      border-radius: 13px;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      background: linear-gradient(
+        120deg,
+        rgba(56, 189, 248, 0.12),
+        rgba(22, 163, 74, 0.12)
+      );
+      font-size: 0.83rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .insight-main { font-weight: 600; }
+
+    .insight-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .insight-chip {
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body[data-theme="light"] .insight-chip {
+      background: #f9fafb;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.06s ease, box-shadow 0.06s ease, background 0.1s ease, border-color 0.1s ease;
+    }
+
+    .btn {
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    body[data-theme="light"] .btn {
+      background: #ffffff;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: rgba(22, 163, 74, 0.9);
+      color: #ecfdf5;
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.35);
+    }
+
+    .btn-danger {
+      background: rgba(127, 29, 29, 0.95);
+      border-color: rgba(248, 113, 113, 0.9);
+      color: #fee2e2;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.6);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Core Value Explorer */
+
+    .values-card { margin-top: 2px; }
+
+    .values-help {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .function-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    .fn-tab {
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fn-tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    body[data-theme="light"] .fn-tab {
+      background: #f3f4f6;
+    }
+
+    .fn-tab-delete {
+      font-size: 0.9em;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+
+    .fn-add {
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .values-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .value-row {
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 9px;
+    }
+
+    body[data-theme="light"] .value-row {
+      background: #f9fafb;
+    }
+
+    .value-row.highlight {
+      box-shadow: 0 0 0 1px var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .value-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .value-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .value-badge {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    body[data-theme="light"] .value-badge {
+      background: #ffffff;
+    }
+
+    .value-textarea {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 5px 7px;
+      resize: vertical;
+    }
+
+    body[data-theme="light"] .value-textarea {
+      background: #ffffff;
+    }
+
+    .values-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .legend-chip {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    body[data-theme="light"] .legend-chip {
+      background: #f3f4f6;
+    }
+
+    /* People Analyzer Grid */
+
+    .people-card { margin-top: 2px; }
+
+    .table-wrapper {
+      margin-top: 6px;
+      border-radius: 14px;
+      overflow: auto;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    body[data-theme="light"] .table-wrapper {
+      background: #f9fafb;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 1400px;
+      font-size: 0.8rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    body[data-theme="light"] thead {
+      background: #f3f4f6;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.7);
+      text-align: left;
+    }
+
+    th {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    body[data-theme="light"] tbody tr:nth-child(even) {
+      background: #eef2ff;
+    }
+
+    tbody tr:hover {
+      background: rgba(30, 64, 175, 0.35);
+    }
+
+    body[data-theme="light"] tbody tr:hover {
+      background: #dbeafe;
+    }
+
+    .name-input, .seat-input {
+      width: 100%;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: transparent;
+      color: var(--text);
+      padding: 4px 7px;
+    }
+
+    .name-input:focus, .seat-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    body[data-theme="light"] .name-input:focus,
+    body[data-theme="light"] .seat-input:focus {
+      background: #ffffff;
+    }
+
+    .fn-select {
+      width: 100%;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      padding: 4px 7px;
+    }
+
+    body[data-theme="light"] .fn-select {
+      background: #ffffff;
+    }
+
+    .core-header {
+      border-radius: 999px;
+      padding: 6px 8px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      min-width: 140px;
+      white-space: normal;
+      text-align: left;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .core-header:hover {
+      border-style: solid;
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    body[data-theme="light"] .core-header:hover {
+      background: #e5e7eb;
+    }
+
+    .score-buttons {
+      display: inline-flex;
+      gap: 3px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 2px 3px;
+    }
+
+    body[data-theme="light"] .score-buttons {
+      background: #ffffff;
+    }
+
+    .score-btn {
+      width: 24px;
+      height: 18px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .score-btn.active-plus {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .score-btn.active-mid {
+      background: rgba(129, 140, 248, 0.16);
+      color: #818cf8;
+      font-weight: 600;
+    }
+
+    .score-btn.active-minus {
+      background: var(--danger-soft);
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .gwc-toggle {
+      display: inline-flex;
+      gap: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 2px 3px;
+    }
+
+    body[data-theme="light"] .gwc-toggle {
+      background: #ffffff;
+    }
+
+    .gwc-btn {
+      font-size: 0.68rem;
+      border-radius: 999px;
+      padding: 1px 6px;
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .gwc-btn.yes.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .gwc-btn.no.active {
+      background: var(--danger-soft);
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 3px 7px;
+      color: var(--muted);
+    }
+
+    .tag-pill.good {
+      border-color: rgba(34, 197, 94, 0.9);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .tag-pill.bad {
+      border-color: rgba(248, 113, 113, 0.9);
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .action-pill {
+      font-size: 0.7rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .action-keep {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: var(--accent);
+    }
+    .action-move {
+      border-color: rgba(129, 140, 248, 0.9);
+      color: #818cf8;
+    }
+    .action-coach {
+      border-color: rgba(234, 179, 8, 0.9);
+      color: #eab308;
+    }
+    .action-exit {
+      border-color: rgba(248, 113, 113, 0.9);
+      color: var(--danger);
+    }
+
+    .remove-btn {
+      font-size: 0.8rem;
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .remove-btn:hover {
+      color: var(--danger);
+    }
+
+    .scorecard-btn {
+      font-size: 0.8rem;
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .scorecard-btn:hover {
+      color: #38bdf8;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 14px; }
+    }
+
+    /* Scorecard (PDF) styles – tuned for A5 look */
+
+    .scorecard-card {
+      width: 460px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 55%),
+                  radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.16), transparent 55%),
+                  radial-gradient(circle at 0 100%, rgba(34, 197, 94, 0.16), transparent 55%),
+                  #020617;
+      color: #e5e7eb;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.95);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body[data-theme="light"] .scorecard-card {
+      background: #ffffff;
+      color: #020617;
+    }
+
+    .scorecard-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+
+    .scorecard-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .scorecard-card h1 {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+
+    .sc-seat {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .sc-function {
+      font-size: 0.8rem;
+      color: #a5b4fc;
+    }
+
+    body[data-theme="light"] .sc-function {
+      color: #4f46e5;
+    }
+
+    .scorecard-tag {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: flex-end;
+      font-size: 0.74rem;
+    }
+
+    .scorecard-tag span {
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    body[data-theme="light"] .scorecard-tag span {
+      background: #f9fafb;
+    }
+
+    .scorecard-section {
+      margin-bottom: 10px;
+    }
+
+    .scorecard-section h2 {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .scorecard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+
+    .scorecard-table th,
+    .scorecard-table td {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 4px 3px;
+    }
+
+    .scorecard-table th {
+      text-align: left;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .scorecard-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .scorecard-pill {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    body[data-theme="light"] .scorecard-pill {
+      background: #f3f4f6;
+    }
+
+    .scorecard-meta {
+      font-size: 0.66rem;
+      color: #9ca3af;
+      text-align: right;
+    }
+
+    /* PDF score cell */
+
+         /* PDF score cell */
+    .sc-score-cell {
+      text-align: right;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .sc-score-inline {
+      font-weight: 700;
+    }
+
+    .sc-score-plus {
+      color: #4ade80;  /* green */
+    }
+
+    .sc-score-mid {
+      color: #facc15;  /* amber */
+    }
+
+    .sc-score-minus {
+      color: #f97373;  /* red */
+    }
+
+    /* Home button */
+    .lead-link-gradient {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .lead-link-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+  </style>
+</head>
+
+  <div class="container">
+
+    <header class="header">
+      <div class="header-main">
+        <div class="title-row">
+          <h1>People Analyzer</h1>
+          <span class="badge">Right People • Right Seats</span>
+        </div>
+        <p class="subtitle">
+          SaaS-flavoured values (+ / ± / –) with GWC (Gets It, Wants It, Capacity). Sync seats from your Accountability Chart and score each person by function.
+        </p>
+      </div>
+      <div class="header-meta">
+        <div class="pill-row">
+          <div class="pill"><strong>Values</strong><span>+ Always • ± Sometimes • – Rarely</span></div>
+          <div class="pill"><strong>GWC</strong><span>Yes / No per seat</span></div>
+        </div>
+        <div class="theme-toggle" id="themeToggle">
+          <span>Theme</span>
+          <div class="toggle-track"><div class="toggle-knob"></div></div>
+          <span id="themeLabel">Dark</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div class="top-row">
+        <section class="card insights-card">
+          <div class="card-header">
+            <h2 class="card-title">Team Snapshot</h2>
+          </div>
+          <div class="insight-banner" id="insightBanner">
+            <div class="insight-main">No data yet. Add people or sync seats to see People / Seats health.</div>
+            <div class="insight-metrics" id="insightMetrics" style="display:none;">
+              <div class="insight-chip"><strong id="rightPeopleCount">0</strong><span>Right People</span></div>
+              <div class="insight-chip"><strong id="rightSeatCount">0</strong><span>Right Seats</span></div>
+              <div class="insight-chip"><strong id="fullMatchCount">0</strong><span>Right Person + Right Seat</span></div>
+              <div class="insight-chip"><strong id="coachOrExitCount">0</strong><span>Coach / Exit Seats</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card controls-card">
+          <div class="card-header">
+            <h2 class="card-title">Controls</h2>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-primary" id="addRowBtn">＋ Add Person</button>
+            <button class="btn" id="recalcBtn">Recalculate</button>
+            <button class="btn" id="exportBtn">⬇ Export CSV</button>
+            <button class="btn" id="syncFromChartBtn">↻ Sync from Accountability Chart</button>
+            <button class="btn" id="saveBtn">💾 Save</button>
+            <button class="btn btn-danger" id="resetBtn">⟲ Reset</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Core Value Explorer -->
+      <section class="card values-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Core Value Explorer</h2>
+            <p class="values-help">
+              Start with Business Values, then refine for each function (Sales, Marketing, CS, Product…). Click a value header in the grid to jump here.
+            </p>
+          </div>
+        </div>
+        <div class="function-tabs" id="functionTabs"></div>
+        <div class="values-details" id="valuesDetails"></div>
+        <div class="values-legend">
+          <span class="legend-chip">+ Always – consistently lives this value</span>
+          <span class="legend-chip">± Sometimes – mixed / situational</span>
+          <span class="legend-chip">– Rarely – misaligned with how we operate</span>
+        </div>
+      </section>
+
+      <!-- People Analyzer Grid -->
+      <section class="card people-card">
+        <div class="card-header">
+          <h2 class="card-title">People Analyzer Grid</h2>
+          <div class="card-subtitle">Filter by function via tabs above. Sync seats from your Accountability Chart and tag per function.</div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Seat / Role</th>
+                <th>Function</th>
+                <th class="core-header" data-value-key="customer_first">Customer-first mindset</th>
+                <th class="core-header" data-value-key="ownership_chaos">Ownership over chaos</th>
+                <th class="core-header" data-value-key="bias_action">Bias for action</th>
+                <th class="core-header" data-value-key="collab_low_ego">Collaboration & low ego</th>
+                <th class="core-header" data-value-key="data_informed">Data-informed thinking</th>
+                <th class="core-header" data-value-key="learning_velocity">Learning velocity</th>
+                <th>G</th>
+                <th>W</th>
+                <th>C</th>
+                <th>Right Person?</th>
+                <th>Right Seat?</th>
+                <th>Suggested Action</th>
+                <th>PDF</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="peopleBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Hidden scorecard template for PDF export -->
+  <div id="scorecardTemplate" class="scorecard-card" style="display:none;">
+    <div class="scorecard-header">
+      <div>
+        <div class="scorecard-label">PEOPLE ANALYZER SCORECARD</div>
+        <h1 id="scName">Name Here</h1>
+        <p id="scSeat" class="sc-seat">Seat / Role</p>
+        <p id="scFunction" class="sc-function">Function</p>
+      </div>
+      <div class="scorecard-tag">
+        <span id="scRightPerson">Right Person?</span>
+        <span id="scRightSeat">Right Seat?</span>
+      </div>
+    </div>
+
+    <div class="scorecard-section">
+<h2>Core Values</h2>
+<table class="scorecard-table">
+  <thead>
+    <tr>
+      <th>Value & Result</th>
+    </tr>
+  </thead>
+  <tbody id="scValuesBody"></tbody>
+</table>
+
+    </div>
+
+    <div class="scorecard-section">
+      <h2>GWC (Gets It, Wants It, Capacity)</h2>
+      <table class="scorecard-table">
+        <tbody>
+          <tr>
+            <td>Gets It</td>
+            <td id="scG">–</td>
+          </tr>
+          <tr>
+            <td>Wants It</td>
+            <td id="scW">–</td>
+          </tr>
+          <tr>
+            <td>Capacity</td>
+            <td id="scC">–</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scorecard-footer">
+      <div class="scorecard-pill" id="scSuggestedAction">Suggested Action: –</div>
+      <div class="scorecard-meta" id="scMeta">
+        Generated from People Analyzer
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <script>
+    const STORAGE_KEY = 'eosPeopleAnalyzer_v6';
+    const ACCT_STORAGE_KEY = 'bearopsAccountabilityChart_v4';
+
+    const valueKeys = [
+      'customer_first',
+      'ownership_chaos',
+      'bias_action',
+      'collab_low_ego',
+      'data_informed',
+      'learning_velocity'
+    ];
+
+    const valueLabels = {
+      customer_first: 'Customer-first mindset',
+      ownership_chaos: 'Ownership over chaos',
+      bias_action: 'Bias for action',
+      collab_low_ego: 'Collaboration & low ego',
+      data_informed: 'Data-informed thinking',
+      learning_velocity: 'Learning velocity'
+    };
+
+    const defaultFunctionList = [
+      { key: 'business',    label: 'Business Values',   builtIn: true },
+      { key: 'sales',       label: 'Sales',             builtIn: true },
+      { key: 'marketing',   label: 'Marketing',         builtIn: true },
+      { key: 'success',     label: 'Customer Success',  builtIn: true },
+      { key: 'product',     label: 'Product',           builtIn: true },
+      { key: 'engineering', label: 'Engineering',       builtIn: true },
+      { key: 'support',     label: 'Support',           builtIn: true }
+    ];
+
+    const defaultValueDefinitions = {
+      customer_first: 'Always starts from the customer’s problem, not our internal preferences or politics.',
+      ownership_chaos: 'Steps into messy situations, makes decisions, and owns outcomes without waiting for perfect clarity.',
+      bias_action: 'Moves fast, runs small experiments, and unblocks progress instead of waiting for perfect information.',
+      collab_low_ego: 'Works cross-functionally, shares context, and optimises for the best outcome, not personal credit.',
+      data_informed: 'Uses metrics and evidence to shape opinions and changes approach when the data says so.',
+      learning_velocity: 'Learns quickly, adapts to change, and scales as the company grows.'
+    };
+
+    const functionDefaultDefinitions = {
+      sales: {
+        customer_first: 'Discovery starts with outcomes and pains, not our pitch. Protects trust over short-term quota.',
+        ownership_chaos: 'Takes ownership of messy territories, unclear ICP, and broken handoffs.',
+        bias_action: 'Follows up quickly, tests new talk tracks, and experiments with sequences.',
+        collab_low_ego: 'Brings CS/Product into deals early and shares learning with the team.',
+        data_informed: 'Looks at win rate, stage conversion, and coverage before shouting “we need more leads”.',
+        learning_velocity: 'Updates messaging after wins/losses and shares what works with the team.'
+      },
+      marketing: {
+        customer_first: 'Campaigns start with real customer language and problems.',
+        ownership_chaos: 'Ships campaigns even when personas and segments are still evolving.',
+        bias_action: 'Launches iterative campaigns rather than waiting for perfect assets.',
+        collab_low_ego: 'Pulls in feedback from Sales and CS and kills low-performing ideas quickly.',
+        data_informed: 'Optimises for pipeline and revenue, not just MQL volume.',
+        learning_velocity: 'Tests new channels and formats and rolls out winners fast.'
+      }
+    };
+
+    let functionList = JSON.parse(JSON.stringify(defaultFunctionList));
+    let valueDefinitions = {};
+    let currentFunctionKey = 'business';
+
+    const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+
+    const peopleBody = document.getElementById('peopleBody');
+    const addRowBtn = document.getElementById('addRowBtn');
+    const recalcBtn = document.getElementById('recalcBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const syncFromChartBtn = document.getElementById('syncFromChartBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const rightPeopleCountEl = document.getElementById('rightPeopleCount');
+    const rightSeatCountEl = document.getElementById('rightSeatCount');
+    const fullMatchCountEl = document.getElementById('fullMatchCount');
+    const coachOrExitCountEl = document.getElementById('coachOrExitCount');
+    const insightBanner = document.getElementById('insightBanner');
+    const insightMetrics = document.getElementById('insightMetrics');
+
+    const functionTabs = document.getElementById('functionTabs');
+    const valuesDetails = document.getElementById('valuesDetails');
+
+    const coreHeaders = document.querySelectorAll('.core-header');
+
+    function getFunctionByKey(key) {
+      return functionList.find(f => f.key === key);
+    }
+
+    function ensureBusinessExists() {
+      if (!functionList.some(f => f.key === 'business')) {
+        functionList.unshift({ key: 'business', label: 'Business Values', builtIn: true });
+      }
+    }
+
+    function getFunctionLabel(fnKey) {
+      const f = getFunctionByKey(fnKey);
+      if (f) return f.label;
+      const nice = (fnKey || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      return nice || 'Business Values';
+    }
+
+    function ensureFunctionInList(fnKey, labelOverride) {
+      ensureBusinessExists();
+      let fn = getFunctionByKey(fnKey);
+      if (!fn) {
+        fn = {
+          key: fnKey,
+          label: labelOverride || getFunctionLabel(fnKey),
+          builtIn: false
+        };
+        functionList.push(fn);
+      } else if (labelOverride) {
+        fn.label = labelOverride;
+      }
+      return fn.key;
+    }
+
+    function mapFunctionNameToFnKey(name) {
+      if (!name) return 'business';
+      const trimmed = name.trim();
+      if (!trimmed) return 'business';
+      const lower = trimmed.toLowerCase();
+
+      const existing = functionList.find(f => f.label.toLowerCase() === lower);
+      if (existing) return existing.key;
+
+      let baseKey = lower
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+      if (!baseKey) baseKey = 'fn_' + Date.now();
+
+      let key = baseKey;
+      let i = 2;
+      while (functionList.some(f => f.key === key)) {
+        key = baseKey + '_' + i++;
+      }
+      return key;
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const current = body.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', next);
+      themeLabel.textContent = next === 'dark' ? 'Dark' : 'Light';
+      saveState();
+    });
+
+    function renderFunctionTabs() {
+      ensureBusinessExists();
+      const tabsHtml = functionList.map(fn => {
+        const canDelete = !fn.builtIn && fn.key !== 'business';
+        return `
+          <button class="fn-tab" data-fn="${fn.key}" type="button">
+            <span>${fn.label}</span>
+            ${canDelete ? `<span class="fn-tab-delete" data-fn="${fn.key}" title="Delete function">✕</span>` : ''}
+          </button>
+        `;
+      }).join('');
+      const addHtml = `<button class="fn-add" type="button" data-add-fn>＋ Add Function</button>`;
+      functionTabs.innerHTML = tabsHtml + addHtml;
+      setActiveFunctionTab(currentFunctionKey);
+    }
+
+    function setActiveFunctionTab(fnKey) {
+      const tabs = functionTabs.querySelectorAll('.fn-tab');
+      tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.fn === fnKey);
+      });
+    }
+
+    function captureCurrentFunctionDefinitions() {
+      if (!currentFunctionKey) return;
+      const map = valueDefinitions[currentFunctionKey] || {};
+      const rows = valuesDetails.querySelectorAll('.value-row');
+      rows.forEach(row => {
+        const key = row.dataset.valueRow;
+        const textarea = row.querySelector('textarea.value-textarea');
+        if (key && textarea) {
+          map[key] = textarea.value;
+        }
+      });
+      valueDefinitions[currentFunctionKey] = map;
+    }
+
+    function renderValuesDetails(fnKey) {
+      const defs = valueDefinitions[fnKey] || {};
+      const baseDefaults =
+        fnKey === 'business'
+          ? defaultValueDefinitions
+          : (functionDefaultDefinitions[fnKey] || {});
+
+      const html = valueKeys.map(key => {
+        const label = valueLabels[key];
+        const text =
+          defs[key] ||
+          baseDefaults[key] ||
+          defaultValueDefinitions[key] ||
+          '';
+        return `
+          <div class="value-row" data-value-row="${key}">
+            <div class="value-header">
+              <span class="value-name">${label}</span>
+              <span class="value-badge">${getFunctionLabel(fnKey)}</span>
+            </div>
+            <textarea
+              class="value-textarea"
+              data-function="${fnKey}"
+              data-value-key="${key}"
+              placeholder="Define how ‘${label}’ shows up for ${getFunctionLabel(fnKey)}…"
+            >${text}</textarea>
+          </div>
+        `;
+      }).join('');
+      valuesDetails.innerHTML = html;
+    }
+
+    function highlightValueRow(valueKey) {
+      document.querySelector('.values-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const rows = valuesDetails.querySelectorAll('.value-row');
+      rows.forEach(r => r.classList.remove('highlight'));
+      const target = valuesDetails.querySelector(`.value-row[data-value-row="${valueKey}"]`);
+      if (target) {
+        target.classList.add('highlight');
+        setTimeout(() => target.classList.remove('highlight'), 2000);
+      }
+    }
+
+    function filterRowsForFunction() {
+      const rows = peopleBody.querySelectorAll('tr');
+      rows.forEach(tr => {
+        const sel = tr.querySelector('.fn-select');
+        const rowFn = sel ? sel.value : 'business';
+        if (currentFunctionKey === 'business') {
+          tr.style.display = '';
+        } else {
+          tr.style.display = rowFn === currentFunctionKey ? '' : 'none';
+        }
+      });
+    }
+
+    function refreshFnSelectOptions() {
+      const selects = peopleBody.querySelectorAll('.fn-select');
+      selects.forEach(sel => {
+        const current = sel.value || 'business';
+        sel.innerHTML = functionList.map(f =>
+          `<option value="${f.key}" ${f.key === current ? 'selected' : ''}>${f.label}</option>`
+        ).join('');
+      });
+    }
+
+    function switchFunction(fnKey) {
+      captureCurrentFunctionDefinitions();
+      currentFunctionKey = fnKey;
+      setActiveFunctionTab(fnKey);
+      renderValuesDetails(fnKey);
+      filterRowsForFunction();
+      recalcAll();
+      saveState();
+    }
+
+    function deleteFunction(fnKey) {
+      if (!fnKey || fnKey === 'business') {
+        alert('You cannot delete Business Values.');
+        return;
+      }
+      const fn = getFunctionByKey(fnKey);
+      if (!fn) return;
+      if (!confirm(`Delete function "${fn.label}" and move its seats back to Business Values?`)) return;
+
+      functionList = functionList.filter(f => f.key !== fnKey);
+      delete valueDefinitions[fnKey];
+
+      peopleBody.querySelectorAll('.fn-select').forEach(sel => {
+        if (sel.value === fnKey) sel.value = 'business';
+      });
+
+      if (currentFunctionKey === fnKey) currentFunctionKey = 'business';
+
+      renderFunctionTabs();
+      renderValuesDetails(currentFunctionKey);
+      refreshFnSelectOptions();
+      filterRowsForFunction();
+      recalcAll();
+      saveState();
+    }
+
+    function addNewFunction() {
+      const name = prompt('Name for new function (e.g. "RevOps", "EMEA Sales")?');
+      if (!name) return;
+      const trimmed = name.trim();
+      if (!trimmed) return;
+
+      const lower = trimmed.toLowerCase();
+      if (lower === 'business values' || lower === 'business') {
+        alert('“Business Values” is reserved. Please choose another name.');
+        return;
+      }
+
+      let key = mapFunctionNameToFnKey(trimmed);
+      key = ensureFunctionInList(key, trimmed);
+
+      currentFunctionKey = key;
+      renderFunctionTabs();
+      renderValuesDetails(key);
+      refreshFnSelectOptions();
+      filterRowsForFunction();
+      recalcAll();
+      saveState();
+    }
+
+    functionTabs.addEventListener('click', (e) => {
+      const deleteBtn = e.target.closest('.fn-tab-delete');
+      if (deleteBtn) {
+        deleteFunction(deleteBtn.dataset.fn);
+        return;
+      }
+      const addBtn = e.target.closest('[data-add-fn]');
+      if (addBtn) {
+        addNewFunction();
+        return;
+      }
+      const tab = e.target.closest('.fn-tab');
+      if (!tab) return;
+      switchFunction(tab.dataset.fn);
+    });
+
+    valuesDetails.addEventListener('input', (e) => {
+      if (e.target.classList.contains('value-textarea')) {
+        captureCurrentFunctionDefinitions();
+        saveState();
+      }
+    });
+
+    coreHeaders.forEach(th => {
+      const key = th.dataset.valueKey;
+      if (!key) return;
+      th.addEventListener('click', () => highlightValueRow(key));
+    });
+
+    function updateCoreValueUI(scoreButtons, value) {
+      const buttons = scoreButtons.querySelectorAll('.score-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active-plus', 'active-mid', 'active-minus');
+        if (btn.dataset.score === value) {
+          if (value === '+') btn.classList.add('active-plus');
+          else if (value === '±') btn.classList.add('active-mid');
+          else if (value === '-') btn.classList.add('active-minus');
+        }
+      });
+      scoreButtons.dataset.score = value || '';
+    }
+
+    function updateGwcUI(toggle, value) {
+      const yesBtn = toggle.querySelector('.yes');
+      const noBtn = toggle.querySelector('.no');
+      yesBtn.classList.remove('active');
+      noBtn.classList.remove('active');
+      if (value === 'yes') yesBtn.classList.add('active');
+      if (value === 'no') noBtn.classList.add('active');
+      toggle.dataset.value = value || '';
+    }
+
+    function createRow(name = '', seat = '', coreScores = [], gwcValues = ['', '', ''], fnKey = 'business') {
+      fnKey = ensureFunctionInList(fnKey);
+      const safeScores = coreScores && coreScores.length === valueKeys.length
+        ? coreScores
+        : new Array(valueKeys.length).fill('');
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="name-input" type="text" placeholder="Name" value="${name}"></td>
+        <td><input class="seat-input" type="text" placeholder="Seat / Role" value="${seat}"></td>
+        <td>
+          <select class="fn-select">
+            ${functionList.map(f => `<option value="${f.key}" ${f.key === fnKey ? 'selected' : ''}>${f.label}</option>`).join('')}
+          </select>
+        </td>
+        ${valueKeys.map((_, i) => `
+          <td>
+            <div class="score-buttons" data-score="${safeScores[i] || ''}">
+              <button class="score-btn" data-score="+">+</button>
+              <button class="score-btn" data-score="±">±</button>
+              <button class="score-btn" data-score="-">-</button>
+            </div>
+          </td>
+        `).join('')}
+        <td>
+          <div class="gwc-toggle" data-value="${gwcValues[0] || ''}">
+            <button class="gwc-btn yes" data-value="yes">Yes</button>
+            <button class="gwc-btn no" data-value="no">No</button>
+          </div>
+        </td>
+        <td>
+          <div class="gwc-toggle" data-value="${gwcValues[1] || ''}">
+            <button class="gwc-btn yes" data-value="yes">Yes</button>
+            <button class="gwc-btn no" data-value="no">No</button>
+          </div>
+        </td>
+        <td>
+          <div class="gwc-toggle" data-value="${gwcValues[2] || ''}">
+            <button class="gwc-btn yes" data-value="yes">Yes</button>
+            <button class="gwc-btn no" data-value="no">No</button>
+          </div>
+        </td>
+        <td class="right-person-cell"><span class="tag-pill">–</span></td>
+        <td class="right-seat-cell"><span class="tag-pill">–</span></td>
+        <td class="action-cell"><span class="action-pill">No data</span></td>
+        <td><button class="scorecard-btn" title="Export PDF">📄</button></td>
+        <td><button class="remove-btn" title="Remove">✖</button></td>
+      `;
+      peopleBody.appendChild(tr);
+
+      const scoreButtons = tr.querySelectorAll('.score-buttons');
+      scoreButtons.forEach((sb, idx) => {
+        updateCoreValueUI(sb, safeScores[idx] || '');
+      });
+
+      const gwcToggles = tr.querySelectorAll('.gwc-toggle');
+      gwcToggles.forEach((toggle, idx) => {
+        updateGwcUI(toggle, gwcValues[idx] || '');
+      });
+
+      return tr;
+    }
+
+    function evaluateRow(tr) {
+      const coreScoreEls = tr.querySelectorAll('.score-buttons');
+      let hasMinus = false;
+      let hasPlusOrMid = false;
+
+      coreScoreEls.forEach(sb => {
+        const val = sb.dataset.score || '';
+        if (val === '-') hasMinus = true;
+        if (val === '+' || val === '±') hasPlusOrMid = true;
+      });
+
+      const rightPerson = !hasMinus && hasPlusOrMid;
+
+      const gwcToggles = tr.querySelectorAll('.gwc-toggle');
+      let rightSeat = true;
+      gwcToggles.forEach(toggle => {
+        const val = toggle.dataset.value;
+        if (val !== 'yes') rightSeat = false;
+      });
+
+      const rightPersonCell = tr.querySelector('.right-person-cell');
+      const rightSeatCell = tr.querySelector('.right-seat-cell');
+      const actionCell = tr.querySelector('.action-cell');
+
+      if (rightPerson) {
+        rightPersonCell.innerHTML = `<span class="tag-pill good">Right Person</span>`;
+      } else {
+        rightPersonCell.innerHTML = `<span class="tag-pill bad">Not Aligned</span>`;
+      }
+
+      if (rightSeat) {
+        rightSeatCell.innerHTML = `<span class="tag-pill good">Right Seat</span>`;
+      } else {
+        rightSeatCell.innerHTML = `<span class="tag-pill">Check GWC</span>`;
+      }
+
+      let actionLabel = 'No data';
+      let actionClass = '';
+      if (rightPerson && rightSeat) {
+        actionLabel = 'Keep & Grow';
+        actionClass = 'action-keep';
+      } else if (rightPerson && !rightSeat) {
+        actionLabel = 'Move Seat / Develop';
+        actionClass = 'action-move';
+      } else if (!rightPerson && rightSeat) {
+        actionLabel = 'Coach Hard / Consider Exit';
+        actionClass = 'action-coach';
+      } else {
+        actionLabel = 'Exit / Replace';
+        actionClass = 'action-exit';
+      }
+      actionCell.innerHTML = `<span class="action-pill ${actionClass}">${actionLabel}</span>`;
+
+      return { rightPerson, rightSeat };
+    }
+
+    function recalcAll() {
+      const rows = peopleBody.querySelectorAll('tr');
+      let totalVisible = 0;
+      let rightPeople = 0;
+      let rightSeats = 0;
+      let fullMatch = 0;
+      let coachOrExit = 0;
+
+      rows.forEach(tr => {
+        if (tr.style.display === 'none') return;
+        totalVisible++;
+        const result = evaluateRow(tr);
+        if (result.rightPerson) rightPeople++;
+        if (result.rightSeat) rightSeats++;
+        if (result.rightPerson && result.rightSeat) fullMatch++;
+        if (!result.rightPerson || !result.rightSeat) coachOrExit++;
+      });
+
+      if (totalVisible === 0) {
+        const msg = currentFunctionKey === 'business'
+          ? 'No people scored yet. Add rows or sync from the Accountability Chart.'
+          : `No people tagged to ${getFunctionLabel(currentFunctionKey)} yet. Tag seats to this function to see insights.`;
+        insightBanner.querySelector('.insight-main').textContent = msg;
+        insightMetrics.style.display = 'none';
+      } else {
+        const ratio = fullMatch / totalVisible;
+        insightBanner.querySelector('.insight-main').textContent =
+          ratio < 0.7
+            ? `Less than 70% of ${getFunctionLabel(currentFunctionKey)} seats are Right Person + Right Seat. Prioritise people decisions this quarter.`
+            : `Strong coverage of Right Person + Right Seat for ${getFunctionLabel(currentFunctionKey)}. Focus on coaching and succession.`;
+        insightMetrics.style.display = 'flex';
+      }
+
+      rightPeopleCountEl.textContent = rightPeople;
+      rightSeatCountEl.textContent = rightSeats;
+      fullMatchCountEl.textContent = fullMatch;
+      coachOrExitCountEl.textContent = coachOrExit;
+
+      saveState();
+    }
+
+    addRowBtn.addEventListener('click', () => {
+      const row = createRow('', '', [], ['', '', ''], currentFunctionKey);
+      evaluateRow(row);
+      filterRowsForFunction();
+      recalcAll();
+    });
+
+    recalcBtn.addEventListener('click', () => {
+      filterRowsForFunction();
+      recalcAll();
+    });
+
+    peopleBody.addEventListener('click', (e) => {
+      const target = e.target;
+
+      if (target.classList.contains('score-btn')) {
+        const sb = target.closest('.score-buttons');
+        const score = target.dataset.score;
+        updateCoreValueUI(sb, score);
+        evaluateRow(sb.closest('tr'));
+        recalcAll();
+      }
+
+      if (target.classList.contains('gwc-btn')) {
+        const toggle = target.closest('.gwc-toggle');
+        const val = target.dataset.value;
+        updateGwcUI(toggle, val);
+        evaluateRow(toggle.closest('tr'));
+        recalcAll();
+      }
+
+      if (target.classList.contains('scorecard-btn')) {
+        const tr = target.closest('tr');
+        if (tr) exportRowToPDF(tr);
+      }
+
+      if (target.classList.contains('remove-btn')) {
+        const tr = target.closest('tr');
+        tr.remove();
+        recalcAll();
+      }
+    });
+
+    peopleBody.addEventListener('change', (e) => {
+      if (e.target.classList.contains('fn-select')) {
+        filterRowsForFunction();
+        recalcAll();
+      }
+    });
+
+    peopleBody.addEventListener('input', (e) => {
+      if (e.target.classList.contains('name-input') || e.target.classList.contains('seat-input')) {
+        recalcAll();
+      }
+    });
+
+    function exportToCsv() {
+      const rows = [];
+      const headers = [
+        'Person',
+        'Seat',
+        'Function',
+        ...valueKeys.map(k => valueLabels[k]),
+        'GetsIt',
+        'WantsIt',
+        'Capacity',
+        'RightPerson',
+        'RightSeat',
+        'SuggestedAction'
+      ];
+      rows.push(headers.join(','));
+
+      peopleBody.querySelectorAll('tr').forEach(tr => {
+        const name = tr.querySelector('.name-input')?.value || '';
+        const seat = tr.querySelector('.seat-input')?.value || '';
+        const fnSel = tr.querySelector('.fn-select');
+        const fnLabel = fnSel ? getFunctionLabel(fnSel.value) : '';
+
+        const coreScores = Array.from(tr.querySelectorAll('.score-buttons')).map(sb => sb.dataset.score || '');
+        const gwcVals = Array.from(tr.querySelectorAll('.gwc-toggle')).map(t => t.dataset.value || '');
+        const rightPersonText = tr.querySelector('.right-person-cell')?.innerText.trim() || '';
+        const rightSeatText = tr.querySelector('.right-seat-cell')?.innerText.trim() || '';
+        const actionText = tr.querySelector('.action-cell')?.innerText.trim() || '';
+
+        const row = [
+          name,
+          seat,
+          fnLabel,
+          ...coreScores,
+          gwcVals[0] || '',
+          gwcVals[1] || '',
+          gwcVals[2] || '',
+          rightPersonText,
+          rightSeatText,
+          actionText
+        ].map(v => `"${String(v).replace(/"/g, '""')}"`);
+
+        rows.push(row.join(','));
+      });
+
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'people-analyzer-export.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    exportBtn.addEventListener('click', exportToCsv);
+
+    function getStateFromDOM() {
+      captureCurrentFunctionDefinitions();
+
+      const rows = [];
+      peopleBody.querySelectorAll('tr').forEach(tr => {
+        const name = tr.querySelector('.name-input')?.value || '';
+        const seat = tr.querySelector('.seat-input')?.value || '';
+        const fnSel = tr.querySelector('.fn-select');
+        const fnKey = fnSel ? fnSel.value : 'business';
+
+        const coreScores = Array.from(tr.querySelectorAll('.score-buttons')).map(sb => sb.dataset.score || '');
+        const gwcVals = Array.from(tr.querySelectorAll('.gwc-toggle')).map(t => t.dataset.value || '');
+
+        rows.push({
+          name,
+          seat,
+          fnKey,
+          coreScores,
+          gwcVals
+        });
+      });
+
+      return {
+        theme: body.getAttribute('data-theme') || 'dark',
+        rows,
+        functionList,
+        valueDefinitions,
+        currentFunctionKey
+      };
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(getStateFromDOM()));
+      } catch (e) {
+        console.warn('Failed to save People Analyzer state', e);
+      }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+      return JSON.parse(raw);
+      } catch (e) {
+        console.warn('Failed to load People Analyzer state', e);
+        return null;
+      }
+    }
+
+    function applyState(state) {
+      if (!state) return;
+
+      functionList = Array.isArray(state.functionList) && state.functionList.length
+        ? state.functionList
+        : JSON.parse(JSON.stringify(defaultFunctionList));
+      ensureBusinessExists();
+
+      valueDefinitions = state.valueDefinitions || {};
+      currentFunctionKey = state.currentFunctionKey || 'business';
+
+      const theme = state.theme || 'dark';
+      body.setAttribute('data-theme', theme);
+      themeLabel.textContent = theme === 'dark' ? 'Dark' : 'Light';
+
+      renderFunctionTabs();
+      renderValuesDetails(currentFunctionKey);
+
+      peopleBody.innerHTML = '';
+      if (state.rows && state.rows.length) {
+        state.rows.forEach(r => {
+          const row = createRow(
+            r.name || '',
+            r.seat || '',
+            r.coreScores || [],
+            r.gwcVals || ['', '', ''],
+            r.fnKey || 'business'
+          );
+          evaluateRow(row);
+        });
+      }
+
+      refreshFnSelectOptions();
+      filterRowsForFunction();
+      recalcAll();
+    }
+
+    saveBtn.addEventListener('click', () => {
+      saveState();
+      alert('People Analyzer saved locally in this browser.');
+    });
+
+    resetBtn.addEventListener('click', () => {
+      if (!confirm('This clears all People Analyzer data from this browser (does NOT touch the Accountability Chart). Continue?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      valueDefinitions = {};
+      functionList = JSON.parse(JSON.stringify(defaultFunctionList));
+      currentFunctionKey = 'business';
+      renderFunctionTabs();
+      renderValuesDetails(currentFunctionKey);
+      peopleBody.innerHTML = '';
+      seedDefaultRows();
+      filterRowsForFunction();
+      recalcAll();
+    });
+
+    function loadAccountabilityChartState() {
+      try {
+        const raw = localStorage.getItem(ACCT_STORAGE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return null;
+        if (!Array.isArray(parsed.functions)) return null;
+        return parsed;
+      } catch (e) {
+        console.warn('Unable to load Accountability Chart state:', e);
+        return null;
+      }
+    }
+
+    function syncFromAccountabilityChart(opts) {
+      const options = opts || {};
+      const replaceExisting = !!options.replaceExisting;
+
+      const acctState = loadAccountabilityChartState();
+      if (!acctState) {
+        alert('No Accountability Chart data found in this browser.');
+        return;
+      }
+
+      const functions = Array.isArray(acctState.functions) ? acctState.functions : [];
+      if (!functions.length) {
+        alert('Accountability Chart has no functions/seats yet.');
+        return;
+      }
+
+      functions.forEach(fn => {
+        const fnName = (fn.name || '').trim();
+        if (!fnName) return;
+        const fnKey = mapFunctionNameToFnKey(fnName);
+        ensureFunctionInList(fnKey, fnName);
+      });
+
+      renderFunctionTabs();
+      refreshFnSelectOptions();
+
+      if (replaceExisting) {
+        peopleBody.innerHTML = '';
+      }
+
+      const existingKeys = new Set(
+        Array.from(peopleBody.querySelectorAll('tr')).map(tr => {
+          const seat = (tr.querySelector('.seat-input')?.value || '').trim().toLowerCase();
+          const fnSel = tr.querySelector('.fn-select');
+          const fnKey = fnSel ? fnSel.value : 'business';
+          return seat + '|' + fnKey;
+        })
+      );
+
+      let addedCount = 0;
+
+      functions.forEach(fn => {
+        const fnName = (fn.name || '').trim();
+        if (!fnName) return;
+        let fnKey = mapFunctionNameToFnKey(fnName);
+        fnKey = ensureFunctionInList(fnKey, fnName);
+
+        const seats = Array.isArray(fn.seats) ? fn.seats : [];
+        seats.forEach(seat => {
+          const role = (seat.role || '').trim();
+          if (!role) return;
+          const owner = (seat.owner || '').trim();
+          const key = role.toLowerCase() + '|' + fnKey;
+          if (existingKeys.has(key)) return;
+
+          const row = createRow(owner, role, [], ['', '', ''], fnKey);
+          evaluateRow(row);
+          existingKeys.add(key);
+          addedCount++;
+        });
+      });
+
+      filterRowsForFunction();
+      recalcAll();
+
+      if (!addedCount) {
+        alert('Functions synced. No new seats to import.');
+      } else {
+        alert(`Imported ${addedCount} seat(s) from the Accountability Chart.`);
+      }
+    }
+
+    syncFromChartBtn.addEventListener('click', () => {
+      syncFromAccountabilityChart({ replaceExisting: false });
+    });
+
+    async function exportRowToPDF(tr) {
+      const { jsPDF } = window.jspdf;
+
+      const name = tr.querySelector('.name-input')?.value || '';
+      const seat = tr.querySelector('.seat-input')?.value || '';
+      const fnSel = tr.querySelector('.fn-select');
+      const fnLabel = fnSel ? fnSel.options[fnSel.selectedIndex].textContent : '';
+
+      const rightPersonText = tr.querySelector('.right-person-cell')?.innerText.trim() || '';
+      const rightSeatText = tr.querySelector('.right-seat-cell')?.innerText.trim() || '';
+      const actionText = tr.querySelector('.action-cell')?.innerText.trim() || '';
+
+      const scoreButtons = tr.querySelectorAll('.score-buttons');
+      const gwcToggles = tr.querySelectorAll('.gwc-toggle');
+
+      document.getElementById('scName').textContent = name || 'Unnamed Person';
+      document.getElementById('scSeat').textContent = seat || 'Seat not set';
+      document.getElementById('scFunction').textContent = fnLabel || 'Business Values';
+      document.getElementById('scRightPerson').textContent = rightPersonText || 'Right Person? –';
+      document.getElementById('scRightSeat').textContent = rightSeatText || 'Right Seat? –';
+      document.getElementById('scSuggestedAction').textContent = `Suggested Action: ${actionText || '–'}`;
+      document.getElementById('scMeta').textContent =
+        `Generated from People Analyzer • ${new Date().toLocaleDateString()}`;
+
+      const scValuesBody = document.getElementById('scValuesBody');
+      scValuesBody.innerHTML = '';
+
+      const scoreMeta = {
+        '+': { label: 'Always', cls: 'sc-score-plus' },
+        '±': { label: 'Sometimes', cls: 'sc-score-mid' },
+        '-': { label: 'Rarely', cls: 'sc-score-minus' }
+      };
+
+      scoreButtons.forEach((sb, idx) => {
+        let score = '–';
+        const activeBtn = sb.querySelector('.score-btn.active-plus, .score-btn.active-mid, .score-btn.active-minus');
+
+        if (activeBtn) {
+          score = activeBtn.dataset.score || activeBtn.textContent.trim() || '–';
+        } else if (sb.dataset.score) {
+          score = sb.dataset.score;
+        }
+
+        const key = valueKeys[idx];
+        const label = valueLabels[key] || key;
+
+        const meta = scoreMeta[score] || { label: 'Not set', cls: '' };
+
+const trVal = document.createElement('tr');
+trVal.innerHTML = `
+  <td>
+    ${label} – 
+    <span class="sc-score-inline ${meta.cls}">
+      ${score} ${meta.label}
+    </span>
+  </td>
+`;
+scValuesBody.appendChild(trVal);
+      });
+
+      document.getElementById('scG').textContent =
+        gwcToggles[0]?.dataset.value === 'yes' ? 'Yes' : 'No / n/a';
+      document.getElementById('scW').textContent =
+        gwcToggles[1]?.dataset.value === 'yes' ? 'Yes' : 'No / n/a';
+      document.getElementById('scC').textContent =
+        gwcToggles[2]?.dataset.value === 'yes' ? 'Yes' : 'No / n/a';
+
+      const card = document.getElementById('scorecardTemplate');
+      card.style.display = 'block';
+
+      const canvas = await html2canvas(card, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+
+      const pdf = new jsPDF('p', 'mm', 'a5');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const margin = 8;
+      const imgWidth = pageWidth - margin * 2;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const yPos = Math.max(margin, (pageHeight - imgHeight) / 2);
+
+      pdf.addImage(imgData, 'PNG', margin, yPos, imgWidth, imgHeight);
+
+      const safeName = (name || 'Seat').replace(/[^a-z0-9]+/gi, '_');
+      pdf.save(`PeopleScorecard_${safeName}.pdf`);
+
+      card.style.display = 'none';
+    }
+
+    function seedDefaultRows() {
+      const examples = [
+        {
+          name: 'Alice – Head of Sales',
+          fnKey: 'sales',
+          coreScores: ['+', '+', '+', '±', '+', '+'],
+          gwc: ['yes', 'yes', 'yes']
+        },
+        {
+          name: 'Brian – CS Lead',
+          fnKey: 'success',
+          coreScores: ['±', '+', '±', '+', '±', '-'],
+          gwc: ['yes', 'yes', 'no']
+        }
+      ];
+
+      examples.forEach(ex => {
+        const [personName, seat] = ex.name.split(' – ');
+        const row = createRow(personName, seat, ex.coreScores, ex.gwc, ex.fnKey);
+        evaluateRow(row);
+      });
+
+      filterRowsForFunction();
+      recalcAll();
+    }
+
+    (function init() {
+      renderFunctionTabs();
+      renderValuesDetails(currentFunctionKey);
+
+      const state = loadState();
+      if (state && state.rows && state.rows.length) {
+        applyState(state);
+      } else {
+        const acctState = loadAccountabilityChartState();
+        if (acctState && Array.isArray(acctState.functions) && acctState.functions.length) {
+          syncFromAccountabilityChart({ replaceExisting: true });
+        } else {
+          seedDefaultRows();
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
