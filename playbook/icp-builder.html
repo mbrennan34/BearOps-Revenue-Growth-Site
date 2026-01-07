@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Account Intel & Command of the Message – BearOps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at top left, #1f2937 0%, #020617 55%, #000 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 32px 16px 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      margin-bottom: 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      letter-spacing: 0.02em;
+      color: #e5e7eb;
+      margin-bottom: 8px;
+    }
+
+    .header h1 span {
+      background: linear-gradient(135deg, #60a5fa, #f97316, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 12px 24px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      background: rgba(30, 64, 175, 0.3);
+      color: #e2e8f0;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      color: white;
+      border-color: #6366f1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      color: #bfdbfe;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      color: #a5b4fc;
+      font-size: 1.1rem;
+      margin: 20px 0 12px 0;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #cbd5e0;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 1em;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      color: white;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(148, 163, 184, 0.2);
+      color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(148, 163, 184, 0.3);
+    }
+
+    .status-message {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    .status-info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+
+    .status-success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .status-warning {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      color: #fde047;
+    }
+
+    .command-section {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .command-section h4 {
+      color: #f87171;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .command-section.before h4 { color: #f87171; border-color: rgba(248, 113, 113, 0.3); }
+    .command-section.negative h4 { color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+    .command-section.after h4 { color: #22c55e; border-color: rgba(34, 197, 94, 0.3); }
+    .command-section.outcomes h4 { color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); }
+    .command-section.capabilities h4 { color: #a78bfa; border-color: rgba(167, 139, 250, 0.3); }
+    .command-section.metrics h4 { color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
+
+    .command-content {
+      color: #cbd5e0;
+      line-height: 1.7;
+    }
+
+    .command-content ul {
+      margin: 8px 0 8px 20px;
+    }
+
+    .command-content li {
+      margin: 6px 0;
+    }
+
+    .question-box {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 3px solid #60a5fa;
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 4px;
+    }
+
+    .question-box p {
+      color: #93c5fd;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .question-box ul {
+      color: #cbd5e0;
+      font-size: 0.85rem;
+      margin-left: 20px;
+    }
+
+    .methodology-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 4px 4px 4px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-sandler {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-challenger {
+      background: rgba(251, 146, 60, 0.2);
+      color: #fdba74;
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .badge-command {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .script-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      position: relative;
+    }
+
+    .script-box h5 {
+      color: #bfdbfe;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .script-content {
+      color: #cbd5e0;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+    }
+
+    .muted {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
+    pre {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      color: #cbd5e0;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .tabs {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><span>Account Intel & Command of the Message</span></h1>
+      <p>Integrated research, discovery, and messaging framework using Sandler, Challenger, and Command of the Message methodologies</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('intel')" data-tab="intel">
+        1. Account Intel
+      </button>
+      <button class="tab" onclick="switchTab('command')" data-tab="command">
+        2. Command of Message
+      </button>
+      <button class="tab" onclick="switchTab('messaging')" data-tab="messaging">
+        3. Messaging & Scripts
+      </button>
+    </div>
+
+    <!-- TAB 1: ACCOUNT INTEL -->
+    <div class="tab-content active" id="intel">
+      <div class="card">
+        <h2>🔍 Account Intel</h2>
+        <p class="muted" style="margin-bottom: 16px;">Capture your company context and target account, then use AI prompts to build rich intel. This feeds into Command of the Message.</p>
+
+        <div id="intelStatus" class="status-message status-info">
+          ℹ️ Complete this step to unlock Command of the Message framework
+        </div>
+
+        <h3>Step 1: Your Company</h3>
+        <div class="form-group">
+          <label>Your Company Name *</label>
+          <input type="text" id="yourCompany" placeholder="BearOps" value="BearOps">
+        </div>
+
+        <div class="form-group">
+          <label>Problems You Solve (for your ICP) *</label>
+          <textarea id="problemsSolved" placeholder="Examples: forecasting chaos, misaligned GTM, no clear RevOps ownership...">• Manual revenue forecasting and planning chaos
+• Lack of structured sales methodologies (MEDDICC, SPIN, Challenger)
+• Inconsistent pipeline management and deal qualification
+• Poor territory and quota planning
+• Inefficient sales-to-CS handoffs
+• No systematic coaching or enablement framework</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Your Target Personas (optional)</label>
+          <input type="text" id="yourTargetPersonas" placeholder="Founders, CEOs, CROs, VP Sales, COO, CFO..." value="CRO, VP Sales, Head of Revenue Operations">
+        </div>
+
+        <h3>Step 2: Target Account</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company Name *</label>
+            <input type="text" id="companyName" placeholder="TargetCo">
+          </div>
+          <div class="form-group">
+            <label>Target Persona *</label>
+            <input type="text" id="targetPersona" placeholder="CRO, VP Sales, Founder...">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Industry</label>
+            <input type="text" id="industry" placeholder="B2B SaaS, FinTech, HealthTech...">
+          </div>
+          <div class="form-group">
+            <label>Company Size</label>
+            <input type="text" id="companySize" placeholder="e.g. 80 FTE / €6m ARR">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top: 6px;" onclick="generateResearchPrompts()">
+          ⚙️ Generate Research Prompts
+        </button>
+
+        <div id="researchPrompts" style="display:none; margin-top:20px;">
+          <h3>AI Research Prompts</h3>
+          <p class="muted">Copy each prompt into ChatGPT/Claude, then paste the answers into Step 3 below.</p>
+
+          <div style="margin-top: 16px;">
+            <h4 style="color: #a5b4fc; font-size: 1rem; margin-bottom: 8px;">1. Company Intelligence</h4>
+            <pre id="prompt1" style="margin-bottom: 8px;"></pre>
+            <button class="btn btn-secondary" onclick="copyPrompt('prompt1')">📋 Copy Prompt 1</button>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <h4 style="color: #a5b4fc; font-size: 1rem; margin-bottom: 8px;">2. Persona Intelligence</h4>
+            <pre id="prompt2" style="margin-bottom: 8px;"></pre>
+            <button class="btn btn-secondary" onclick="copyPrompt('prompt2')">📋 Copy Prompt 2</button>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <h4 style="color: #a5b4fc; font-size: 1rem; margin-bottom: 8px;">3. Triggers & Angles</h4>
+            <pre id="prompt3" style="margin-bottom: 8px;"></pre>
+            <button class="btn btn-secondary" onclick="copyPrompt('prompt3')">📋 Copy Prompt 3</button>
+          </div>
+        </div>
+
+        <h3 style="margin-top:20px;">Step 3: Paste Research Summary</h3>
+        <div class="form-group">
+          <label>Research Summary (from AI)</label>
+          <textarea id="researchResults" placeholder="Summarise the intel you got from the prompts above..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveResearch()">💾 Save Research</button>
+      </div>
+    </div>
+
+    <!-- TAB 2: COMMAND OF THE MESSAGE -->
+    <div class="tab-content" id="command">
+      <div class="card">
+        <h2>📋 Command of the Message</h2>
+        <p class="muted" style="margin-bottom: 16px;">Transform your account intel into a structured discovery framework using Command of the Message methodology.</p>
+
+        <div id="commandEmpty">
+          <div class="status-message status-info">
+            ℹ️ Save Account Intel first, then generate your Command of the Message framework
+          </div>
+          <button class="btn btn-primary" onclick="generateCommand()" disabled id="generateCommandBtn">
+            ⚙️ Generate Command of the Message
+          </button>
+        </div>
+
+        <div id="commandGenerated" style="display:none;">
+          <div style="margin-bottom: 16px;">
+            <span class="methodology-badge badge-command">Command of Message</span>
+            <span class="methodology-badge badge-challenger">Challenger Sale</span>
+            <span class="methodology-badge badge-sandler">Sandler</span>
+          </div>
+
+          <button class="btn btn-secondary" onclick="regenerateCommand()" style="margin-bottom: 16px;">
+            🔁 Regenerate Framework
+          </button>
+
+          <div id="commandContent"></div>
+
+          <h3 style="margin-top: 24px;">Additional Discovery Notes</h3>
+          <div class="form-group">
+            <textarea id="commandNotes" placeholder="Add your own notes, questions, or observations..."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="saveCommand()">💾 Save Notes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: MESSAGING & SCRIPTS -->
+    <div class="tab-content" id="messaging">
+      <div class="card">
+        <h2>✉️ Messaging & Scripts</h2>
+        <p class="muted" style="margin-bottom: 16px;">Generate messaging and scripts based on your Command of the Message framework, leveraging Sandler and Challenger methodologies.</p>
+
+        <div id="messagingEmpty">
+          <div class="status-message status-info">
+            ℹ️ Generate Command of the Message framework first
+          </div>
+          <button class="btn btn-primary" onclick="generateMessaging()" disabled id="generateMessagingBtn">
+            ⚙️ Generate Messaging & Scripts
+          </button>
+        </div>
+
+        <div id="messagingGenerated" style="display:none;">
+          <button class="btn btn-secondary" onclick="regenerateMessaging()" style="margin-bottom: 16px;">
+            🔁 Regenerate Messaging
+          </button>
+
+          <div id="messagingContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global state
+    let accountData = {
+      yourCompany: '',
+      problemsSolved: '',
+      targetPersonas: '',
+      company: '',
+      persona: '',
+      industry: '',
+      size: '',
+      research: '',
+      commandGenerated: false,
+      messagingGenerated: false
+    };
+
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    // Generate research prompts
+    function generateResearchPrompts() {
+      const yourCompany = document.getElementById('yourCompany').value.trim();
+      const problems = document.getElementById('problemsSolved').value.trim();
+      const personas = document.getElementById('yourTargetPersonas').value.trim();
+      const company = document.getElementById('companyName').value.trim();
+      const persona = document.getElementById('targetPersona').value.trim();
+      const industry = document.getElementById('industry').value.trim();
+      const size = document.getElementById('companySize').value.trim();
+
+      if (!yourCompany || !problems) {
+        alert('⚠️ Please fill in "Your Company" and "Problems You Solve" first.');
+        return;
+      }
+      if (!company || !persona) {
+        alert('⚠️ Please enter target Company Name and Persona.');
+        return;
+      }
+
+      accountData.yourCompany = yourCompany;
+      accountData.problemsSolved = problems;
+      accountData.targetPersonas = personas;
+      accountData.company = company;
+      accountData.persona = persona;
+      accountData.industry = industry;
+      accountData.size = size;
+
+      const p1 = [
+        `You are a research assistant. Build a concise "Company Intelligence" brief for ${company}.`,
+        "",
+        "Include:",
+        "- What they do (1–2 sentences)",
+        "- Who they sell to",
+        "- Key products or offerings",
+        "- Recent funding or major announcements (last 12–18 months)",
+        "- Growth signals (hiring, expansion, product launches)",
+        "",
+        `Context: We (${yourCompany}) solve:`,
+        problems
+      ].join("\n");
+
+      const p2 = [
+        `You are a GTM strategist. Build a "Persona Intelligence" brief for the ${persona} at a ${size || "mid-sized"} ${industry || "B2B"} company like ${company}.`,
+        "",
+        "Include:",
+        "- Typical responsibilities and KPIs",
+        "- Reporting line (who they report to / who reports to them)",
+        "- How they think about revenue, risk and efficiency",
+        "- What would cause them to look for help from a partner like us",
+        "",
+        "Keep it practical and bulleted."
+      ].join("\n");
+
+      const p3 = [
+        "You are an outbound strategist.",
+        "",
+        `Using the previous company & persona research for ${company} (${persona}),`,
+        "create:",
+        "- 3–5 specific triggers or events that make outreach timely",
+        "- 3–5 tailored opener angles tied to those triggers",
+        "- 3 personalised subject lines for an email",
+        "",
+        `Context about our offer: ${yourCompany} helps companies solve:`,
+        problems,
+        "",
+        "Output in short bullets I can paste into my notes."
+      ].join("\n");
+
+      document.getElementById('prompt1').textContent = p1;
+      document.getElementById('prompt2').textContent = p2;
+      document.getElementById('prompt3').textContent = p3;
+
+      document.getElementById('researchPrompts').style.display = 'block';
+
+      const status = document.getElementById('intelStatus');
+      status.className = 'status-message status-warning';
+      status.textContent = '⚠️ Copy prompts → Run in ChatGPT/Claude → Paste results into Step 3 below.';
+    }
+
+    // Copy prompt to clipboard
+    function copyPrompt(promptId) {
+      const el = document.getElementById(promptId);
+      if (!el) return;
+      const text = el.textContent || el.innerText || '';
+      if (!text.trim()) return;
+
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert('✅ Prompt copied to clipboard.');
+        })
+        .catch(() => {
+          alert('⚠️ Could not copy. Please select and copy manually.');
+        });
+    }
+
+    // Save research
+    function saveResearch() {
+      const resultsEl = document.getElementById('researchResults');
+      if (!resultsEl) return;
+      const val = resultsEl.value.trim();
+      if (!val) {
+        alert('⚠️ Paste your AI research results before saving.');
+        return;
+      }
+
+      accountData.research = val;
+
+      const btn = document.getElementById('generateCommandBtn');
+      if (btn) btn.disabled = false;
+
+      const status = document.getElementById('intelStatus');
+      if (status) {
+        status.className = 'status-message status-success';
+        status.textContent = '✅ Research saved. You can now generate Command of the Message.';
+      }
+
+      alert('✅ Research saved successfully!');
+    }
+
+    // Generate Command of the Message
+    function generateCommand() {
+      if (!accountData.company || !accountData.persona) {
+        alert('⚠️ Please save Account Intel first');
+        return;
+      }
+
+      const commandHTML = buildCommandOfMessage();
+      
+      document.getElementById('commandEmpty').style.display = 'none';
+      document.getElementById('commandGenerated').style.display = 'block';
+      document.getElementById('commandContent').innerHTML = commandHTML;
+      
+      accountData.commandGenerated = true;
+      document.getElementById('generateMessagingBtn').disabled = false;
+      
+      switchTab('command');
+    }
+
+    // Build Command of the Message HTML
+    function buildCommandOfMessage() {
+      const { company, persona, problemsSolved, research, industry, size } = accountData;
+      
+      const problems = problemsSolved.split('\n').filter(p => p.trim()).map(p => p.trim().replace(/^[•\-]\s*/, ''));
+      
+      // Extract triggers from research (same logic as before)
+      let triggerList = [];
+      const researchLower = research.toLowerCase();
+      
+      if (researchLower.includes('series a') || researchLower.includes('series b') || researchLower.includes('funding')) {
+        triggerList.push('Recent funding round');
+      }
+      if (researchLower.includes('new cro') || researchLower.includes('new vp') || researchLower.includes('hired')) {
+        triggerList.push('New leadership hire');
+      }
+      if (researchLower.includes('expansion') || researchLower.includes('expanding') || researchLower.includes('new market')) {
+        triggerList.push('Market expansion');
+      }
+      if (researchLower.includes('missed target') || researchLower.includes('missed quota') || researchLower.includes('behind target')) {
+        triggerList.push('Missed revenue targets');
+      }
+      if (researchLower.includes('doubled') || researchLower.includes('rapid growth') || researchLower.includes('scaling')) {
+        triggerList.push('Rapid team growth');
+      }
+      if (researchLower.includes('board pressure') || researchLower.includes('investor')) {
+        triggerList.push('Increased board scrutiny');
+      }
+      
+      // Fallback if no triggers detected
+      if (triggerList.length === 0) {
+        triggerList = ['Recent growth phase', 'Operational scaling needs'];
+      }
+
+      let html = `
+        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+          <h4 style="color: #60a5fa; margin-bottom: 12px;">Target Account Context</h4>
+          <p style="color: #cbd5e0; margin-bottom: 8px;"><strong>${company}</strong> – ${persona} – ${industry || 'Industry'} – ${size || 'Size'}</p>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 6px; margin-top: 12px;">
+            <p style="color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px;">Research Summary:</p>
+            <p style="color: #cbd5e0; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap;">${research.substring(0, 500)}${research.length > 500 ? '...' : ''}</p>
+          </div>
+        </div>
+      `;
+
+      // 1. BEFORE (Current State)
+      html += `
+        <div class="command-section before">
+          <h4>📍 1. BEFORE – Current State & Pain</h4>
+          <div class="command-content">
+            <p><strong>Based on your research, what's happening now at ${company}:</strong></p>
+            <ul>
+              ${problems.map(p => `<li>${p}</li>`).join('')}
+      `;
+      
+      // Add research-based context if available
+      if (researchLower.includes('forecast') || researchLower.includes('predict')) {
+        html += `<li>Uncertainty about revenue predictability and forecast accuracy</li>`;
+      }
+      if (researchLower.includes('hiring') || researchLower.includes('team') || researchLower.includes('headcount')) {
+        html += `<li>Rapid team growth creating operational strain and process gaps</li>`;
+      }
+      if (researchLower.includes('manual') || researchLower.includes('spreadsheet')) {
+        html += `<li>Heavy manual work taking focus away from strategic initiatives</li>`;
+      }
+      
+      html += `
+            </ul>
+            
+            ${triggerList.length > 0 ? `
+            <p style="margin-top: 12px; padding: 10px; background: rgba(251, 146, 60, 0.1); border-left: 3px solid #fb923c; border-radius: 4px;">
+              <strong style="color: #fb923c;">Active Triggers at ${company}:</strong><br>
+              <span style="color: #cbd5e0; font-size: 0.9rem;">${triggerList.map(t => '• ' + t).join('<br>')}</span>
+            </p>
+            ` : ''}
+          </div>
+          
+          <div class="question-box">
+            <p>🎯 Sandler Discovery Questions:</p>
+            <ul>
+              <li>"Tell me about your current process for ${problems[0]?.toLowerCase() || 'managing your operations'}?"</li>
+              <li>"How are you currently dealing with ${problems[1]?.toLowerCase() || 'this challenge'}?"</li>
+              <li>"Walk me through what happens when ${triggerList[0]?.toLowerCase() || 'you need to demonstrate results to the board'}?"</li>
+              <li>"On a scale of 1-10, how painful is ${problems[0]?.toLowerCase() || 'this situation'} right now?"</li>
+              ${triggerList[0] ? `<li>"You mentioned ${triggerList[0].toLowerCase()} – how has that changed your priorities?"</li>` : ''}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // 2. NEGATIVE CONSEQUENCES
+      html += `
+        <div class="command-section negative">
+          <h4>⚠️ 2. NEGATIVE CONSEQUENCES – Cost of Inaction</h4>
+          <div class="command-content">
+            <p><strong>What happens if ${company} doesn't address this:</strong></p>
+            <ul>
+      `;
+      
+      // Customize consequences based on research triggers
+      if (triggerList.some(t => t.includes('funding'))) {
+        html += `<li><strong>Funding Risk:</strong> Investors expect operational maturity after a funding round – continued chaos erodes confidence and makes next round harder</li>`;
+      }
+      if (triggerList.some(t => t.includes('leadership'))) {
+        html += `<li><strong>Leadership Credibility:</strong> New leaders need quick wins – inherited broken processes make it harder to deliver results</li>`;
+      }
+      if (triggerList.some(t => t.includes('growth') || t.includes('scaling'))) {
+        html += `<li><strong>Scaling Failure:</strong> Current processes will completely break as team doubles – chaos compounds at scale</li>`;
+      }
+      if (triggerList.some(t => t.includes('missed') || t.includes('targets'))) {
+        html += `<li><strong>Revenue Risk:</strong> Pattern of missed targets becomes structural problem – board loses confidence, best talent leaves</li>`;
+      }
+      
+      // Always include these core consequences
+      html += `
+              <li><strong>Talent Cost:</strong> Top performers leave due to chaotic processes and unfair territories</li>
+              <li><strong>Time Waste:</strong> Leadership spends 40%+ of time on manual work vs. strategic initiatives</li>
+              <li><strong>Opportunity Cost:</strong> Can't confidently invest in expansion without predictable capacity planning</li>
+              <li><strong>Competitive Risk:</strong> Competitors with better operations will outpace you in the market</li>
+            </ul>
+          </div>
+          
+          <div class="question-box">
+            <p>🎯 Challenger Teaching Questions:</p>
+            <ul>
+              <li>"What's the cost of NOT fixing ${problems[0]?.toLowerCase() || 'this'} over the next 12 months?"</li>
+              <li>"If you continue on this path, where do you see ${company} in 6 months?"</li>
+              ${triggerList[0] ? `<li>"Given ${triggerList[0].toLowerCase()}, what's at risk if you don't get operational control soon?"</li>` : ''}
+              <li>"How much revenue are you leaving on the table with your current approach?"</li>
+              ${triggerList.some(t => t.includes('funding')) ? `<li>"What will your board say when they see the same issues 6 months post-funding?"</li>` : ''}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // 3. AFTER (Future State)
+      html += `
+        <div class="command-section after">
+          <h4>✨ 3. AFTER – Desired Future State</h4>
+          <div class="command-content">
+            <p><strong>The future state ${company} needs to achieve:</strong></p>
+            <ul>
+              <li><strong>Real-time visibility:</strong> ${persona} and leadership have current, accurate view of pipeline and forecast</li>
+              <li><strong>Efficient operations:</strong> Team focuses on ${persona.includes('Sales') || persona.includes('Revenue') ? 'selling' : 'strategic work'}, not manual reporting and admin</li>
+              <li><strong>Structured methodology:</strong> Every rep uses proven frameworks (MEDDICC, Challenger, SPIN) consistently</li>
+              <li><strong>Predictable capacity:</strong> Leadership can confidently model hiring needs and quota capacity</li>
+              <li><strong>Fast ramp time:</strong> New reps reach productivity in 3-4 months, not 6-9</li>
+              <li><strong>Scalable processes:</strong> Operations don't break when headcount doubles</li>
+      `;
+      
+      // Add trigger-specific outcomes
+      if (triggerList.some(t => t.includes('funding'))) {
+        html += `<li><strong>Board confidence:</strong> Investors see mature, predictable revenue operations worthy of the funding</li>`;
+      }
+      if (triggerList.some(t => t.includes('leadership'))) {
+        html += `<li><strong>Leadership success:</strong> New ${persona} has operational foundation to deliver quick wins and build credibility</li>`;
+      }
+      if (triggerList.some(t => t.includes('expansion'))) {
+        html += `<li><strong>Expansion readiness:</strong> Proven playbook to replicate across new markets without reinventing the wheel</li>`;
+      }
+      
+      html += `
+            </ul>
+          </div>
+          
+          <div class="question-box">
+            <p>🎯 Sandler Need-Payoff Questions:</p>
+            <ul>
+              <li>"What would it mean for ${company} if you could reduce manual forecasting time by 75%?"</li>
+              <li>"How would your board react if you achieved 85%+ forecast accuracy?"</li>
+              <li>"What becomes possible if you cut new rep ramp time in half?"</li>
+              ${triggerList[0] ? `<li>"With ${triggerList[0].toLowerCase()}, what strategic moves become possible with operational control?"</li>` : ''}
+              <li>"If you had this visibility and predictability, what would you do differently?"</li>
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // 4. POSITIVE BUSINESS OUTCOMES
+      // Extract team size for calculations
+      let teamSize = 25; // default
+      if (size && (size.includes('50') || size.includes('40') || size.includes('60'))) teamSize = 50;
+      if (size && (size.includes('80') || size.includes('100'))) teamSize = 80;
+      if (size && (size.includes('150') || size.includes('200'))) teamSize = 150;
+      
+      const revenueImpact = teamSize < 50 ? '$1-3M' : teamSize < 100 ? '$2-5M' : '$5-10M';
+      const productivitySavings = teamSize < 50 ? '$300K+' : teamSize < 100 ? '$500K+' : '$800K+';
+      const turnoverSavings = teamSize < 50 ? '$200-400K' : teamSize < 100 ? '$300-600K' : '$600K-1M';
+      
+      html += `
+        <div class="command-section outcomes">
+          <h4>📈 4. POSITIVE BUSINESS OUTCOMES – Quantified Value</h4>
+          <div class="command-content">
+            <p><strong>Measurable outcomes ${company} can achieve${size ? ' (scaled to ~' + size + ')' : ''}:</strong></p>
+            <ul>
+              <li><strong>30 Days:</strong> Structured forecast process reduces cycle time from 3 days to 4 hours</li>
+              <li><strong>30 Days:</strong> Document current-state and identify top 3 quick wins specific to ${company}</li>
+              <li><strong>90 Days:</strong> Achieve 85%+ forecast accuracy (from typical 60-70% at this stage)</li>
+              <li><strong>90 Days:</strong> Complete territory redesign with clear, fair assignment rules</li>
+              <li><strong>90 Days:</strong> All reps certified on chosen sales methodology with active coaching program</li>
+              <li><strong>90 Days:</strong> 75% reduction in manual reporting time</li>
+              <li><strong>6 Months:</strong> Rep ramp time reduced to 3-4 months (from typical 6-9 months)</li>
+              <li><strong>6 Months:</strong> Turnover reduced to <15% (from typical 30%+ at scaling companies)</li>
+              <li><strong>12 Months:</strong> Systematic capacity planning enables confident hiring decisions ahead of revenue</li>
+      `;
+      
+      if (triggerList.some(t => t.includes('expansion'))) {
+        html += `<li><strong>12 Months:</strong> Proven playbook ready to scale into new markets without rebuilding</li>`;
+      }
+      
+      html += `
+            </ul>
+            
+            <p style="margin-top: 16px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
+              <strong style="color: #22c55e;">Total Impact for ${company}:</strong><br>
+              <span style="color: #cbd5e0;">• ${revenueImpact} in recovered revenue (reduced slippage and improved win rates)</span><br>
+              <span style="color: #cbd5e0;">• ${productivitySavings} annually in productivity gains (reduced manual work)</span><br>
+              <span style="color: #cbd5e0;">• ${turnoverSavings} in reduced turnover costs</span><br>
+              <span style="color: #cbd5e0;">• 6-12 months faster growth trajectory vs. competitors</span>
+            </p>
+          </div>
+        </div>
+      `;
+
+      // 5. REQUIRED CAPABILITIES
+      html += `
+        <div class="command-section capabilities">
+          <h4>🔧 5. REQUIRED CAPABILITIES – What It Takes</h4>
+          <div class="command-content">
+            <p><strong>To achieve these outcomes, ${company} needs:</strong></p>
+            <ul>
+              <li><strong>Proven Methodology:</strong> Structured frameworks (MEDDICC, Challenger, SPIN) – not invented here</li>
+              <li><strong>Systematic Processes:</strong> Documented playbooks for forecasting, territory planning, and ${persona.includes('Ops') ? 'operations management' : 'sales coaching'}</li>
+              <li><strong>Capacity Planning Tools:</strong> Models to confidently predict hiring needs and quota distribution at scale</li>
+              <li><strong>Training & Enablement:</strong> Not just documentation – active certification and coaching for ${persona} and their team</li>
+      `;
+      
+      // Add context-specific capabilities
+      if (triggerList.some(t => t.includes('leadership') || t.includes('new'))) {
+        html += `<li><strong>Change Management:</strong> Expertise in helping new leaders implement processes quickly without organizational resistance</li>`;
+      } else {
+        html += `<li><strong>Change Management:</strong> Expertise in rolling out new processes across growing teams</li>`;
+      }
+      
+      if (triggerList.some(t => t.includes('expansion'))) {
+        html += `<li><strong>Multi-Market Scalability:</strong> Frameworks that adapt to different markets without starting from scratch</li>`;
+      }
+      
+      html += `
+              <li><strong>Quick Implementation:</strong> Results visible in 30-60 days, not 12-18 months</li>
+              <li><strong>Stage-Specific Expertise:</strong> Experience with ${industry || 'B2B SaaS'} companies at ${size ? size + ' scale' : 'Series A/B stage'}</li>
+            </ul>
+          </div>
+          
+          <div class="question-box">
+            <p>🎯 Challenger Reframe Questions:</p>
+            <ul>
+              <li>"Most ${persona}s at your stage think they need a new CRM or more dashboards. What they actually need is frameworks first, technology second. Here's why..."</li>
+              <li>"Companies that scale successfully focus on these 3 things that ${company} likely isn't prioritizing yet..."</li>
+              <li>"Your competitors who've cracked this did something counterintuitive..."</li>
+              ${triggerList[0] ? `<li>"Given ${triggerList[0].toLowerCase()}, here's what successful companies do in their first 90 days..."</li>` : ''}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // 6. METRICS (How to Measure)
+      html += `
+        <div class="command-section metrics">
+          <h4>📊 6. METRICS – How We Measure Success</h4>
+          <div class="command-content">
+            <p><strong>Key metrics to track ${company}'s progress:</strong></p>
+            <ul>
+              <li><strong>Forecast Accuracy:</strong> % accuracy week-over-week and quarter-over-quarter</li>
+              <li><strong>Time to Forecast:</strong> Hours spent producing forecast (target: <4 hours)</li>
+              <li><strong>Pipeline Quality:</strong> % of deals that close vs. slip or are lost</li>
+              <li><strong>Rep Ramp Time:</strong> Months from hire to first deal and full productivity</li>
+              <li><strong>Quota Attainment:</strong> % of reps hitting quota (target: 60%+)</li>
+              <li><strong>Turnover Rate:</strong> % voluntary attrition (target: <15%)</li>
+              <li><strong>Time to Value:</strong> Days to first measurable improvement</li>
+              <li><strong>Process Adoption:</strong> % of team using new methodology consistently</li>
+            </ul>
+            
+            <p style="margin-top: 12px; color: #fbbf24; font-weight: 600;">
+              Leading Indicators: Pipeline coverage, activity levels, deal velocity, forecast commits vs. actuals
+            </p>
+          </div>
+        </div>
+      `;
+
+      // 7. HOW WE DO IT
+      html += `
+        <div class="command-section" style="background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3);">
+          <h4 style="color: #a5b4fc; border-color: rgba(165, 180, 252, 0.3);">🚀 7. HOW WE DO IT – ${accountData.yourCompany} Approach for ${company}</h4>
+          <div class="command-content">
+            <p><strong>Our methodology tailored to ${company}'s situation:</strong></p>
+            
+            <p style="margin: 12px 0; padding: 10px; background: rgba(59, 130, 246, 0.1); border-left: 3px solid #60a5fa; border-radius: 4px;">
+              <strong style="color: #60a5fa;">Context:</strong><br>
+              <span style="color: #cbd5e0; font-size: 0.9rem;">
+                ${company} is ${size ? 'at ' + size + ' scale' : 'scaling rapidly'}${triggerList[0] ? ' with ' + triggerList[0].toLowerCase() : ''}.
+                ${persona} needs ${problems[0]?.toLowerCase() || 'operational frameworks'} to ${triggerList.some(t => t.includes('leadership')) ? 'build credibility and deliver quick wins' : 'scale effectively'}.
+              </span>
+            </p>
+            
+            <p><strong>Implementation Approach:</strong></p>
+            <ul>
+              <li><strong>Week 1-2: Discovery & Assessment</strong>
+                <ul style="margin-top: 6px;">
+                  <li>Deep dive with ${persona} and leadership team</li>
+                  <li>Map current processes, pain points, and quick wins</li>
+                  ${triggerList[0] ? '<li>Align on urgency driven by ' + triggerList[0].toLowerCase() + '</li>' : ''}
+                  <li>Identify top 3 constraints blocking ${company}'s growth</li>
+                </ul>
+              </li>
+              
+              <li><strong>Week 3-4: Framework Design</strong>
+                <ul style="margin-top: 6px;">
+                  <li>Design custom frameworks aligned to ${company}'s GTM motion and stage</li>
+                  <li>Select methodology (MEDDICC, Challenger, SPIN) based on sales cycle and buyer</li>
+                  <li>Build territory/quota models using ${size ? 'your ' + size + ' data' : 'your current team size'}</li>
+                  <li>Create ${persona}-specific dashboards and reporting</li>
+                </ul>
+              </li>
+              
+              <li><strong>Week 5-8: Implementation & Training</strong>
+                <ul style="margin-top: 6px;">
+                  <li>Roll out frameworks with ${persona}'s revenue team</li>
+                  <li>Hands-on training and certification programs</li>
+                  <li>Manager coaching on how to use frameworks for 1:1s and deal reviews</li>
+                  ${triggerList.some(t => t.includes('expansion')) ? '<li>Document playbook for replication across new markets</li>' : ''}
+                </ul>
+              </li>
+              
+              <li><strong>Week 9-12: Refinement & Enablement</strong>
+                <ul style="margin-top: 6px;">
+                  <li>Coaching, iteration, and adoption tracking</li>
+                  <li>Fine-tune based on ${company}'s specific feedback</li>
+                  <li>Build enablement library and ongoing support model</li>
+                  <li>Quarterly strategic reviews with ${persona}</li>
+                </ul>
+              </li>
+            </ul>
+            
+            <p style="margin-top: 16px;"><strong>What makes us different for ${company}:</strong></p>
+            <ul>
+              <li><strong>Proven frameworks adapted to your context</strong> – not cookie-cutter templates</li>
+              <li><strong>Results visible in 30-60 days</strong> – critical given ${triggerList[0] ? triggerList[0].toLowerCase() : 'your growth trajectory'}</li>
+              <li><strong>Training and enablement included</strong> – not just consulting documents that sit on a shelf</li>
+              <li><strong>Experience with ${industry || 'B2B SaaS'} companies at ${size ? size + ' scale' : 'Series A/B stage'}</strong></li>
+              <li><strong>Practical, operator-led approach</strong> – we've built these systems ourselves as ${persona}s</li>
+              ${triggerList.some(t => t.includes('leadership')) ? '<li><strong>Designed for new leaders</strong> – help you deliver quick wins and build team buy-in</li>' : ''}
+            </ul>
+            
+            <p style="margin-top: 16px; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3);">
+              <strong style="color: #60a5fa;">Reference Customers:</strong><br>
+              <span style="color: #cbd5e0;">Similar ${industry || 'B2B SaaS'} companies at ${size ? size + ' scale' : 'Series A/B stage'} who've achieved these outcomes in 90 days</span>
+            </p>
+          </div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    // Regenerate Command
+    function regenerateCommand() {
+      if (confirm('Regenerate Command of the Message? Your notes will be preserved.')) {
+        generateCommand();
+      }
+    }
+
+    // Save Command
+    function saveCommand() {
+      const notes = document.getElementById('commandNotes').value;
+      accountData.commandNotes = notes;
+      alert('✅ Command of the Message notes saved!');
+    }
+
+    // Generate Messaging
+    function generateMessaging() {
+      if (!accountData.commandGenerated) {
+        alert('⚠️ Please generate Command of the Message first');
+        return;
+      }
+
+      const messagingHTML = buildMessaging();
+      
+      document.getElementById('messagingEmpty').style.display = 'none';
+      document.getElementById('messagingGenerated').style.display = 'block';
+      document.getElementById('messagingContent').innerHTML = messagingHTML;
+      
+      accountData.messagingGenerated = true;
+      
+      switchTab('messaging');
+    }
+
+    // Build Messaging HTML
+    function buildMessaging() {
+      const { company, persona, yourCompany, problemsSolved, research, industry } = accountData;
+      
+      const problems = problemsSolved.split('\n').filter(p => p.trim()).map(p => p.trim().replace(/^[•\-]\s*/, ''));
+      
+      // Extract triggers from research (same logic as Command of Message)
+      let triggerList = [];
+      const researchLower = research.toLowerCase();
+      
+      if (researchLower.includes('series a') || researchLower.includes('series b') || researchLower.includes('funding')) {
+        triggerList.push('Recent funding round');
+      }
+      if (researchLower.includes('new cro') || researchLower.includes('new vp') || researchLower.includes('hired')) {
+        triggerList.push('New leadership hire');
+      }
+      if (researchLower.includes('expansion') || researchLower.includes('expanding') || researchLower.includes('new market')) {
+        triggerList.push('Market expansion');
+      }
+      if (researchLower.includes('missed target') || researchLower.includes('missed quota') || researchLower.includes('behind target')) {
+        triggerList.push('Missed revenue targets');
+      }
+      if (researchLower.includes('doubled') || researchLower.includes('rapid growth') || researchLower.includes('scaling')) {
+        triggerList.push('Rapid team growth');
+      }
+      if (researchLower.includes('board pressure') || researchLower.includes('investor')) {
+        triggerList.push('Increased board scrutiny');
+      }
+      
+      // Fallback if no triggers detected
+      if (triggerList.length === 0) {
+        triggerList = ['recent growth', 'operational scaling needs'];
+      }
+      
+      const mainTrigger = triggerList[0] || 'recent growth';
+      const mainProblem = problems[0] || 'revenue operations challenges';
+
+      let html = `
+        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+          <p style="color: #93c5fd; margin-bottom: 8px;"><strong>Context:</strong></p>
+          <p style="color: #cbd5e0;">${company} – ${persona} – Trigger: ${mainTrigger}</p>
+          <p style="color: #cbd5e0;">Leading with: ${mainProblem}</p>
+        </div>
+      `;
+
+      // Email Sequence
+      html += `
+        <h3 style="color: #a5b4fc; margin: 24px 0 16px 0;">Email Sequence</h3>
+      `;
+
+      // Email 1 - Trigger-based opener
+      html += `
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Email 1: Trigger-Based Opener <span class="methodology-badge badge-challenger">Challenger</span></h5>
+          <div class="script-content">Subject: ${mainTrigger} at ${company}
+
+Hi {{first_name}},
+
+Noticed ${company}'s ${mainTrigger.toLowerCase()}${triggerList[1] ? ' and ' + triggerList[1].toLowerCase() : ''}. 
+
+Most ${persona}s at this stage hit ${mainProblem.toLowerCase()} – especially when ${triggerList[0]?.toLowerCase() || 'scaling quickly'}.
+
+The impact? Missed targets, board pressure, and top performers leaving due to chaos.
+
+We help ${industry || 'B2B SaaS'} companies at Series A/B build scalable revenue frameworks BEFORE scaling teams. Recent client achieved:
+• 85%+ forecast accuracy (from 60-70%)
+• Rep ramp cut from 7 months to 3.5 months
+• 75% less time on manual reporting
+
+Worth a 15-minute conversation?
+
+Best,
+{{your_name}}</div>
+        </div>
+      `;
+
+      // Email 2 - Teaching / Reframe
+      html += `
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Email 2: Teaching / Reframe <span class="methodology-badge badge-challenger">Challenger</span></h5>
+          <div class="script-content">Subject: Re: ${mainTrigger} at ${company}
+
+Hi {{first_name}},
+
+Following up on ${mainProblem.toLowerCase()}.
+
+Here's what most ${persona}s get wrong at your stage:
+
+❌ They think they need a new CRM or more dashboards
+✅ What actually works: Structured frameworks FIRST, then technology
+
+Companies that crack this focus on three things:
+1. Proven sales methodology (MEDDICC, Challenger, SPIN) – not invented here
+2. Systematic forecasting and territory planning
+3. Enablement and coaching – not just documentation
+
+${industry || 'B2B SaaS'} companies who do this see results in 60-90 days:
+• Forecast accuracy jumps to 85%+
+• Pipeline quality improves (less slippage)
+• Board confidence increases dramatically
+
+Similar situation at ${company}?
+
+Let's talk.
+
+Best,
+{{your_name}}</div>
+        </div>
+      `;
+
+      // Email 3 - Case Study / Proof
+      html += `
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Email 3: Case Study <span class="methodology-badge badge-command">Command</span></h5>
+          <div class="script-content">Subject: How [SimilarCo] solved ${mainProblem.toLowerCase()}
+
+{{first_name}},
+
+Quick case study that might be relevant:
+
+**BEFORE:**
+• [SimilarCo]'s ${persona} was dealing with ${mainProblem.toLowerCase()}
+• Forecast took 3 days to compile, accuracy was 65%
+• New reps took 7+ months to ramp
+• Board losing confidence in the numbers
+
+**AFTER (90 days with ${yourCompany}):**
+• Forecast time: 4 hours
+• Accuracy: 87%
+• Rep ramp: 3.5 months
+• Systematic capacity planning enables confident hiring
+
+**HOW:**
+• Implemented MEDDICC across the team
+• Built structured forecast and territory planning process
+• Created enablement program with ongoing coaching
+
+Total impact: ~$3M in recovered revenue, $400K in productivity gains, 40% reduction in turnover.
+
+Similar to ${company}'s situation?
+
+Worth a conversation.
+
+Best,
+{{your_name}}</div>
+        </div>
+      `;
+
+      // Email 4 - Breakup
+      html += `
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Email 4: Breakup <span class="methodology-badge badge-sandler">Sandler</span></h5>
+          <div class="script-content">Subject: Should I close your file?
+
+{{first_name}},
+
+I've reached out a few times about ${mainProblem.toLowerCase()} at ${company}.
+
+I'm guessing one of three things:
+
+1. **Not a priority right now** (totally fair – timing matters)
+2. **Already solved** (great! curious what you went with)
+3. **My emails got buried** (happens to all of us)
+
+If it's #1 or #2, no worries – I'll close your file and stop bothering you.
+
+If it's #3 and this IS something you're looking to improve, just reply "interested" and I'll send times.
+
+Either way, best of luck with ${mainTrigger.toLowerCase()}.
+
+Best,
+{{your_name}}
+
+P.S. - Curious what you decided even if it's not us. Always learning.</div>
+        </div>
+      `;
+
+      // Cold Call Script
+      html += `
+        <h3 style="color: #a5b4fc; margin: 32px 0 16px 0;">Cold Call Script</h3>
+        
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Sandler-Style Cold Call <span class="methodology-badge badge-sandler">Sandler</span></h5>
+          <div class="script-content"><strong>[PATTERN INTERRUPT]</strong>
+"Hi {{first_name}}, this is {{your_name}} from ${yourCompany}. Did I catch you at a bad time?"
+
+<strong>[WAIT FOR RESPONSE]</strong>
+
+<strong>[UPFRONT CONTRACT]</strong>
+"I know you're busy, so I'll be brief. I work with ${persona}s at ${industry || 'B2B SaaS'} companies dealing with ${mainProblem.toLowerCase()} – especially during ${triggerList[0]?.toLowerCase() || 'rapid growth'}. 
+
+Does that sound familiar?"
+
+<strong>[IF YES]</strong>
+"Great. I have a couple quick questions. If it seems like a fit, we can schedule a proper follow-up. If not, I'll let you go. Fair?"
+
+<strong>[PAIN DISCOVERY - Pick 2-3]</strong>
+
+1. "Walk me through your current forecasting process. How long does it take?"
+
+2. "On a scale of 1-10, how confident are you in your forecast accuracy?"
+
+3. "Tell me about how you're managing ${mainProblem.toLowerCase()} right now?"
+
+4. "You mentioned ${triggerList[0]?.toLowerCase() || 'recent growth'} – how has that impacted your ${persona.includes('Revenue') || persona.includes('CRO') ? 'revenue operations' : 'planning process'}?"
+
+5. "What happens if you can't fix this in the next 90 days?"
+
+<strong>[IMPLICATION]</strong>
+"So if I'm hearing you right, ${mainProblem.toLowerCase()} is costing you [TIME/MONEY/CREDIBILITY] and it's only getting worse as you scale. Is that accurate?"
+
+<strong>[NEED-PAYOFF]</strong>
+"If we could help you achieve 85%+ forecast accuracy and cut your reporting time by 75%, what would that mean for ${company}?"
+
+<strong>[NEXT STEP / TIME ASK]</strong>
+"Based on what you've shared, I think there's a fit here. Can we schedule 30 minutes next week to dive deeper? I'll send over some questions in advance so it's productive for you."
+
+<strong>[NOTES FOR THIS CALL]</strong>
+• Trigger: ${mainTrigger}
+• Pain: ${mainProblem}
+• Listen for: budget authority, timeline, decision process
+• Qualify: Do they have budget? What's driving urgency? Who else is involved?
+• Next step: Discovery workshop to map current state</div>
+        </div>
+      `;
+
+      // LinkedIn Message
+      html += `
+        <h3 style="color: #a5b4fc; margin: 32px 0 16px 0;">LinkedIn Outreach</h3>
+        
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>LinkedIn Connection Request</h5>
+          <div class="script-content">Hi {{first_name}},
+
+${persona.includes('CRO') || persona.includes('VP') || persona.includes('Head') ? 'Fellow revenue leader here' : 'Reaching out as someone who works with ' + persona + 's'} – saw ${company}'s ${mainTrigger.toLowerCase()} and wanted to connect.
+
+I work with ${persona}s tackling ${mainProblem.toLowerCase()}, especially at companies going through rapid scaling.
+
+Curious how you're approaching this?
+
+Best,
+{{your_name}}</div>
+        </div>
+
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>LinkedIn InMail / Follow-up</h5>
+          <div class="script-content">Hi {{first_name}},
+
+Noticed ${company}'s ${mainTrigger.toLowerCase()}. Congrats!
+
+Quick question: How are you handling ${mainProblem.toLowerCase()} as you scale?
+
+Most ${persona}s at Series A/B hit this wall – forecast accuracy drops, territories become chaotic, new reps take forever to ramp.
+
+We help ${industry || 'B2B SaaS'} companies build revenue frameworks that scale. Recent client:
+• Forecast accuracy: 87% (from 63%)
+• Rep ramp: 3.5 months (from 7)
+• Manual reporting: -75%
+
+Worth a conversation?
+
+Best,
+{{your_name}}</div>
+        </div>
+      `;
+
+      // Discovery Call Framework
+      html += `
+        <h3 style="color: #a5b4fc; margin: 32px 0 16px 0;">Discovery Call Framework</h3>
+        
+        <div class="script-box">
+          <button class="copy-btn" onclick="copyScript(this)">📋 Copy</button>
+          <h5>Command of the Message Discovery <span class="methodology-badge badge-command">Command</span> <span class="methodology-badge badge-sandler">Sandler</span></h5>
+          <div class="script-content"><strong>AGENDA (2 minutes)</strong>
+"Thanks for your time, {{first_name}}. Here's what I'd like to cover in our 30 minutes:
+1. Your current state – what's working, what's not (10 min)
+2. Where you need to be – your goals and timeline (10 min)  
+3. Determine if there's a fit – and if so, next steps (10 min)
+
+Does that work for you? Anything you want to add?"
+
+<strong>SECTION 1: BEFORE (Current State) – 10 minutes</strong>
+
+"Tell me about your current ${mainProblem.toLowerCase()} situation..."
+
+**Key questions:**
+• "Walk me through your forecasting process end-to-end"
+• "How long does it take? Who's involved?"
+• "What's your forecast accuracy typically? How do you know?"
+• "Tell me about your sales methodology – what frameworks do your reps use?"
+• "How do new reps learn the process? How long to productivity?"
+• "Describe your territory and quota planning – what's the process?"
+
+<strong>SECTION 2: NEGATIVE CONSEQUENCES (Cost of Inaction) – 5 minutes</strong>
+
+"Help me understand the impact..."
+
+**Key questions:**
+• "What's the cost of continuing with your current approach?"
+• "How much revenue is at risk due to forecast inaccuracy?"
+• "What's happening with your top performers when processes are chaotic?"
+• "How is this affecting your board relationships?"
+• "What happens if you can't fix this before your next funding round?"
+• "Scale of 1-10, how painful is this? What makes it that painful?"
+
+<strong>SECTION 3: AFTER (Future State) – 5 minutes</strong>
+
+"Paint me a picture of success..."
+
+**Key questions:**
+• "What does 'great' look like for you in 6 months?"
+• "If you could wave a magic wand, what would be different?"
+• "What outcomes do you need to achieve by [their deadline]?"
+• "How would achieving this change your relationship with the board?"
+• "What would it mean for ${company} if you could predict revenue confidently?"
+
+<strong>SECTION 4: DECISION CRITERIA – 5 minutes</strong>
+
+"Let's talk about how you'll make this decision..."
+
+**Key questions:**
+• "What's driving the urgency to solve this now?"
+• "What's your timeline for making a decision?"
+• "Who else needs to be involved in this decision?"
+• "What's your budget for solving this?"
+• "What would make you choose us vs. someone else?"
+• "What concerns do you have about working with ${yourCompany}?"
+
+<strong>SECTION 5: NEXT STEPS – 3 minutes</strong>
+
+**Based on qualification:**
+
+<strong>QUALIFIED & INTERESTED:</strong>
+"Based on what you've shared – especially [PAIN] and [URGENCY] – I think we can help. 
+
+Next step would be a deeper discovery session where we:
+• Map your current processes in detail
+• Identify the top 3 quick wins
+• Build a 30-60-90 day implementation plan
+
+Can you get [KEY STAKEHOLDERS] together next week?"
+
+<strong>NOT QUALIFIED / WRONG TIMING:</strong>
+"Based on what you've shared, I don't think we're the right fit right now. Here's why: [HONEST REASON]
+
+What I'd recommend instead: [ALTERNATIVE]
+
+Can I check back with you in [TIMEFRAME]?"
+
+<strong>NOTES FOR THIS CALL:</strong>
+• Trigger: ${mainTrigger}
+• Problems to probe: ${problems.slice(0, 3).join(', ')}
+• Listen for: URGENCY, BUDGET, AUTHORITY, TIMELINE
+• Red flags: No urgency, DIY culture, tiny budget
+• Qualify hard: Better to disqualify early than waste time</div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    // Copy script to clipboard
+    function copyScript(button) {
+      const scriptBox = button.parentElement;
+      const scriptContent = scriptBox.querySelector('.script-content');
+      const text = scriptContent.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '✅ Copied!';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      }).catch(err => {
+        alert('Failed to copy. Please select and copy manually.');
+      });
+    }
+
+    // Regenerate Messaging
+    function regenerateMessaging() {
+      if (confirm('Regenerate all messaging? Current content will be replaced.')) {
+        generateMessaging();
+      }
+    }
+
+    // Initialize
+    console.log('🚀 Account Intel & Command of the Message loaded');
+  </script>
+</body>
+</html>

@@ -1,0 +1,3567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDDICC Playbook - Team Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(18px);
+        }
+        
+        .mode-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mode-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.85);
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        
+        .mode-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: 0.08em;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        
+        input[type="text"], 
+        input[type="date"],
+        textarea, 
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: rgba(10, 22, 40, 0.95);
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 1px rgba(102,126,234,0.7);
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        input[type="text"]:first-of-type {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 2rem; 
+        }
+        
+        .grid-3 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 1.5rem; 
+        }
+        
+        .grid-4 { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1rem; 
+        }
+        
+        .stat-card {
+            background: rgba(5,15,30,0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+            text-align: center;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        .stat-trend {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .trend-up { color: #38ef7d; }
+        .trend-down { color: #f5576c; }
+        
+        .progress-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .score-card {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(5,15,30,0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .tab-inactive:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .tab-completed::before {
+            content: "✓ ";
+            color: #38ef7d;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+            backdrop-filter: blur(8px);
+        }
+        
+        .alert-danger {
+            background: rgba(235, 51, 73, 0.15);
+            border-color: #eb3349;
+            color: #ffffff;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 93, 108, 0.15);
+            border-color: #f5576c;
+            color: #ffffff;
+        }
+        
+        .alert-success {
+            background: rgba(56, 239, 125, 0.15);
+            border-color: #38ef7d;
+            color: #ffffff;
+        }
+        
+        .alert-info {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+            color: #ffffff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        th {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+            background: rgba(10,22,40,0.9);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        td {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .score-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 0.875rem;
+        }
+        
+        .score-high { 
+            background: rgba(56, 239, 125, 0.2); 
+            color: #38ef7d;
+            border: 1px solid #38ef7d;
+        }
+        
+        .score-medium { 
+            background: rgba(240, 147, 251, 0.2); 
+            color: #f093fb;
+            border: 1px solid #f093fb;
+        }
+        
+        .score-low { 
+            background: rgba(235, 51, 73, 0.2); 
+            color: #eb3349;
+            border: 1px solid #eb3349;
+        }
+        
+        .stage-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .stage-discovery { 
+            background: rgba(102, 126, 234, 0.2); 
+            color: #667eea;
+        }
+        
+        .stage-qualification { 
+            background: rgba(17, 153, 142, 0.2); 
+            color: #11998e;
+        }
+        
+        .stage-proposal { 
+            background: rgba(240, 147, 251, 0.2); 
+            color: #f093fb;
+        }
+        
+        .stage-negotiation { 
+            background: rgba(245, 93, 108, 0.2); 
+            color: #f5576c;
+        }
+        
+        .stage-closed-won { 
+            background: rgba(56, 239, 125, 0.2); 
+            color: #38ef7d;
+        }
+        
+        .stage-closed-lost { 
+            background: rgba(235, 51, 73, 0.2); 
+            color: #eb3349;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: rgba(255,255,255,0.04);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+        }
+        
+        .modal-content.wide {
+            max-width: 1200px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: rgba(255,255,255,0.7);
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: #ffffff;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            background: rgba(10,22,40,0.9);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .chart-bar:hover {
+            opacity: 0.8;
+            filter: brightness(1.2);
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .hidden { 
+            display: none; 
+        }
+        
+        .filter-bar {
+            background: rgba(10,22,40,0.9);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        
+        .filter-bar select {
+            width: auto;
+            min-width: 150px;
+        }
+        
+        .rep-card {
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(5,15,30,0.9);
+        }
+        
+        .rep-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .rep-name {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .rep-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .gate-check {
+            background: rgba(245, 93, 108, 0.15);
+            border: 2px solid #f5576c;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(8px);
+        }
+        
+        .gate-check-title {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .requirement-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .requirement-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(245, 93, 108, 0.2);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .requirement-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .requirement-met {
+            color: #38ef7d;
+        }
+        
+        .requirement-met::before {
+            content: "✓ ";
+            font-weight: bold;
+        }
+        
+        .requirement-unmet {
+            color: #f5576c;
+        }
+        
+        .requirement-unmet::before {
+            content: "✗ ";
+            font-weight: bold;
+        }
+        
+        .section-prompt {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mode Toggle -->
+        <div class="card" style="padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);">
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="rep-mode-btn" onclick="switchMode('rep')">Rep Mode</button>
+                <button class="mode-btn" id="manager-mode-btn" onclick="switchMode('manager')">Manager Dashboard</button>
+                <button class="mode-btn" id="review-mode-btn" onclick="switchMode('review')">Pipeline Review</button>
+            </div>
+        </div>
+
+        <!-- REP MODE -->
+        <div id="rep-view">
+            <!-- Header -->
+            <div class="card">
+                <div class="header-actions">
+                    <div>
+                        <h1>AI-Powered MEDDICC Playbook</h1>
+                        <p class="subtitle">Real-time coaching • Auto-save • Team visibility</p>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-success" onclick="newDeal()">+ New Deal</button>
+                        <button class="btn btn-primary" onclick="showDealListModal()">📁 My Deals (<span id="deal-count">0</span>)</button>
+                        <button class="btn btn-warning" onclick="exportData()">📤 Export CSV</button>
+                        <button class="btn btn-purple" onclick="downloadTemplate()">📋 Download Template</button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('csv-upload').click()">📥 Import CSV</button>
+                        <input type="file" id="csv-upload" accept=".csv" style="display: none;" onchange="importCSV(event)">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Deal Name *</label>
+                        <input type="text" id="deal-name" placeholder="Company Name - Opportunity" oninput="handleDealNameChange()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deal Value (£) *</label>
+                        <input type="text" id="deal-value" placeholder="50000" oninput="handleFieldChange()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Created Date *</label>
+                        <input type="date" id="created-date" oninput="handleCreatedDateChange()" title="When was this opportunity first identified?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Close Date *</label>
+                        <input type="date" id="close-date" oninput="handleFieldChange()">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Sales Rep *</label>
+                        <input type="text" id="sales-rep" placeholder="Your Name" oninput="handleFieldChange()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deal Stage *</label>
+                        <select id="deal-stage" onchange="handleStageChange()">
+                            <option value="">Select Stage</option>
+                            <option value="discovery">Discovery</option>
+                            <option value="qualification">Qualification</option>
+                            <option value="proposal">Proposal</option>
+                            <option value="negotiation">Negotiation</option>
+                            <option value="closed-won">Closed Won</option>
+                            <option value="closed-lost">Closed Lost</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Forecast Category</label>
+                        <select id="forecast-category" onchange="handleFieldChange()">
+                            <option value="">Select Category</option>
+                            <option value="pipeline">Pipeline</option>
+                            <option value="best-case">Best Case</option>
+                            <option value="commit">Commit</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="gate-alert"></div>
+                
+                <div class="progress-section">
+                    <div>
+                        <div class="progress-info">
+                            <span>MEDDICC Qualification Progress</span>
+                            <span><span id="filled-count">0</span> / 7 components</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="score-card" id="score-card" style="display: none;">
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">Deal Score</div>
+                        <div class="score-value" id="score-value">0%</div>
+                        <div style="font-size: 0.75rem; font-weight: bold;" id="score-status">High Risk</div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div class="score-card">
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">Days Open</div>
+                        <div class="score-value" id="days-open" style="font-size: 1.75rem; color: #667eea;">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7);" id="days-open-label">Since Created</div>
+                    </div>
+                    <div class="score-card">
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">Days in Stage</div>
+                        <div class="score-value" id="days-in-stage" style="font-size: 1.75rem; color: #f093fb;">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7);" id="stage-name-label">Current Stage</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Left Column -->
+                <div>
+                    <div class="tabs" id="section-tabs"></div>
+                    
+                    <div class="card">
+                        <h2 id="section-title">Metrics</h2>
+                        <p class="section-prompt" id="section-prompt"></p>
+                        <textarea id="section-input" placeholder="Enter details..."></textarea>
+                        
+                        <div id="button-row" style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: space-between;">
+                            <button class="btn btn-secondary" id="prev-btn" onclick="previousSection()">Previous</button>
+                            <button class="btn btn-success" id="save-btn" onclick="saveDeal()" disabled>💾 Save Deal</button>
+                            <button class="btn btn-primary" id="next-btn" onclick="nextSection()">Next</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <div class="card">
+                        <h2>🤖 AI Sales Coach</h2>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <button class="btn btn-success" onclick="getAICoaching()">Get Coaching</button>
+                            <button class="btn btn-primary" id="champion-btn" onclick="generateChampionEmail()" disabled>✉️ Champion</button>
+                            <button class="btn btn-purple" id="eb-btn" onclick="generateEBEmail()" disabled>🎯 Econ Buyer</button>
+                            <button class="btn btn-warning" onclick="showRiskScore()">⚠️ Risk Score</button>
+                        </div>
+                        
+                        <div id="insights-container">
+                            <div style="padding: 3rem; text-align: center; color: rgba(255,255,255,0.6);">
+                                <p style="font-size: 3rem; margin-bottom: 1rem;">💡</p>
+                                <p style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">Fill in your MEDDICC components to receive:</p>
+                                <ul style="text-align: left; display: inline-block; list-style: none; padding: 0; color: rgba(255,255,255,0.7);">
+                                    <li>✓ Real-time qualification feedback</li>
+                                    <li>✓ Critical questions to ask</li>
+                                    <li>✓ Deal risk identification</li>
+                                    <li>✓ Mandatory gate validation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MANAGER DASHBOARD -->
+        <div id="manager-view" class="hidden">
+            <div class="card">
+                <h1>Team Dashboard</h1>
+                <p class="subtitle">Real-time pipeline health and team performance</p>
+                
+                <div class="grid-4">
+                    <div class="stat-card">
+                        <div class="stat-value" id="team-pipeline-value">£0</div>
+                        <div class="stat-label">Total Pipeline</div>
+                        <div class="stat-trend" id="pipeline-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="team-avg-score">0%</div>
+                        <div class="stat-label">Avg Qualification Score</div>
+                        <div class="stat-trend" id="score-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="team-deal-count">0</div>
+                        <div class="stat-label">Active Deals</div>
+                        <div class="stat-trend" id="deal-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="team-at-risk">0</div>
+                        <div class="stat-label">Deals At Risk</div>
+                        <div class="stat-trend" id="risk-trend"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h2>Pipeline Health by Stage</h2>
+                    <div class="chart-container" id="stage-chart"></div>
+                </div>
+                
+                <div class="card">
+                    <h2>MEDDICC Component Completion</h2>
+                    <div class="chart-container" id="component-chart"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Team Performance</h2>
+                <div class="grid-3" id="rep-cards"></div>
+            </div>
+
+            <div class="card">
+                <h2>⚠️ At Risk Deal Analysis</h2>
+                <p class="subtitle">Deals requiring immediate attention based on multiple risk factors</p>
+                
+                <div class="filter-bar">
+                    <label style="color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>Risk Type:</span>
+                        <select id="risk-filter" onchange="updateRiskDeals()" style="min-width: 200px;">
+                            <option value="all">All At Risk Deals</option>
+                            <option value="low-score">❌ Low Qualification (<50%)</option>
+                            <option value="stale">🕒 Stale (>45 days in stage)</option>
+                            <option value="close-date">📅 Closing Soon & Weak</option>
+                            <option value="advanced-weak">🚨 Advanced Stage & Weak</option>
+                            <option value="missing-key">🔑 Missing Key Components</option>
+                        </select>
+                    </label>
+                    <button class="btn btn-warning" onclick="exportRiskReport()">📊 Export Risk Report</button>
+                </div>
+                
+                <div id="risk-summary" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: rgba(235,51,73,0.15); border: 1px solid #eb3349; border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #eb3349;" id="risk-low-score-count">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Low Score<br><50%</div>
+                    </div>
+                    <div style="background: rgba(245,93,108,0.15); border: 1px solid #f5576c; border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #f5576c;" id="risk-stale-count">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Stale<br>>45 Days</div>
+                    </div>
+                    <div style="background: rgba(240,147,251,0.15); border: 1px solid #f093fb; border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #f093fb;" id="risk-close-count">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Closing Soon<br>& Weak</div>
+                    </div>
+                    <div style="background: rgba(255,165,0,0.15); border: 1px solid #ffa500; border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #ffa500;" id="risk-advanced-count">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Advanced<br>& Weak</div>
+                    </div>
+                    <div style="background: rgba(102,126,234,0.15); border: 1px solid #667eea; border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #667eea;" id="risk-missing-count">0</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Missing Key<br>Components</div>
+                    </div>
+                </div>
+                
+                <div id="risk-deals-container"></div>
+            </div>
+
+            <div class="card">
+                <h2>Deals Requiring Attention</h2>
+                <div class="filter-bar">
+                    <select id="filter-rep" onchange="filterManagerDeals()">
+                        <option value="">All Reps</option>
+                    </select>
+                    <select id="filter-stage" onchange="filterManagerDeals()">
+                        <option value="">All Stages</option>
+                        <option value="discovery">Discovery</option>
+                        <option value="qualification">Qualification</option>
+                        <option value="proposal">Proposal</option>
+                        <option value="negotiation">Negotiation</option>
+                    </select>
+                    <select id="filter-risk" onchange="filterManagerDeals()">
+                        <option value="">All Risk Levels</option>
+                        <option value="high">High Risk (<50%)</option>
+                        <option value="medium">Medium Risk (50-74%)</option>
+                        <option value="low">Low Risk (75%+)</option>
+                    </select>
+                </div>
+                <table id="manager-deals-table">
+                    <thead>
+                        <tr>
+                            <th>Deal Name</th>
+                            <th>Rep</th>
+                            <th>Value</th>
+                            <th>Stage</th>
+                            <th>Score</th>
+                            <th>Close Date</th>
+                            <th>Days in Stage</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manager-deals-body"></tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Forecast Accuracy Tracker</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Forecast</th>
+                            <th>Actual</th>
+                            <th>Accuracy</th>
+                            <th>Avg Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="forecast-table-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: rgba(255,255,255,0.6); padding: 2rem;">
+                                Track forecast accuracy as deals close
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- REVIEW MODE -->
+        <div id="review-view" class="hidden">
+            <div class="card">
+                <h1>Pipeline Review Mode</h1>
+                <p class="subtitle">Structured 1:1 deal reviews with action tracking</p>
+                
+                <div class="filter-bar">
+                    <select id="review-rep" onchange="loadReviewDeals()">
+                        <option value="">Select Rep</option>
+                    </select>
+                    <select id="review-stage-filter" onchange="loadReviewDeals()">
+                        <option value="">All Stages</option>
+                        <option value="discovery">Discovery</option>
+                        <option value="qualification">Qualification</option>
+                        <option value="proposal">Proposal</option>
+                        <option value="negotiation">Negotiation</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="exportReviewNotes()">📄 Export Review Notes</button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h2>Deal Queue</h2>
+                    <div id="review-deal-list"></div>
+                </div>
+                
+                <div class="card">
+                    <h2>Deal Review</h2>
+                    <div id="review-deal-detail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="deal-list-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Deals</h2>
+                <button class="close-btn" onclick="closeDealListModal()">×</button>
+            </div>
+            <div id="deal-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const QUALIFICATION_GATES = {
+            'qualification': { minScore: 40, message: 'Deals must be 40%+ qualified to move to Qualification' },
+            'proposal': { minScore: 60, message: 'Deals must be 60%+ qualified to move to Proposal' },
+            'negotiation': { minScore: 70, message: 'Deals must be 70%+ qualified to move to Negotiation' },
+            'commit': { minScore: 75, message: 'Only deals 75%+ qualified can be forecasted as Commit' }
+        };
+
+        const sections = [
+            { 
+                id: 'metrics', 
+                label: 'Metrics', 
+                prompt: 'What quantifiable business metrics or outcomes matter to this prospect?',
+                guidance: {
+                    whatToInclude: [
+                        'Specific numbers (%, hours, costs)',
+                        'Currency values (£, $, €)',
+                        'Current state vs desired state',
+                        'Time period for measurement'
+                    ],
+                    goodExample: '**Current State:** Processing 500 orders/day manually takes 12 hours/day (3 FTE @ £35K each = £105K/year labor cost)\n**Desired State:** Automate 80% of orders, reduce processing time to 2 hours/day\n**Business Impact:** Save £84K/year in labor + redeploy staff to higher-value work\n**Timeframe:** Measure over 6 months post-implementation',
+                    badExample: 'Want to improve efficiency and reduce costs. Looking to streamline operations.',
+                    questions: [
+                        'What specific metric are you trying to move? (revenue, cost, time, error rate, etc.)',
+                        'What is the current baseline measurement?',
+                        'What is the target/goal measurement?',
+                        'What is the financial impact in £/$/€?',
+                        'Over what time period will you measure this?'
+                    ],
+                    minLength: 100,
+                    keywords: ['£', '$', '€', '%', 'hours', 'days', 'cost', 'save', 'increase', 'reduce']
+                }
+            },
+            { 
+                id: 'economicBuyer', 
+                label: 'Economic Buyer', 
+                prompt: 'Who has budget authority and final sign-off for this purchase?',
+                guidance: {
+                    whatToInclude: [
+                        'Full name and exact title',
+                        'Their spending authority level',
+                        'Evidence of access (meeting scheduled, introduced, etc.)',
+                        'Their strategic priorities this year'
+                    ],
+                    goodExample: '**Name:** Sarah Chen, CFO\n**Authority:** Signs off on all investments >£25K, part of executive committee\n**Access:** Champion (David) reports directly to her, intro meeting scheduled 15th Jan\n**Priorities:** Cost reduction initiatives, digital transformation, improving cash flow\n**Relationship:** Warm - she attended our webinar last month and requested follow-up',
+                    badExample: 'Finance department will approve. Talking to the IT manager who seems interested.',
+                    questions: [
+                        'What is their exact title? (CFO, CEO, VP Finance, etc.)',
+                        'What is their spending authority threshold?',
+                        'When do you have a meeting scheduled with them?',
+                        'What are their top 3 business priorities this year?',
+                        'How will you get access to them if you haven\'t met yet?'
+                    ],
+                    minLength: 80,
+                    keywords: ['cfo', 'ceo', 'cto', 'cio', 'vp', 'director', 'head', 'meeting', 'scheduled', 'access']
+                }
+            },
+            { 
+                id: 'decisionCriteria', 
+                label: 'Decision Criteria', 
+                prompt: 'What specific criteria will they use to evaluate solutions?',
+                guidance: {
+                    whatToInclude: [
+                        'Technical requirements (must-haves)',
+                        'Business requirements (ROI, payback period)',
+                        'Weighted priorities (what matters most)',
+                        'Deal-breakers (what eliminates vendors)'
+                    ],
+                    goodExample: '**Must-Haves:**\n1. API integration with Salesforce (critical)\n2. SOC2 compliance (non-negotiable)\n3. <6 month implementation (board mandate)\n\n**Evaluation Criteria (weighted):**\n- ROI/Payback period (40%)\n- Ease of implementation (30%)\n- Vendor stability/references (20%)\n- Ongoing support quality (10%)\n\n**Deal-Breakers:**\n- No on-premise option (regulatory requirement)\n- Implementation >£50K (budget constraint)',
+                    badExample: 'Looking for best value, good features, and reliable vendor. Want something that works well.',
+                    questions: [
+                        'What are the absolute must-have features/requirements?',
+                        'What are the nice-to-haves vs must-haves?',
+                        'How will they score/weight different criteria?',
+                        'What would eliminate a vendor from consideration?',
+                        'Who defined these criteria and when?'
+                    ],
+                    minLength: 120,
+                    keywords: ['must', 'require', 'need', 'critical', 'important', 'roi', 'compliance', 'integration']
+                }
+            },
+            { 
+                id: 'decisionProcess', 
+                label: 'Decision Process', 
+                prompt: 'What are the steps, timeline, and stakeholders in their buying process?',
+                guidance: {
+                    whatToInclude: [
+                        'Each stage/step with dates',
+                        'Who is involved at each stage',
+                        'Approval gates and sign-offs',
+                        'Legal, procurement, security reviews'
+                    ],
+                    goodExample: '**Stage 1 - Technical Evaluation (Jan 15-30):**\nIT team tests solution, security review by CISO\n\n**Stage 2 - Business Case (Feb 1-14):**\nChampion presents ROI to CFO & COO, need exec approval to proceed\n\n**Stage 3 - Vendor Selection (Feb 15-28):**\nFinal vendor presentations, reference calls, negotiation\n\n**Stage 4 - Legal/Procurement (Mar 1-15):**\nContract review (Legal - 1 week), PO creation (Procurement)\n\n**Stage 5 - Signature (Mar 20 target):**\nCFO signs, Budget approved in Q1\n\n**Dependencies:** Security review can delay 2-3 weeks if issues found',
+                    badExample: 'Need to get approval from a few people. Probably take a few weeks. Will let you know.',
+                    questions: [
+                        'What are the specific stages from here to signed contract?',
+                        'Who needs to approve at each stage?',
+                        'What are the realistic dates for each stage?',
+                        'Is Legal/Procurement/Security involved? When?',
+                        'What could delay the process?'
+                    ],
+                    minLength: 150,
+                    keywords: ['week', 'month', 'date', 'stage', 'step', 'phase', 'legal', 'procurement', 'approval', 'review']
+                }
+            },
+            { 
+                id: 'identifyPain', 
+                label: 'Identify Pain', 
+                prompt: 'What business pain are they experiencing? What happens if they do nothing?',
+                guidance: {
+                    whatToInclude: [
+                        'Specific problem being experienced now',
+                        'Business impact/consequences',
+                        'Why this is urgent (trigger event)',
+                        'Cost of doing nothing'
+                    ],
+                    goodExample: '**Current Pain:**\nManual order processing causing 4-6 hour delays, leading to customer complaints and lost orders. Last month: 23 cancelled orders worth £127K due to slow processing.\n\n**Root Cause:**\nLegacy system can\'t handle volume growth (40% increase in 18 months), no integration between sales & fulfillment.\n\n**Business Impact:**\n- Revenue at risk: £1.5M/year in lost orders\n- Customer satisfaction dropping (NPS down from 52 to 38)\n- Staff burnout (overtime costs +£45K/year)\n\n**Urgency:**\nCEO mandate to fix before peak season (May), board reviewing this in Q1\n\n**Cost of Inaction:**\nContinue losing 5-7% of orders, reputation damage, potential staff turnover',
+                    badExample: 'Current system is old and inefficient. Want to modernize and improve things.',
+                    questions: [
+                        'What specific problem are they experiencing right now?',
+                        'What is the measurable business impact?',
+                        'Why is this urgent? What changed?',
+                        'What happens if they do nothing?',
+                        'Who is feeling this pain most acutely?'
+                    ],
+                    minLength: 120,
+                    keywords: ['cost', 'lose', 'losing', 'risk', 'waste', 'fail', 'failing', 'urgent', 'problem', 'issue']
+                }
+            },
+            { 
+                id: 'champion', 
+                label: 'Champion', 
+                prompt: 'Who is actively selling internally on your behalf? What\'s their influence?',
+                guidance: {
+                    whatToInclude: [
+                        'Champion name, title, and tenure',
+                        'Why they care (personal stake)',
+                        'Their influence and credibility',
+                        'Evidence they\'re actively selling for you'
+                    ],
+                    goodExample: '**Champion:** David Thompson, VP Operations (8 years tenure)\n\n**Why He Cares:**\nDirectly measured on operational efficiency KPIs. His bonus tied to cost reduction targets. Board pressure to modernize. This is his initiative.\n\n**Influence & Access:**\n- Reports directly to COO\n- Respected by CFO (worked together 4 years)\n- Owns budget for operations technology (£500K)\n- Sits on digital transformation steering committee\n\n**Active Advocacy:**\n- Built internal business case deck using our ROI data\n- Already presented to COO, got verbal approval\n- Scheduled meeting with CFO for us (Jan 15)\n- Provided us with their evaluation criteria\n- Giving us intel on procurement process\n\n**Relationship Quality:** Strong - meets bi-weekly, responds within hours, proactively shares updates',
+                    badExample: 'IT manager David seems interested and likes our solution. He\'s helpful.',
+                    questions: [
+                        'What is their name and exact title?',
+                        'Why do they personally care about solving this?',
+                        'What is their relationship with the Economic Buyer?',
+                        'What have they done to actively sell for you internally?',
+                        'What access/credibility do they have with decision-makers?'
+                    ],
+                    minLength: 100,
+                    keywords: ['access', 'influence', 'credibility', 'advocate', 'champion', 'support', 'reports to', 'relationship']
+                }
+            },
+            { 
+                id: 'competition', 
+                label: 'Competition', 
+                prompt: 'What alternatives are they considering (competitors, DIY, status quo)?',
+                guidance: {
+                    whatToInclude: [
+                        'Named competitors being evaluated',
+                        'Their perceived strengths/weaknesses',
+                        'Status quo/do-nothing option',
+                        'Your differentiation'
+                    ],
+                    goodExample: '**Direct Competitors:**\n1. **Competitor A** - Incumbent (3 years), known brand\n   - Strengths: Existing relationship, familiar to team\n   - Weaknesses: No Salesforce integration (critical gap), slow implementation (8-12 months), 40% more expensive\n   - Status: In evaluation, not preferred by Champion\n\n2. **Competitor B** - New vendor\n   - Strengths: Lower price (£15K less)\n   - Weaknesses: No SOC2 yet (deal-breaker), small company (stability concerns), limited UK support\n   - Status: Under consideration\n\n**Status Quo:**\n- Keep current manual process\n- Risk: Continue losing orders, staff burnout\n- Champion strongly against this, CEO mandate to change\n\n**Our Differentiation:**\n- Only vendor with native Salesforce integration\n- Fastest implementation (8 weeks vs 6+ months)\n- Mid-market pricing with enterprise features',
+                    badExample: 'Looking at a few other vendors. Might also consider building internally or staying with current solution.',
+                    questions: [
+                        'Who are the specific competitors by name?',
+                        'What do you know about their strengths and weaknesses?',
+                        'Is "do nothing" or "build it themselves" an option?',
+                        'What makes you different/better than each alternative?',
+                        'Which competitor does the Champion prefer and why?'
+                    ],
+                    minLength: 120,
+                    keywords: ['competitor', 'alternative', 'status quo', 'build', 'internal', 'current', 'versus', 'compared']
+                }
+            }
+        ];
+
+        let currentMode = 'rep';
+        let currentDealId = null;
+        let activeSection = 0;
+        let dealData = {};
+        let autoSaveTimer = null;
+
+        // Initialize
+        function init() {
+            resetDealData();
+            renderTabs();
+            updateSection();
+            updateDealCount();
+        }
+
+        function resetDealData() {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            dealData = {
+                dealName: '',
+                dealValue: '',
+                closeDate: '',
+                salesRep: '',
+                dealStage: '',
+                forecastCategory: '',
+                createdDate: today,
+                stageHistory: [],
+                metrics: '',
+                economicBuyer: '',
+                decisionCriteria: '',
+                decisionProcess: '',
+                identifyPain: '',
+                champion: '',
+                competition: ''
+            };
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update button states
+            document.getElementById('rep-mode-btn').classList.toggle('active', mode === 'rep');
+            document.getElementById('manager-mode-btn').classList.toggle('active', mode === 'manager');
+            document.getElementById('review-mode-btn').classList.toggle('active', mode === 'review');
+            
+            // Show/hide views
+            document.getElementById('rep-view').classList.toggle('hidden', mode !== 'rep');
+            document.getElementById('manager-view').classList.toggle('hidden', mode !== 'manager');
+            document.getElementById('review-view').classList.toggle('hidden', mode !== 'review');
+            
+            if (mode === 'manager') {
+                loadManagerDashboard();
+            } else if (mode === 'review') {
+                loadReviewMode();
+            }
+        }
+
+        function renderTabs() {
+            const tabsContainer = document.getElementById('section-tabs');
+            tabsContainer.innerHTML = sections.map((section, index) => {
+                const isActive = index === activeSection;
+                const isCompleted = dealData[section.id] && dealData[section.id].trim() !== '';
+                return `<button class="tab ${isActive ? 'tab-active' : 'tab-inactive'} ${isCompleted ? 'tab-completed' : ''}" 
+                        onclick="setActiveSection(${index})">${section.label}</button>`;
+            }).join('');
+        }
+
+        function setActiveSection(index) {
+            activeSection = index;
+            updateSection();
+        }
+
+        function updateSection() {
+            const section = sections[activeSection];
+            document.getElementById('section-title').textContent = section.label;
+            document.getElementById('section-prompt').textContent = section.prompt;
+            document.getElementById('section-input').value = dealData[section.id] || '';
+            
+            document.getElementById('prev-btn').disabled = activeSection === 0;
+            document.getElementById('next-btn').disabled = activeSection === sections.length - 1;
+            
+            // Add guidance panel
+            if (section.guidance) {
+                renderGuidancePanel(section);
+                
+                // Update quality indicators (needs to happen after DOM is ready)
+                setTimeout(() => {
+                    updateQualityIndicators(section);
+                }, 100);
+            }
+            
+            renderTabs();
+            updateProgress();
+        }
+
+        function renderGuidancePanel(section) {
+            try {
+                const guidance = section.guidance;
+                
+                if (!guidance) {
+                    console.warn('No guidance found for section:', section.id);
+                    return;
+                }
+                
+                // Check if textarea exists
+                const textarea = document.getElementById('section-input');
+                if (!textarea) {
+                    console.error('Textarea not found');
+                    return;
+                }
+                
+                const guidanceHTML = `
+                    <div style="margin-bottom: 1rem;">
+                        <button class="btn btn-secondary" onclick="toggleGuidance()" id="guidance-toggle" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 0.5rem;">
+                            <span id="guidance-icon">▼</span> Show Guidance & Examples
+                        </button>
+                    </div>
+                    
+                    <div id="guidance-panel" class="hidden" style="background: rgba(10,22,40,0.95); border: 1px solid rgba(102,126,234,0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <h4 style="color: #667eea; margin-bottom: 1rem; font-size: 1rem;">📋 What to Include:</h4>
+                        <ul style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; padding-left: 1.5rem; line-height: 1.6;">
+                            ${guidance.whatToInclude.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        
+                        <h4 style="color: #38ef7d; margin-bottom: 0.5rem; font-size: 1rem;">✅ Good Example:</h4>
+                        <div style="background: rgba(56,239,125,0.05); border-left: 3px solid #38ef7d; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.85rem; white-space: pre-wrap; color: rgba(255,255,255,0.85);">
+${guidance.goodExample}
+                        </div>
+                        
+                        <h4 style="color: #f5576c; margin-bottom: 0.5rem; font-size: 1rem;">❌ Bad Example:</h4>
+                        <div style="background: rgba(245,93,108,0.05); border-left: 3px solid #f5576c; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.7);">
+                            ${guidance.badExample}
+                        </div>
+                        
+                        <h4 style="color: #f093fb; margin-bottom: 0.5rem; font-size: 1rem;">❓ Key Questions to Answer:</h4>
+                        <ol style="color: rgba(255,255,255,0.8); padding-left: 1.5rem; line-height: 1.8;">
+                            ${guidance.questions.map(q => `<li>${q}</li>`).join('')}
+                        </ol>
+                    </div>
+                `;
+                
+                // Check if guidance container already exists
+                const existingGuidance = document.getElementById('guidance-container');
+                if (existingGuidance) {
+                    existingGuidance.innerHTML = guidanceHTML;
+                } else {
+                    // Create new container
+                    const container = document.createElement('div');
+                    container.id = 'guidance-container';
+                    container.innerHTML = guidanceHTML;
+                    
+                    // Insert before textarea
+                    if (textarea.parentNode) {
+                        textarea.parentNode.insertBefore(container, textarea);
+                    } else {
+                        console.warn('Cannot find textarea parent node');
+                    }
+                }
+            } catch (error) {
+                console.error('Error rendering guidance panel:', error);
+            }
+        }
+
+        function toggleGuidance() {
+            const panel = document.getElementById('guidance-panel');
+            const button = document.getElementById('guidance-toggle');
+            
+            if (!panel || !button) return;
+            
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                button.innerHTML = '<span id="guidance-icon">▲</span> Hide Guidance';
+            } else {
+                panel.classList.add('hidden');
+                button.innerHTML = '<span id="guidance-icon">▼</span> Show Guidance & Examples';
+            }
+        }
+
+        function updateQualityIndicators(section) {
+            try {
+                const value = dealData[section.id] || '';
+                const guidance = section.guidance;
+                
+                if (!guidance) {
+                    console.warn('No guidance found for section:', section.id);
+                    return;
+                }
+                
+                const length = value.length;
+                const meetsLength = length >= guidance.minLength;
+                
+                const keywordsFound = guidance.keywords.filter(keyword => 
+                    value.toLowerCase().includes(keyword)
+                ).length;
+                const keywordScore = Math.min((keywordsFound / 3) * 100, 100);
+                
+                let qualityScore = 0;
+                if (meetsLength) qualityScore += 50;
+                qualityScore += (keywordScore / 2);
+                
+                const qualityHTML = `
+                    <div style="background: rgba(10,22,40,0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1rem; margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <span style="font-weight: 600; color: rgba(255,255,255,0.85);">Quality Score:</span>
+                            <span style="font-size: 1.5rem; font-weight: bold; color: ${qualityScore >= 75 ? '#38ef7d' : qualityScore >= 50 ? '#f093fb' : '#f5576c'};">
+                                ${Math.round(qualityScore)}%
+                            </span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                                <div style="width: ${qualityScore}%; height: 100%; background: ${qualityScore >= 75 ? '#38ef7d' : qualityScore >= 50 ? '#f093fb' : '#f5576c'}; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: ${meetsLength ? '#38ef7d' : 'rgba(255,255,255,0.6)'};">
+                                ${meetsLength ? '✓' : '○'} Length: ${length} / ${guidance.minLength} chars
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: ${keywordsFound >= 3 ? '#38ef7d' : 'rgba(255,255,255,0.6)'};">
+                                ${keywordsFound >= 3 ? '✓' : '○'} Key terms: ${keywordsFound} / 3+
+                            </div>
+                        </div>
+                        
+                        ${qualityScore < 75 ? `
+                            <div style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(245,93,108,0.1); border-left: 3px solid #f5576c; border-radius: 6px; font-size: 0.85rem; color: rgba(255,255,255,0.85);">
+                                <strong>💡 Tip:</strong> ${getQualityTip(section.id, value, guidance)}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                // Check if quality indicator already exists
+                let existingIndicator = document.getElementById('quality-indicator');
+                if (existingIndicator) {
+                    // Update existing
+                    existingIndicator.innerHTML = qualityHTML;
+                } else {
+                    // Create new one
+                    const buttonRow = document.getElementById('button-row');
+                    if (buttonRow && buttonRow.parentNode) {
+                        const container = document.createElement('div');
+                        container.id = 'quality-indicator';
+                        container.innerHTML = qualityHTML;
+                        
+                        // Insert before button row
+                        buttonRow.parentNode.insertBefore(container, buttonRow);
+                    } else {
+                        console.warn('Cannot find button-row element');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating quality indicators:', error);
+            }
+        }
+
+        function getQualityTip(sectionId, value, guidance) {
+            const length = value.length;
+            const hasKeywords = guidance.keywords.some(k => value.toLowerCase().includes(k));
+            
+            if (length < guidance.minLength) {
+                return `Add more detail - aim for at least ${guidance.minLength} characters. Click "Show Guidance" above for examples.`;
+            }
+            
+            if (!hasKeywords) {
+                switch(sectionId) {
+                    case 'metrics':
+                        return 'Include specific numbers with currency symbols (£, $, €) and percentages.';
+                    case 'economicBuyer':
+                        return 'Add their exact title (CFO, CEO, etc.) and describe your access to them.';
+                    case 'decisionCriteria':
+                        return 'List specific must-have requirements and how they\'ll be evaluated.';
+                    case 'decisionProcess':
+                        return 'Include specific stages with dates and approval gates.';
+                    case 'identifyPain':
+                        return 'Describe the business impact and cost of doing nothing.';
+                    case 'champion':
+                        return 'Explain their influence, access to decision-makers, and what they\'re doing to help.';
+                    case 'competition':
+                        return 'Name specific competitors and explain status quo as an option.';
+                }
+            }
+            
+            return 'Almost there! Review the good example above for more detail.';
+        }
+
+        function previousSection() {
+            if (activeSection > 0) {
+                activeSection--;
+                updateSection();
+            }
+        }
+
+        function nextSection() {
+            if (activeSection < sections.length - 1) {
+                activeSection++;
+                updateSection();
+            }
+        }
+
+        function handleDealNameChange() {
+            dealData.dealName = document.getElementById('deal-name').value;
+            updateSaveButton();
+            scheduleAutoSave();
+        }
+
+        function handleFieldChange() {
+            // Sync all fields to dealData
+            dealData.dealValue = document.getElementById('deal-value').value;
+            dealData.closeDate = document.getElementById('close-date').value;
+            dealData.salesRep = document.getElementById('sales-rep').value;
+            dealData.forecastCategory = document.getElementById('forecast-category').value;
+            
+            updateSaveButton();
+            scheduleAutoSave();
+            checkGates();
+            updateProgress();
+        }
+
+        function handleStageChange() {
+            const newStage = document.getElementById('deal-stage').value;
+            const oldStage = dealData.dealStage;
+            
+            dealData.dealStage = newStage;
+            
+            if (oldStage !== newStage && newStage) {
+                if (!dealData.stageHistory) dealData.stageHistory = [];
+                dealData.stageHistory.push({
+                    stage: newStage,
+                    date: new Date().toISOString(),
+                    score: calculateDealScore()
+                });
+            }
+            
+            checkGates();
+            updateDealAge();
+            handleFieldChange();
+        }
+
+        function checkGates() {
+            const stage = dealData.dealStage;
+            const forecast = dealData.forecastCategory;
+            const score = calculateDealScore();
+            const alertDiv = document.getElementById('gate-alert');
+            
+            let blocked = false;
+            let message = '';
+            let requirements = [];
+            
+            // Check stage gates
+            if (stage && QUALIFICATION_GATES[stage] && score < QUALIFICATION_GATES[stage].minScore) {
+                blocked = true;
+                message = QUALIFICATION_GATES[stage].message;
+            }
+            
+            // Check forecast gates
+            if (forecast === 'commit' && score < 75) {
+                blocked = true;
+                message = 'Only deals 75%+ qualified can be forecasted as Commit';
+            }
+            
+            // Generate requirements list
+            if (blocked) {
+                requirements = getMissingRequirements(QUALIFICATION_GATES[stage]?.minScore || 75);
+            }
+            
+            if (blocked) {
+                alertDiv.innerHTML = `
+                    <div class="gate-check">
+                        <div class="gate-check-title">⚠️ Qualification Gate Not Met</div>
+                        <p style="margin-bottom: 1rem; color: #92400e;">${message}</p>
+                        <ul class="requirement-list">
+                            ${requirements.map(req => `
+                                <li class="${req.met ? 'requirement-met' : 'requirement-unmet'}">
+                                    ${req.text}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                alertDiv.innerHTML = '';
+            }
+        }
+
+        function getMissingRequirements(targetScore) {
+            const requirements = [
+                { text: 'Quantified metrics with numbers/currency', met: /\d/.test(dealData.metrics) && /[$€£]/.test(dealData.metrics) },
+                { text: 'Economic Buyer identified with title', met: /(cfo|ceo|cto|cio|vp|director|head)/i.test(dealData.economicBuyer) },
+                { text: 'Multiple decision criteria documented', met: dealData.decisionCriteria.split(',').length >= 2 },
+                { text: 'Decision process with timeline', met: /\d+\s*(week|month|day)/i.test(dealData.decisionProcess) },
+                { text: 'Business pain with impact keywords', met: /(cost|lose|risk|waste|fail)/i.test(dealData.identifyPain) },
+                { text: 'Champion with influence documented', met: /(close|access|credibility|influence)/i.test(dealData.champion) },
+                { text: 'Competition understood (>30 chars)', met: dealData.competition.length > 30 }
+            ];
+            
+            return requirements;
+        }
+
+        function updateSaveButton() {
+            const dealName = document.getElementById('deal-name').value;
+            const dealValue = document.getElementById('deal-value').value;
+            const closeDate = document.getElementById('close-date').value;
+            const salesRep = document.getElementById('sales-rep').value;
+            const dealStage = document.getElementById('deal-stage').value;
+            
+            const hasRequired = dealName && dealName.trim() && 
+                               dealValue && dealValue.trim() && 
+                               closeDate && 
+                               salesRep && salesRep.trim() && 
+                               dealStage;
+            
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.disabled = !hasRequired;
+            
+            if (hasRequired) {
+                saveBtn.style.opacity = '1';
+                saveBtn.style.cursor = 'pointer';
+            } else {
+                saveBtn.style.opacity = '0.5';
+                saveBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // Listen to textarea changes and input events
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+            
+            // Section textarea
+            document.getElementById('section-input').addEventListener('input', (e) => {
+                const section = sections[activeSection];
+                dealData[section.id] = e.target.value;
+                scheduleAutoSave();
+                updateProgress();
+                renderTabs();
+                checkGates();
+                updateSaveButton();
+                
+                // Only update quality indicators if guidance exists
+                if (section.guidance) {
+                    updateQualityIndicators(section);
+                }
+                
+                document.getElementById('champion-btn').disabled = !dealData.champion || !dealData.champion.trim();
+                document.getElementById('eb-btn').disabled = !dealData.economicBuyer || !dealData.economicBuyer.trim();
+            });
+            
+            // Deal name input
+            document.getElementById('deal-name').addEventListener('input', (e) => {
+                handleDealNameChange();
+            });
+            
+            // Deal value input
+            document.getElementById('deal-value').addEventListener('input', (e) => {
+                handleFieldChange();
+            });
+            
+            // Close date input
+            document.getElementById('close-date').addEventListener('input', (e) => {
+                handleFieldChange();
+            });
+            
+            // Sales rep input
+            document.getElementById('sales-rep').addEventListener('input', (e) => {
+                handleFieldChange();
+            });
+            
+            // Deal stage select
+            document.getElementById('deal-stage').addEventListener('change', (e) => {
+                handleStageChange();
+            });
+            
+            // Forecast category select
+            document.getElementById('forecast-category').addEventListener('change', (e) => {
+                handleFieldChange();
+            });
+        });
+
+        function scheduleAutoSave() {
+            if (autoSaveTimer) clearTimeout(autoSaveTimer);
+            if (currentDealId && dealData.dealName) {
+                autoSaveTimer = setTimeout(() => {
+                    saveDeal(true);
+                }, 2000);
+            }
+        }
+
+        function updateDealAge() {
+            const createdDateInput = document.getElementById('created-date').value;
+            
+            if (!createdDateInput) {
+                document.getElementById('days-open').textContent = '0';
+                document.getElementById('days-in-stage').textContent = '0';
+                document.getElementById('stage-name-label').textContent = 'Current Stage';
+                return;
+            }
+            
+            // Calculate days open (from user-entered created date)
+            const createdDate = new Date(createdDateInput);
+            const now = new Date();
+            const daysOpen = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+            
+            // Calculate days in current stage
+            let daysInStage = daysOpen; // Default to days open if no stage history
+            if (dealData.stageHistory && dealData.stageHistory.length > 0) {
+                const lastStageChange = new Date(dealData.stageHistory[dealData.stageHistory.length - 1].date);
+                daysInStage = Math.floor((now - lastStageChange) / (1000 * 60 * 60 * 24));
+            }
+            
+            // Update displays
+            document.getElementById('days-open').textContent = daysOpen;
+            document.getElementById('days-in-stage').textContent = daysInStage;
+            
+            // Update stage label
+            const stageName = dealData.dealStage || 'No stage';
+            const stageLabel = stageName.charAt(0).toUpperCase() + stageName.slice(1);
+            document.getElementById('stage-name-label').textContent = `In ${stageLabel}`;
+            
+            // Color code based on age
+            const daysOpenElement = document.getElementById('days-open');
+            const daysInStageElement = document.getElementById('days-in-stage');
+            
+            // Days open color coding
+            if (daysOpen > 90) {
+                daysOpenElement.style.color = '#f5576c'; // Red - very old
+            } else if (daysOpen > 60) {
+                daysOpenElement.style.color = '#ffa500'; // Orange - getting old
+            } else if (daysOpen > 30) {
+                daysOpenElement.style.color = '#f093fb'; // Purple - moderate
+            } else {
+                daysOpenElement.style.color = '#667eea'; // Blue - fresh
+            }
+            
+            // Days in stage color coding
+            if (daysInStage > 45) {
+                daysInStageElement.style.color = '#f5576c'; // Red - stale
+            } else if (daysInStage > 30) {
+                daysInStageElement.style.color = '#ffa500'; // Orange - getting stale
+            } else if (daysInStage > 14) {
+                daysInStageElement.style.color = '#f093fb'; // Purple - moderate
+            } else {
+                daysInStageElement.style.color = '#38ef7d'; // Green - moving fast
+            }
+        }
+        
+        function handleCreatedDateChange() {
+            dealData.createdDate = document.getElementById('created-date').value;
+            updateDealAge();
+            handleFieldChange();
+        }
+        
+        function updateProgress() {
+            const filledCount = Object.keys(dealData).filter(key => 
+                sections.find(s => s.id === key) && dealData[key] && dealData[key].trim()
+            ).length;
+            
+            document.getElementById('filled-count').textContent = filledCount;
+            document.getElementById('progress-fill').style.width = `${(filledCount / 7) * 100}%`;
+            
+            calculateDealScore();
+        }
+
+        function calculateDealScore() {
+            let score = 0;
+            
+            sections.forEach(section => {
+                const value = dealData[section.id] || '';
+                const guidance = section.guidance;
+                let sectionScore = 0;
+                
+                switch(section.id) {
+                    case 'metrics':
+                        if (value) {
+                            const hasNumbers = /\d/.test(value);
+                            const hasCurrency = /[$€£]/.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasNumbers && hasCurrency && meetsLength) {
+                                sectionScore = 20;
+                            } else if (hasNumbers && hasCurrency) {
+                                sectionScore = 15;
+                            } else if (hasNumbers) {
+                                sectionScore = 10;
+                            } else {
+                                sectionScore = 5;
+                            }
+                        }
+                        break;
+                        
+                    case 'economicBuyer':
+                        if (value) {
+                            const hasTitle = /(cfo|ceo|cto|cio|vp|director|head)/i.test(value);
+                            const hasAccess = /(meeting|scheduled|access|introduced)/i.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasTitle && hasAccess && meetsLength) {
+                                sectionScore = 15;
+                            } else if (hasTitle && meetsLength) {
+                                sectionScore = 12;
+                            } else if (hasTitle) {
+                                sectionScore = 8;
+                            } else {
+                                sectionScore = 5;
+                            }
+                        }
+                        break;
+                        
+                    case 'decisionCriteria':
+                        if (value) {
+                            const criteriaCount = value.split(/[,\n]/).filter(c => c.trim().length > 10).length;
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (criteriaCount >= 3 && meetsLength) {
+                                sectionScore = 15;
+                            } else if (criteriaCount >= 2 && meetsLength) {
+                                sectionScore = 12;
+                            } else if (criteriaCount >= 1) {
+                                sectionScore = 8;
+                            } else {
+                                sectionScore = 5;
+                            }
+                        }
+                        break;
+                        
+                    case 'decisionProcess':
+                        if (value) {
+                            const hasTimeline = /\d+\s*(week|month|day)/i.test(value);
+                            const hasStages = /(step|stage|phase)/i.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasTimeline && hasStages && meetsLength) {
+                                sectionScore = 15;
+                            } else if (hasTimeline && meetsLength) {
+                                sectionScore = 12;
+                            } else if (hasTimeline || hasStages) {
+                                sectionScore = 8;
+                            } else {
+                                sectionScore = 5;
+                            }
+                        }
+                        break;
+                        
+                    case 'identifyPain':
+                        if (value) {
+                            const hasImpact = /(cost|lose|risk|waste|fail)/i.test(value);
+                            const hasUrgency = /(urgent|now|deadline|must)/i.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasImpact && hasUrgency && meetsLength) {
+                                sectionScore = 15;
+                            } else if (hasImpact && meetsLength) {
+                                sectionScore = 12;
+                            } else if (hasImpact) {
+                                sectionScore = 8;
+                            } else {
+                                sectionScore = 5;
+                            }
+                        }
+                        break;
+                        
+                    case 'champion':
+                        if (value) {
+                            const hasInfluence = /(access|influence|credibility|reports to)/i.test(value);
+                            const hasAdvocacy = /(advocate|champion|support|selling)/i.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasInfluence && hasAdvocacy && meetsLength) {
+                                sectionScore = 10;
+                            } else if (hasInfluence && meetsLength) {
+                                sectionScore = 8;
+                            } else if (meetsLength) {
+                                sectionScore = 6;
+                            } else {
+                                sectionScore = 3;
+                            }
+                        }
+                        break;
+                        
+                    case 'competition':
+                        if (value) {
+                            const hasCompetitors = value.length > 50;
+                            const hasStatusQuo = /(status quo|current|do nothing|build)/i.test(value);
+                            const meetsLength = value.length >= guidance.minLength;
+                            
+                            if (hasCompetitors && hasStatusQuo && meetsLength) {
+                                sectionScore = 10;
+                            } else if (hasCompetitors && meetsLength) {
+                                sectionScore = 8;
+                            } else if (meetsLength) {
+                                sectionScore = 6;
+                            } else {
+                                sectionScore = 3;
+                            }
+                        }
+                        break;
+                }
+                
+                score += sectionScore;
+            });
+            
+            const totalScore = Math.round(score);
+            let status = 'High Risk';
+            let color = '#f5576c';
+            
+            if (totalScore >= 75) {
+                status = 'Well Qualified';
+                color = '#38ef7d';
+            } else if (totalScore >= 50) {
+                status = 'Moderate Risk';
+                color = '#f093fb';
+            }
+            
+            const scoreCard = document.getElementById('score-card');
+            if (totalScore > 0) {
+                scoreCard.style.display = 'block';
+                document.getElementById('score-value').textContent = totalScore + '%';
+                document.getElementById('score-value').style.color = color;
+                document.getElementById('score-status').textContent = status;
+                document.getElementById('score-status').style.color = color;
+            } else {
+                scoreCard.style.display = 'none';
+            }
+            
+            return totalScore;
+        }
+
+        // Storage functions
+        function saveDeal(silent = false) {
+            // Read all values from DOM to ensure they're current
+            dealData.dealName = document.getElementById('deal-name').value.trim();
+            dealData.dealValue = document.getElementById('deal-value').value.trim();
+            dealData.closeDate = document.getElementById('close-date').value;
+            dealData.createdDate = document.getElementById('created-date').value;
+            dealData.salesRep = document.getElementById('sales-rep').value.trim();
+            dealData.dealStage = document.getElementById('deal-stage').value;
+            dealData.forecastCategory = document.getElementById('forecast-category').value;
+            
+            if (!dealData.dealName || !dealData.dealValue || !dealData.closeDate || !dealData.createdDate || !dealData.salesRep || !dealData.dealStage) {
+                if (!silent) {
+                    alert('Please fill in all required fields:\n- Deal Name\n- Deal Value\n- Close Date\n- Created Date\n- Sales Rep\n- Deal Stage');
+                }
+                return;
+            }
+            
+            const dealId = currentDealId || `deal_${Date.now()}`;
+            const score = calculateDealScore();
+            
+            const dealToSave = {
+                ...dealData,
+                id: dealId,
+                lastUpdated: new Date().toISOString(),
+                score: score
+            };
+            
+            try {
+                const deals = getDeals();
+                const existingIndex = deals.findIndex(d => d.id === dealId);
+                
+                if (existingIndex >= 0) {
+                    deals[existingIndex] = dealToSave;
+                } else {
+                    deals.push(dealToSave);
+                }
+                
+                localStorage.setItem('meddicc_deals', JSON.stringify(deals));
+                currentDealId = dealId;
+                updateDealCount();
+                
+                if (!silent) {
+                    // Visual feedback
+                    const saveBtn = document.getElementById('save-btn');
+                    const originalText = saveBtn.innerHTML;
+                    saveBtn.innerHTML = '✓ Saved!';
+                    saveBtn.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        saveBtn.innerHTML = originalText;
+                        saveBtn.style.background = '';
+                    }, 2000);
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Save error:', error);
+                alert('Error saving deal. Please try again.');
+                return false;
+            }
+        }
+
+        function getDeals() {
+            try {
+                return JSON.parse(localStorage.getItem('meddicc_deals') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function loadDeal(dealId) {
+            const deals = getDeals();
+            const deal = deals.find(d => d.id === dealId);
+            
+            if (deal) {
+                dealData = { ...deal };
+                currentDealId = dealId;
+                
+                document.getElementById('deal-name').value = dealData.dealName || '';
+                document.getElementById('deal-value').value = dealData.dealValue || '';
+                document.getElementById('close-date').value = dealData.closeDate || '';
+                document.getElementById('created-date').value = dealData.createdDate || new Date().toISOString().split('T')[0];
+                document.getElementById('sales-rep').value = dealData.salesRep || '';
+                document.getElementById('deal-stage').value = dealData.dealStage || '';
+                document.getElementById('forecast-category').value = dealData.forecastCategory || '';
+                
+                updateSection();
+                updateProgress();
+                updateDealAge();
+                updateSaveButton();
+                checkGates();
+                closeDealListModal();
+            }
+        }
+
+        function deleteDeal(dealId) {
+            if (!confirm('Delete this deal?')) return;
+            
+            const deals = getDeals().filter(d => d.id !== dealId);
+            localStorage.setItem('meddicc_deals', JSON.stringify(deals));
+            
+            if (currentDealId === dealId) {
+                newDeal();
+            }
+            
+            updateDealCount();
+            if (currentMode === 'rep') {
+                showDealListModal();
+            } else if (currentMode === 'manager') {
+                loadManagerDashboard();
+            }
+        }
+
+        function newDeal() {
+            resetDealData();
+            currentDealId = null;
+            activeSection = 0;
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('deal-name').value = '';
+            document.getElementById('deal-value').value = '';
+            document.getElementById('close-date').value = '';
+            document.getElementById('created-date').value = today;
+            document.getElementById('sales-rep').value = '';
+            document.getElementById('deal-stage').value = '';
+            document.getElementById('forecast-category').value = '';
+            document.getElementById('gate-alert').innerHTML = '';
+            
+            document.getElementById('champion-btn').disabled = true;
+            document.getElementById('eb-btn').disabled = true;
+            
+            updateSection();
+            updateProgress();
+            updateDealAge();
+            updateSaveButton();
+            
+            document.getElementById('insights-container').innerHTML = `
+                <div style="padding: 3rem; text-align: center; color: rgba(255,255,255,0.6);">
+                    <p style="font-size: 3rem; margin-bottom: 1rem;">💡</p>
+                    <p style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">Fill in your MEDDICC components to receive:</p>
+                    <ul style="text-align: left; display: inline-block; list-style: none; padding: 0; color: rgba(255,255,255,0.7);">
+                        <li>✓ Real-time qualification feedback</li>
+                        <li>✓ Critical questions to ask</li>
+                        <li>✓ Deal risk identification</li>
+                        <li>✓ Mandatory gate validation</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function updateDealCount() {
+            const deals = getDeals();
+            document.getElementById('deal-count').textContent = deals.length;
+        }
+
+        function showDealListModal() {
+            const deals = getDeals().sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated));
+            const dealList = document.getElementById('deal-list');
+            
+            if (deals.length === 0) {
+                dealList.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6); padding: 2rem;">No saved deals yet</p>';
+            } else {
+                dealList.innerHTML = deals.map(deal => {
+                    const scoreClass = deal.score >= 75 ? 'score-high' : deal.score >= 50 ? 'score-medium' : 'score-low';
+                    return `
+                        <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.12); background: rgba(5,15,30,0.9); border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s;" 
+                             onclick="loadDeal('${deal.id}')"
+                             onmouseenter="this.style.borderColor='#667eea'; this.style.boxShadow='0 8px 24px rgba(102, 126, 234, 0.3)'"
+                             onmouseleave="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='none'">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: bold; color: #ffffff; margin-bottom: 0.25rem;">${deal.dealName}</div>
+                                    <div style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">
+                                        ${deal.salesRep} • ${deal.dealStage || 'No stage'} • £${deal.dealValue || '0'}
+                                    </div>
+                                    <div style="margin-top: 0.5rem;">
+                                        <span class="score-badge ${scoreClass}">${deal.score}%</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger" onclick="event.stopPropagation(); deleteDeal('${deal.id}')" style="padding: 0.5rem;">×</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            document.getElementById('deal-list-modal').classList.add('show');
+        }
+
+        function closeDealListModal() {
+            document.getElementById('deal-list-modal').classList.remove('show');
+        }
+
+        // Manager Dashboard
+        function loadManagerDashboard() {
+            const deals = getDeals();
+            const activeDeals = deals.filter(d => !['closed-won', 'closed-lost'].includes(d.dealStage));
+            
+            // Calculate stats
+            const totalValue = activeDeals.reduce((sum, d) => sum + parseFloat(d.dealValue || 0), 0);
+            const avgScore = activeDeals.length > 0 
+                ? Math.round(activeDeals.reduce((sum, d) => sum + d.score, 0) / activeDeals.length)
+                : 0;
+            const atRisk = activeDeals.filter(d => calculateDealRisks(d).length > 0).length;
+            
+            document.getElementById('team-pipeline-value').textContent = `£${totalValue.toLocaleString()}`;
+            document.getElementById('team-avg-score').textContent = `${avgScore}%`;
+            document.getElementById('team-deal-count').textContent = activeDeals.length;
+            document.getElementById('team-at-risk').textContent = atRisk;
+            
+            // Render charts
+            renderStageChart(activeDeals);
+            renderComponentChart(activeDeals);
+            
+            // Render rep cards
+            renderRepCards(activeDeals);
+            
+            // Render deals table
+            renderManagerDealsTable(activeDeals);
+            
+            // Populate filters
+            populateManagerFilters(deals);
+            
+            // Update at-risk deals analysis
+            updateRiskDeals();
+        }
+        
+        function calculateDealRisks(deal) {
+            const risks = [];
+            const now = new Date();
+            const closeDate = deal.closeDate ? new Date(deal.closeDate) : null;
+            const daysToClose = closeDate ? Math.ceil((closeDate - now) / (1000 * 60 * 60 * 24)) : 999;
+            const daysInStage = calculateDaysInStage(deal);
+            
+            // Low qualification score
+            if (deal.score < 50) {
+                risks.push({
+                    type: 'low-score',
+                    severity: 'critical',
+                    icon: '❌',
+                    label: 'Low Qualification Score',
+                    detail: `${deal.score}% - Below acceptable threshold`,
+                    action: 'Immediate qualification work required'
+                });
+            }
+            
+            // Stale deal
+            if (daysInStage > 45) {
+                risks.push({
+                    type: 'stale',
+                    severity: 'high',
+                    icon: '🕒',
+                    label: 'Stale Deal',
+                    detail: `${daysInStage} days in ${deal.dealStage} stage`,
+                    action: 'Create urgency or disqualify'
+                });
+            }
+            
+            // Closing soon but weak
+            if (daysToClose < 30 && daysToClose > 0 && deal.score < 65) {
+                risks.push({
+                    type: 'close-date',
+                    severity: 'critical',
+                    icon: '📅',
+                    label: 'Closing Soon & Poorly Qualified',
+                    detail: `${daysToClose} days to close with ${deal.score}% qualification`,
+                    action: 'Push close date or accelerate qualification'
+                });
+            }
+            
+            // Advanced stage but weak qualification
+            if ((deal.dealStage === 'proposal' || deal.dealStage === 'negotiation') && deal.score < 70) {
+                risks.push({
+                    type: 'advanced-weak',
+                    severity: 'critical',
+                    icon: '🚨',
+                    label: 'Advanced Stage, Weak Qualification',
+                    detail: `In ${deal.dealStage} with only ${deal.score}% qualification`,
+                    action: 'Should not be in this stage - back to qualification'
+                });
+            }
+            
+            // Missing key components
+            const missingComponents = [];
+            if (!deal.economicBuyer || deal.economicBuyer.length < 50) missingComponents.push('Economic Buyer');
+            if (!deal.champion || deal.champion.length < 50) missingComponents.push('Champion');
+            if (!deal.decisionProcess || deal.decisionProcess.length < 50) missingComponents.push('Decision Process');
+            
+            if (missingComponents.length > 0) {
+                risks.push({
+                    type: 'missing-key',
+                    severity: 'high',
+                    icon: '🔑',
+                    label: 'Missing Key MEDDICC Components',
+                    detail: `Missing: ${missingComponents.join(', ')}`,
+                    action: 'Cannot forecast without these components'
+                });
+            }
+            
+            return risks;
+        }
+        
+        function updateRiskDeals() {
+            const deals = getDeals().filter(d => !['closed-won', 'closed-lost'].includes(d.dealStage));
+            const filterType = document.getElementById('risk-filter').value;
+            
+            let atRiskDeals = [];
+            const riskCounts = {
+                'low-score': 0,
+                'stale': 0,
+                'close-date': 0,
+                'advanced-weak': 0,
+                'missing-key': 0
+            };
+            
+            // Calculate all at-risk deals and counts
+            deals.forEach(deal => {
+                const risks = calculateDealRisks(deal);
+                
+                if (risks.length > 0) {
+                    // Count by type
+                    risks.forEach(risk => {
+                        if (riskCounts.hasOwnProperty(risk.type)) {
+                            riskCounts[risk.type]++;
+                        }
+                    });
+                    
+                    // Filter by selected type
+                    if (filterType === 'all') {
+                        atRiskDeals.push({ deal, risks });
+                    } else {
+                        const matchingRisks = risks.filter(r => r.type === filterType);
+                        if (matchingRisks.length > 0) {
+                            atRiskDeals.push({ deal, risks: matchingRisks });
+                        }
+                    }
+                }
+            });
+            
+            // Update counts
+            document.getElementById('risk-low-score-count').textContent = riskCounts['low-score'];
+            document.getElementById('risk-stale-count').textContent = riskCounts['stale'];
+            document.getElementById('risk-close-count').textContent = riskCounts['close-date'];
+            document.getElementById('risk-advanced-count').textContent = riskCounts['advanced-weak'];
+            document.getElementById('risk-missing-count').textContent = riskCounts['missing-key'];
+            
+            // Display deals
+            const container = document.getElementById('risk-deals-container');
+            
+            if (atRiskDeals.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 3rem; text-align: center; color: rgba(255,255,255,0.6);">
+                        <p style="font-size: 3rem; margin-bottom: 1rem;">✅</p>
+                        <p style="font-size: 1.2rem; color: #38ef7d; margin-bottom: 0.5rem;">No Deals At Risk!</p>
+                        <p>All deals are properly qualified and progressing well.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by severity and number of risks
+            atRiskDeals.sort((a, b) => {
+                const aSeverity = a.risks.filter(r => r.severity === 'critical').length;
+                const bSeverity = b.risks.filter(r => r.severity === 'critical').length;
+                if (aSeverity !== bSeverity) return bSeverity - aSeverity;
+                return b.risks.length - a.risks.length;
+            });
+            
+            container.innerHTML = atRiskDeals.map(({ deal, risks }) => {
+                const scoreClass = deal.score >= 75 ? 'score-high' : deal.score >= 50 ? 'score-medium' : 'score-low';
+                const daysInStage = calculateDaysInStage(deal);
+                const closeDate = deal.closeDate ? new Date(deal.closeDate) : null;
+                const daysToClose = closeDate ? Math.ceil((closeDate - new Date()) / (1000 * 60 * 60 * 24)) : null;
+                
+                return `
+                    <div style="background: rgba(10,22,40,0.95); border: 1px solid rgba(255,255,255,0.12); border-left: 4px solid ${risks[0].severity === 'critical' ? '#eb3349' : '#f5576c'}; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="color: #ffffff; margin-bottom: 0.5rem;">${deal.dealName}</h3>
+                                <div style="display: flex; gap: 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.7); flex-wrap: wrap;">
+                                    <span><strong>Rep:</strong> ${deal.salesRep}</span>
+                                    <span><strong>Value:</strong> £${parseFloat(deal.dealValue || 0).toLocaleString()}</span>
+                                    <span><strong>Stage:</strong> ${deal.dealStage}</span>
+                                    <span><strong>Score:</strong> <span class="score-badge ${scoreClass}">${deal.score}%</span></span>
+                                    ${daysToClose !== null && daysToClose > 0 ? `<span><strong>Days to Close:</strong> ${daysToClose}</span>` : ''}
+                                    <span><strong>Days in Stage:</strong> ${daysInStage}</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="loadDeal('${deal.id}'); switchMode('rep')" style="padding: 0.5rem 1rem;">Review Deal</button>
+                        </div>
+                        
+                        <div style="background: rgba(235,51,73,0.1); border-radius: 8px; padding: 1rem;">
+                            <h4 style="color: #f5576c; margin-bottom: 0.75rem; font-size: 0.9rem;">⚠️ Risk Factors (${risks.length}):</h4>
+                            ${risks.map(risk => `
+                                <div style="padding: 0.75rem; background: rgba(10,22,40,0.9); border-radius: 8px; margin-bottom: 0.5rem;">
+                                    <div style="display: flex; align-items: start; gap: 0.75rem;">
+                                        <span style="font-size: 1.5rem;">${risk.icon}</span>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: bold; color: ${risk.severity === 'critical' ? '#eb3349' : '#f5576c'}; margin-bottom: 0.25rem;">
+                                                ${risk.label}
+                                            </div>
+                                            <div style="font-size: 0.875rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">
+                                                ${risk.detail}
+                                            </div>
+                                            <div style="font-size: 0.875rem; color: #667eea; font-style: italic;">
+                                                → ${risk.action}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function exportRiskReport() {
+            const deals = getDeals().filter(d => !['closed-won', 'closed-lost'].includes(d.dealStage));
+            const atRiskDeals = [];
+            
+            deals.forEach(deal => {
+                const risks = calculateDealRisks(deal);
+                if (risks.length > 0) {
+                    atRiskDeals.push({ deal, risks });
+                }
+            });
+            
+            if (atRiskDeals.length === 0) {
+                alert('No at-risk deals to export');
+                return;
+            }
+            
+            const headers = [
+                'Deal Name',
+                'Sales Rep',
+                'Deal Value (£)',
+                'Stage',
+                'Score (%)',
+                'Close Date',
+                'Days in Stage',
+                'Risk Count',
+                'Risk Types',
+                'Primary Risk',
+                'Action Required'
+            ];
+            
+            const csv = [
+                headers.join(','),
+                ...atRiskDeals.map(({ deal, risks }) => {
+                    const daysInStage = calculateDaysInStage(deal);
+                    const riskTypes = risks.map(r => r.label).join('; ');
+                    const primaryRisk = risks[0].label;
+                    const action = risks[0].action;
+                    
+                    return [
+                        `"${deal.dealName}"`,
+                        `"${deal.salesRep}"`,
+                        deal.dealValue || 0,
+                        deal.dealStage,
+                        deal.score,
+                        deal.closeDate || 'Not set',
+                        daysInStage,
+                        risks.length,
+                        `"${riskTypes}"`,
+                        `"${primaryRisk}"`,
+                        `"${action}"`
+                    ].join(',');
+                })
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `at-risk-deals-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function renderStageChart(deals) {
+            const stages = ['discovery', 'qualification', 'proposal', 'negotiation'];
+            const chartData = stages.map(stage => ({
+                stage: stage,
+                count: deals.filter(d => d.dealStage === stage).length,
+                value: deals.filter(d => d.dealStage === stage).reduce((sum, d) => sum + parseFloat(d.dealValue || 0), 0)
+            }));
+            
+            const maxValue = Math.max(...chartData.map(d => d.value), 1);
+            
+            document.getElementById('stage-chart').innerHTML = chartData.map(data => `
+                <div class="chart-bar" style="height: ${(data.value / maxValue) * 100}%;" title="${data.stage}: £${data.value.toLocaleString()}">
+                    <div class="chart-label">${data.stage.charAt(0).toUpperCase() + data.stage.slice(1)}<br>${data.count} deals</div>
+                </div>
+            `).join('');
+        }
+
+        function renderComponentChart(deals) {
+            const components = ['metrics', 'economicBuyer', 'decisionCriteria', 'decisionProcess', 'identifyPain', 'champion', 'competition'];
+            const chartData = components.map(comp => ({
+                name: comp,
+                completion: deals.length > 0 
+                    ? (deals.filter(d => d[comp] && d[comp].trim()).length / deals.length) * 100
+                    : 0
+            }));
+            
+            document.getElementById('component-chart').innerHTML = chartData.map(data => `
+                <div class="chart-bar" style="height: ${data.completion}%;" 
+                     title="${data.name}: ${Math.round(data.completion)}% completion">
+                    <div class="chart-label">${sections.find(s => s.id === data.name).label}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderRepCards(deals) {
+            const reps = [...new Set(deals.map(d => d.salesRep))].filter(r => r);
+            
+            const repCards = reps.map(rep => {
+                const repDeals = deals.filter(d => d.salesRep === rep);
+                const avgScore = Math.round(repDeals.reduce((sum, d) => sum + d.score, 0) / repDeals.length);
+                const totalValue = repDeals.reduce((sum, d) => sum + parseFloat(d.dealValue || 0), 0);
+                const scoreClass = avgScore >= 75 ? 'score-high' : avgScore >= 50 ? 'score-medium' : 'score-low';
+                
+                return `
+                    <div class="rep-card">
+                        <div class="rep-name">${rep}</div>
+                        <div class="rep-stats">
+                            <div>Deals: ${repDeals.length}</div>
+                            <div>Value: £${totalValue.toLocaleString()}</div>
+                            <div>Avg Score:</div>
+                            <div><span class="score-badge ${scoreClass}">${avgScore}%</span></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('rep-cards').innerHTML = repCards || '<p style="text-align: center; color: rgba(255,255,255,0.6);">No rep data available</p>';
+        }
+
+        function renderManagerDealsTable(deals) {
+            const tbody = document.getElementById('manager-deals-body');
+            
+            if (deals.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: rgba(255,255,255,0.6); padding: 2rem;">No active deals</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = deals
+                .sort((a, b) => a.score - b.score)
+                .map(deal => {
+                    const scoreClass = deal.score >= 75 ? 'score-high' : deal.score >= 50 ? 'score-medium' : 'score-low';
+                    const stageClass = `stage-${deal.dealStage}`;
+                    const daysInStage = calculateDaysInStage(deal);
+                    
+                    return `
+                        <tr>
+                            <td><strong>${deal.dealName}</strong></td>
+                            <td>${deal.salesRep}</td>
+                            <td>£${parseFloat(deal.dealValue || 0).toLocaleString()}</td>
+                            <td><span class="stage-badge ${stageClass}">${deal.dealStage}</span></td>
+                            <td><span class="score-badge ${scoreClass}">${deal.score}%</span></td>
+                            <td>${deal.closeDate ? new Date(deal.closeDate).toLocaleDateString() : 'Not set'}</td>
+                            <td>${daysInStage} days</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" 
+                                        onclick="loadDeal('${deal.id}'); switchMode('rep')">Review</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+        }
+
+        function calculateDaysInStage(deal) {
+            if (!deal.stageHistory || deal.stageHistory.length === 0) {
+                return Math.floor((new Date() - new Date(deal.createdDate)) / (1000 * 60 * 60 * 24));
+            }
+            
+            const lastChange = deal.stageHistory[deal.stageHistory.length - 1];
+            return Math.floor((new Date() - new Date(lastChange.date)) / (1000 * 60 * 60 * 24));
+        }
+
+        function populateManagerFilters(deals) {
+            const reps = [...new Set(deals.map(d => d.salesRep))].filter(r => r);
+            
+            const repFilter = document.getElementById('filter-rep');
+            repFilter.innerHTML = '<option value="">All Reps</option>' + 
+                reps.map(rep => `<option value="${rep}">${rep}</option>`).join('');
+        }
+
+        function filterManagerDeals() {
+            const rep = document.getElementById('filter-rep').value;
+            const stage = document.getElementById('filter-stage').value;
+            const risk = document.getElementById('filter-risk').value;
+            
+            let deals = getDeals().filter(d => !['closed-won', 'closed-lost'].includes(d.dealStage));
+            
+            if (rep) deals = deals.filter(d => d.salesRep === rep);
+            if (stage) deals = deals.filter(d => d.dealStage === stage);
+            if (risk) {
+                if (risk === 'high') deals = deals.filter(d => d.score < 50);
+                else if (risk === 'medium') deals = deals.filter(d => d.score >= 50 && d.score < 75);
+                else if (risk === 'low') deals = deals.filter(d => d.score >= 75);
+            }
+            
+            renderManagerDealsTable(deals);
+        }
+
+        // Review Mode
+        function loadReviewMode() {
+            const deals = getDeals();
+            const reps = [...new Set(deals.map(d => d.salesRep))].filter(r => r);
+            
+            const repSelect = document.getElementById('review-rep');
+            repSelect.innerHTML = '<option value="">Select Rep</option>' + 
+                reps.map(rep => `<option value="${rep}">${rep}</option>`).join('');
+        }
+
+        function loadReviewDeals() {
+            const rep = document.getElementById('review-rep').value;
+            const stage = document.getElementById('review-stage-filter').value;
+            
+            if (!rep) {
+                document.getElementById('review-deal-list').innerHTML = '<p style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.6);">Select a rep to review their deals</p>';
+                return;
+            }
+            
+            let deals = getDeals().filter(d => d.salesRep === rep && !['closed-won', 'closed-lost'].includes(d.dealStage));
+            if (stage) deals = deals.filter(d => d.dealStage === stage);
+            
+            const dealList = document.getElementById('review-deal-list');
+            
+            if (deals.length === 0) {
+                dealList.innerHTML = '<p style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.6);">No deals match filter</p>';
+                return;
+            }
+            
+            dealList.innerHTML = deals
+                .sort((a, b) => a.score - b.score)
+                .map(deal => {
+                    const scoreClass = deal.score >= 75 ? 'score-high' : deal.score >= 50 ? 'score-medium' : 'score-low';
+                    return `
+                        <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.12); background: rgba(5,15,30,0.9); border-radius: 12px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s;"
+                             onclick="showReviewDetail('${deal.id}')"
+                             onmouseenter="this.style.borderColor='#667eea'; this.style.boxShadow='0 8px 24px rgba(102, 126, 234, 0.3)'"
+                             onmouseleave="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='none'">
+                            <div style="font-weight: bold; color: #ffffff; margin-bottom: 0.5rem;">${deal.dealName}</div>
+                            <div style="display: flex; gap: 0.5rem; font-size: 0.875rem;">
+                                <span class="score-badge ${scoreClass}">${deal.score}%</span>
+                                <span class="stage-badge stage-${deal.dealStage}">${deal.dealStage}</span>
+                                <span style="color: rgba(255,255,255,0.7);">£${parseFloat(deal.dealValue || 0).toLocaleString()}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+        }
+
+        function showReviewDetail(dealId) {
+            const deal = getDeals().find(d => d.id === dealId);
+            if (!deal) return;
+            
+            const requirements = getMissingRequirements(75);
+            
+            document.getElementById('review-deal-detail').innerHTML = `
+                <h3 style="color: #ffffff;">${deal.dealName}</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; font-size: 0.875rem; color: rgba(255,255,255,0.8);">
+                    <div><strong style="color: #ffffff;">Rep:</strong> ${deal.salesRep}</div>
+                    <div><strong style="color: #ffffff;">Value:</strong> £${parseFloat(deal.dealValue || 0).toLocaleString()}</div>
+                    <div><strong style="color: #ffffff;">Stage:</strong> ${deal.dealStage}</div>
+                    <div><strong style="color: #ffffff;">Close Date:</strong> ${deal.closeDate ? new Date(deal.closeDate).toLocaleDateString() : 'Not set'}</div>
+                    <div><strong style="color: #ffffff;">Score:</strong> <span class="score-badge ${deal.score >= 75 ? 'score-high' : deal.score >= 50 ? 'score-medium' : 'score-low'}">${deal.score}%</span></div>
+                    <div><strong style="color: #ffffff;">Days in Stage:</strong> ${calculateDaysInStage(deal)}</div>
+                </div>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #ffffff;">MEDDICC Review</h4>
+                <div style="background: rgba(10,22,40,0.9); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.12);">
+                    ${sections.map(section => `
+                        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <strong style="color: #ffffff;">${section.label}:</strong>
+                            <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.8); white-space: pre-wrap;">${deal[section.id] || '<em style="color: rgba(255,255,255,0.5);">Not completed</em>'}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <h4 style="margin-bottom: 1rem; color: #ffffff;">Qualification Requirements</h4>
+                <ul class="requirement-list">
+                    ${requirements.map(req => `
+                        <li class="${req.met ? 'requirement-met' : 'requirement-unmet'}">${req.text}</li>
+                    `).join('')}
+                </ul>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #ffffff;">Review Notes</h4>
+                <textarea id="review-notes-${dealId}" placeholder="Add notes from this review..." 
+                          style="width: 100%; min-height: 100px; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(10,22,40,0.95); color: #ffffff;"></textarea>
+                
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="saveReviewNotes('${dealId}')">Save Notes</button>
+                    <button class="btn btn-secondary" onclick="loadDeal('${dealId}'); switchMode('rep')">Edit Deal</button>
+                </div>
+            `;
+        }
+
+        function saveReviewNotes(dealId) {
+            const notes = document.getElementById(`review-notes-${dealId}`).value;
+            const deals = getDeals();
+            const deal = deals.find(d => d.id === dealId);
+            
+            if (deal) {
+                if (!deal.reviewNotes) deal.reviewNotes = [];
+                deal.reviewNotes.push({
+                    date: new Date().toISOString(),
+                    notes: notes
+                });
+                
+                localStorage.setItem('meddicc_deals', JSON.stringify(deals));
+                alert('Review notes saved!');
+            }
+        }
+
+        function exportReviewNotes() {
+            const rep = document.getElementById('review-rep').value;
+            if (!rep) {
+                alert('Please select a rep first');
+                return;
+            }
+            
+            const deals = getDeals().filter(d => d.salesRep === rep);
+            let output = `Pipeline Review Notes - ${rep}\nGenerated: ${new Date().toLocaleString()}\n\n`;
+            
+            deals.forEach(deal => {
+                output += `\n${'='.repeat(60)}\n`;
+                output += `Deal: ${deal.dealName}\n`;
+                output += `Value: £${deal.dealValue} | Stage: ${deal.dealStage} | Score: ${deal.score}%\n`;
+                output += `${'='.repeat(60)}\n`;
+                
+                if (deal.reviewNotes && deal.reviewNotes.length > 0) {
+                    deal.reviewNotes.forEach(note => {
+                        output += `\n[${new Date(note.date).toLocaleDateString()}]\n${note.notes}\n`;
+                    });
+                } else {
+                    output += '\nNo review notes yet.\n';
+                }
+            });
+            
+            const blob = new Blob([output], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `pipeline-review-${rep}-${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+        }
+
+        // Export functions
+        function downloadTemplate() {
+            const headers = [
+                'Deal Name',
+                'Deal Value (£)',
+                'Close Date (YYYY-MM-DD)',
+                'Created Date (YYYY-MM-DD)',
+                'Sales Rep',
+                'Deal Stage',
+                'Forecast Category',
+                'Metrics',
+                'Economic Buyer',
+                'Decision Criteria',
+                'Decision Process',
+                'Identify Pain',
+                'Champion',
+                'Competition'
+            ];
+            
+            const exampleRow = [
+                'Acme Corp - CRM Implementation',
+                '50000',
+                '2026-03-15',
+                '2025-12-01',
+                'John Smith',
+                'qualification',
+                'best-case',
+                'Current: Processing 500 orders/day = 12hrs (£105K/year labor). Target: Automate 80% = 2hrs. Impact: Save £84K/year. Timeline: 6 months.',
+                'Sarah Chen, CFO. Signs off on all investments >£25K. Meeting scheduled 15th Jan. Priorities: Cost reduction, digital transformation.',
+                'Must-have: API integration with Salesforce (critical), SOC2 compliance (non-negotiable). Evaluation weighted: ROI 40%, Implementation 30%, Vendor stability 20%.',
+                'Stage 1 - Technical Evaluation (Jan 15-30): IT team tests. Stage 2 - Business Case (Feb 1-14): Champion presents to CFO. Stage 3 - Legal (Mar 1-15): Contract review.',
+                'Manual order processing causing 4-6 hour delays. Lost 23 orders worth £127K last month. CEO mandate to fix before peak season (May). Continue losing 5-7% of orders if no action.',
+                'David Thompson, VP Operations (8 years). Reports directly to COO. Built internal business case. Scheduled CFO meeting for us. Strong relationship - meets bi-weekly.',
+                'Competitor A - Incumbent (3 years), no Salesforce integration (critical gap), 40% more expensive. Status quo: Continue manual process, risk losing orders.'
+            ];
+            
+            const csv = [
+                headers.join(','),
+                exampleRow.map(field => `"${field.replace(/"/g, '""')}"`).join(',')
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `meddicc-template-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showImportInstructions();
+        }
+        
+        function showImportInstructions() {
+            const instructions = `
+**📋 CSV Template Downloaded!**
+
+**How to Use:**
+
+1. **Open the CSV** in Excel or Google Sheets
+2. **Keep the example row** as a reference (or delete it)
+3. **Add your deals** - one row per deal
+4. **Follow the format:**
+   - Deal Stage: discovery, qualification, proposal, negotiation, closed-won, closed-lost
+   - Forecast Category: pipeline, best-case, commit, closed
+   - Close Date: YYYY-MM-DD format (e.g., 2026-03-15)
+   - Created Date: YYYY-MM-DD format (e.g., 2025-12-01) - when opportunity was first identified
+5. **Save as CSV** (not Excel format)
+6. **Click "Import CSV"** to upload
+
+**Tips:**
+• Copy/paste similar deals to save time
+• Use multi-line text in MEDDICC fields (Excel will handle it)
+• Required fields: Deal Name, Sales Rep
+• Created Date tracks deal age - backdate for existing opportunities
+• Include as much MEDDICC detail as possible for better scoring
+
+Ready to import when you are!
+            `;
+            
+            showInsights(instructions);
+        }
+        
+        function importCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const rows = parseCSV(csv);
+                    
+                    if (rows.length < 2) {
+                        alert('CSV file appears to be empty or invalid');
+                        return;
+                    }
+                    
+                    const headers = rows[0];
+                    const dataRows = rows.slice(1);
+                    
+                    // Validate headers
+                    const expectedHeaders = [
+                        'Deal Name', 'Deal Value (£)', 'Close Date (YYYY-MM-DD)', 'Created Date (YYYY-MM-DD)', 'Sales Rep', 
+                        'Deal Stage', 'Forecast Category', 'Metrics', 'Economic Buyer', 
+                        'Decision Criteria', 'Decision Process', 'Identify Pain', 'Champion', 'Competition'
+                    ];
+                    
+                    const headerMatch = headers.every((h, i) => h.trim() === expectedHeaders[i]);
+                    if (!headerMatch) {
+                        alert('CSV headers do not match template. Please use the downloaded template.');
+                        return;
+                    }
+                    
+                    // Process rows
+                    let imported = 0;
+                    let skipped = 0;
+                    const errors = [];
+                    
+                    dataRows.forEach((row, index) => {
+                        try {
+                            if (row.length < 14) {
+                                skipped++;
+                                errors.push(`Row ${index + 2}: Not enough columns`);
+                                return;
+                            }
+                            
+                            const [dealName, dealValue, closeDate, createdDate, salesRep, dealStage, forecastCategory,
+                                   metrics, economicBuyer, decisionCriteria, decisionProcess, 
+                                   identifyPain, champion, competition] = row;
+                            
+                            // Validate required fields
+                            if (!dealName || !dealName.trim()) {
+                                skipped++;
+                                errors.push(`Row ${index + 2}: Missing Deal Name`);
+                                return;
+                            }
+                            
+                            if (!salesRep || !salesRep.trim()) {
+                                skipped++;
+                                errors.push(`Row ${index + 2}: Missing Sales Rep`);
+                                return;
+                            }
+                            
+                            // Create deal
+                            const dealId = `deal_${Date.now()}_${index}`;
+                            const score = calculateScoreFromData({
+                                metrics, economicBuyer, decisionCriteria, decisionProcess,
+                                identifyPain, champion, competition
+                            });
+                            
+                            const newDeal = {
+                                id: dealId,
+                                dealName: dealName.trim(),
+                                dealValue: dealValue.trim(),
+                                closeDate: closeDate.trim(),
+                                createdDate: createdDate && createdDate.trim() ? createdDate.trim() : new Date().toISOString().split('T')[0],
+                                salesRep: salesRep.trim(),
+                                dealStage: dealStage.trim().toLowerCase(),
+                                forecastCategory: forecastCategory.trim().toLowerCase(),
+                                metrics: metrics.trim(),
+                                economicBuyer: economicBuyer.trim(),
+                                decisionCriteria: decisionCriteria.trim(),
+                                decisionProcess: decisionProcess.trim(),
+                                identifyPain: identifyPain.trim(),
+                                champion: champion.trim(),
+                                competition: competition.trim(),
+                                lastUpdated: new Date().toISOString(),
+                                score: score,
+                                stageHistory: []
+                            };
+                            
+                            // Add to storage
+                            const deals = getDeals();
+                            deals.push(newDeal);
+                            localStorage.setItem('meddicc_deals', JSON.stringify(deals));
+                            
+                            imported++;
+                        } catch (err) {
+                            skipped++;
+                            errors.push(`Row ${index + 2}: ${err.message}`);
+                        }
+                    });
+                    
+                    // Show results
+                    updateDealCount();
+                    
+                    let message = `**Import Complete!**\n\n`;
+                    message += `✅ Successfully imported: ${imported} deals\n`;
+                    if (skipped > 0) {
+                        message += `⚠️ Skipped: ${skipped} rows\n\n`;
+                        if (errors.length > 0) {
+                            message += `**Errors:**\n${errors.slice(0, 10).join('\n')}`;
+                            if (errors.length > 10) {
+                                message += `\n... and ${errors.length - 10} more errors`;
+                            }
+                        }
+                    }
+                    
+                    showInsights(message);
+                    
+                    // Reset file input
+                    event.target.value = '';
+                    
+                } catch (err) {
+                    alert(`Error importing CSV: ${err.message}`);
+                    console.error('Import error:', err);
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function parseCSV(csv) {
+            const rows = [];
+            let currentRow = [];
+            let currentField = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < csv.length; i++) {
+                const char = csv[i];
+                const nextChar = csv[i + 1];
+                
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        // Escaped quote
+                        currentField += '"';
+                        i++; // Skip next quote
+                    } else {
+                        // Toggle quote state
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // End of field
+                    currentRow.push(currentField);
+                    currentField = '';
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                    // End of row
+                    if (char === '\r' && nextChar === '\n') {
+                        i++; // Skip \n in \r\n
+                    }
+                    if (currentField || currentRow.length > 0) {
+                        currentRow.push(currentField);
+                        rows.push(currentRow);
+                        currentRow = [];
+                        currentField = '';
+                    }
+                } else {
+                    currentField += char;
+                }
+            }
+            
+            // Add last field and row if present
+            if (currentField || currentRow.length > 0) {
+                currentRow.push(currentField);
+                rows.push(currentRow);
+            }
+            
+            return rows;
+        }
+        
+        function calculateScoreFromData(data) {
+            let score = 0;
+            
+            // Metrics (20 points)
+            if (data.metrics) {
+                const hasNumbers = /\d/.test(data.metrics);
+                const hasCurrency = /[$€£]/.test(data.metrics);
+                const meetsLength = data.metrics.length >= 100;
+                
+                if (hasNumbers && hasCurrency && meetsLength) {
+                    score += 20;
+                } else if (hasNumbers && hasCurrency) {
+                    score += 15;
+                } else if (hasNumbers) {
+                    score += 10;
+                } else if (data.metrics.length > 0) {
+                    score += 5;
+                }
+            }
+            
+            // Economic Buyer (15 points)
+            if (data.economicBuyer) {
+                const hasTitle = /(cfo|ceo|cto|cio|vp|director|head)/i.test(data.economicBuyer);
+                const hasAccess = /(meeting|scheduled|access|introduced)/i.test(data.economicBuyer);
+                const meetsLength = data.economicBuyer.length >= 80;
+                
+                if (hasTitle && hasAccess && meetsLength) {
+                    score += 15;
+                } else if (hasTitle && meetsLength) {
+                    score += 12;
+                } else if (hasTitle) {
+                    score += 8;
+                } else if (data.economicBuyer.length > 0) {
+                    score += 5;
+                }
+            }
+            
+            // Decision Criteria (15 points)
+            if (data.decisionCriteria) {
+                const criteriaCount = data.decisionCriteria.split(/[,\n]/).filter(c => c.trim().length > 10).length;
+                const meetsLength = data.decisionCriteria.length >= 120;
+                
+                if (criteriaCount >= 3 && meetsLength) {
+                    score += 15;
+                } else if (criteriaCount >= 2 && meetsLength) {
+                    score += 12;
+                } else if (criteriaCount >= 1) {
+                    score += 8;
+                } else if (data.decisionCriteria.length > 0) {
+                    score += 5;
+                }
+            }
+            
+            // Decision Process (15 points)
+            if (data.decisionProcess) {
+                const hasTimeline = /\d+\s*(week|month|day)/i.test(data.decisionProcess);
+                const hasStages = /(step|stage|phase)/i.test(data.decisionProcess);
+                const meetsLength = data.decisionProcess.length >= 150;
+                
+                if (hasTimeline && hasStages && meetsLength) {
+                    score += 15;
+                } else if (hasTimeline && meetsLength) {
+                    score += 12;
+                } else if (hasTimeline || hasStages) {
+                    score += 8;
+                } else if (data.decisionProcess.length > 0) {
+                    score += 5;
+                }
+            }
+            
+            // Identify Pain (15 points)
+            if (data.identifyPain) {
+                const hasImpact = /(cost|lose|risk|waste|fail)/i.test(data.identifyPain);
+                const hasUrgency = /(urgent|now|deadline|must)/i.test(data.identifyPain);
+                const meetsLength = data.identifyPain.length >= 120;
+                
+                if (hasImpact && hasUrgency && meetsLength) {
+                    score += 15;
+                } else if (hasImpact && meetsLength) {
+                    score += 12;
+                } else if (hasImpact) {
+                    score += 8;
+                } else if (data.identifyPain.length > 0) {
+                    score += 5;
+                }
+            }
+            
+            // Champion (10 points)
+            if (data.champion) {
+                const hasInfluence = /(access|influence|credibility|reports to)/i.test(data.champion);
+                const hasAdvocacy = /(advocate|champion|support|selling)/i.test(data.champion);
+                const meetsLength = data.champion.length >= 100;
+                
+                if (hasInfluence && hasAdvocacy && meetsLength) {
+                    score += 10;
+                } else if (hasInfluence && meetsLength) {
+                    score += 8;
+                } else if (meetsLength) {
+                    score += 6;
+                } else if (data.champion.length > 0) {
+                    score += 3;
+                }
+            }
+            
+            // Competition (10 points)
+            if (data.competition) {
+                const hasCompetitors = data.competition.length > 50;
+                const hasStatusQuo = /(status quo|current|do nothing|build)/i.test(data.competition);
+                const meetsLength = data.competition.length >= 120;
+                
+                if (hasCompetitors && hasStatusQuo && meetsLength) {
+                    score += 10;
+                } else if (hasCompetitors && meetsLength) {
+                    score += 8;
+                } else if (meetsLength) {
+                    score += 6;
+                } else if (data.competition.length > 0) {
+                    score += 3;
+                }
+            }
+            
+            return Math.round(score);
+        }
+        
+        function exportData() {
+            const deals = getDeals();
+            
+            if (deals.length === 0) {
+                alert('No deals to export');
+                return;
+            }
+            
+            const headers = [
+                'Deal Name',
+                'Deal Value (£)',
+                'Close Date (YYYY-MM-DD)',
+                'Created Date (YYYY-MM-DD)',
+                'Sales Rep',
+                'Deal Stage',
+                'Forecast Category',
+                'Metrics',
+                'Economic Buyer',
+                'Decision Criteria',
+                'Decision Process',
+                'Identify Pain',
+                'Champion',
+                'Competition'
+            ];
+            
+            const csv = [
+                headers.join(','),
+                ...deals.map(d => [
+                    d.dealName || '',
+                    d.dealValue || '',
+                    d.closeDate || '',
+                    d.createdDate || '',
+                    d.salesRep || '',
+                    d.dealStage || '',
+                    d.forecastCategory || '',
+                    d.metrics || '',
+                    d.economicBuyer || '',
+                    d.decisionCriteria || '',
+                    d.decisionProcess || '',
+                    d.identifyPain || '',
+                    d.champion || '',
+                    d.competition || ''
+                ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `meddicc-export-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Rule-Based AI Coaching Engine
+        function getAICoaching() {
+            const score = calculateDealScore();
+            const analysis = analyzeQualification();
+            
+            let coaching = `**DEAL QUALIFICATION ANALYSIS**\n\n`;
+            coaching += `**Overall Score: ${score}% - ${analysis.status}**\n\n`;
+            
+            // What's Strong
+            if (analysis.strengths.length > 0) {
+                coaching += `**✓ What's Strong:**\n`;
+                analysis.strengths.forEach(s => coaching += `• ${s}\n`);
+                coaching += `\n`;
+            }
+            
+            // Critical Gaps
+            if (analysis.gaps.length > 0) {
+                coaching += `**⚠️ Critical Gaps:**\n`;
+                analysis.gaps.forEach(g => coaching += `• ${g}\n`);
+                coaching += `\n`;
+            }
+            
+            // Questions to Ask Next
+            coaching += `**🎯 Questions to Ask Next:**\n`;
+            const questions = generateQuestions();
+            questions.forEach(q => coaching += `${q}\n`);
+            coaching += `\n`;
+            
+            // Red Flags
+            if (analysis.redFlags.length > 0) {
+                coaching += `**🚩 Red Flags:**\n`;
+                analysis.redFlags.forEach(f => coaching += `• ${f}\n`);
+                coaching += `\n`;
+            }
+            
+            // Next Actions
+            coaching += `**📋 Next Actions:**\n`;
+            const actions = generateNextActions();
+            actions.forEach(a => coaching += `• ${a}\n`);
+            
+            showInsights(coaching);
+        }
+
+        function analyzeQualification() {
+            const score = calculateDealScore();
+            let status = 'High Risk - Needs Immediate Attention';
+            let strengths = [];
+            let gaps = [];
+            let redFlags = [];
+            
+            if (score >= 75) {
+                status = 'Well Qualified - Ready to Progress';
+            } else if (score >= 50) {
+                status = 'Moderate Risk - Strengthen Key Areas';
+            }
+            
+            // Analyze Metrics
+            if (dealData.metrics) {
+                if (/\d+/.test(dealData.metrics) && /[$€£]/.test(dealData.metrics)) {
+                    strengths.push('Metrics are quantified with specific numbers and currency values');
+                } else if (/\d+/.test(dealData.metrics)) {
+                    gaps.push('Metrics lack currency/financial impact - convert to £ value');
+                } else {
+                    gaps.push('Metrics are not quantified - need specific numbers');
+                }
+            } else {
+                gaps.push('No metrics documented - this is critical for justifying ROI');
+                redFlags.push('Cannot justify purchase without quantified business impact');
+            }
+            
+            // Analyze Economic Buyer
+            if (dealData.economicBuyer) {
+                if (/(cfo|ceo|cto|cio)/i.test(dealData.economicBuyer)) {
+                    strengths.push('Economic Buyer identified at C-level - strong buying authority');
+                } else if (/(vp|director|head)/i.test(dealData.economicBuyer)) {
+                    strengths.push('Economic Buyer identified at VP/Director level');
+                    if (parseFloat(dealData.dealValue) > 50000) {
+                        gaps.push('Deal value >£50K but EB is not C-level - verify spending authority');
+                    }
+                } else {
+                    gaps.push('Economic Buyer title unclear - confirm their spending authority');
+                }
+                
+                if (!/(access|meeting|scheduled|confirmed)/i.test(dealData.economicBuyer)) {
+                    redFlags.push('No evidence of direct access to Economic Buyer');
+                }
+            } else {
+                gaps.push('Economic Buyer not identified - who signs the contract?');
+                redFlags.push('Cannot close without knowing who controls budget');
+            }
+            
+            // Analyze Decision Criteria
+            if (dealData.decisionCriteria) {
+                const criteriaCount = dealData.decisionCriteria.split(/[,;]/).filter(c => c.trim().length > 5).length;
+                if (criteriaCount >= 3) {
+                    strengths.push(`${criteriaCount} decision criteria documented - comprehensive evaluation framework`);
+                } else if (criteriaCount >= 1) {
+                    gaps.push('Only 1-2 decision criteria - dig deeper on their evaluation process');
+                }
+            } else {
+                gaps.push('Decision criteria unknown - how will they choose a vendor?');
+                redFlags.push('Risk of last-minute requirements or "no decision"');
+            }
+            
+            // Analyze Decision Process
+            if (dealData.decisionProcess) {
+                if (/\d+\s*(week|month)/i.test(dealData.decisionProcess)) {
+                    strengths.push('Decision timeline documented with specific timeframes');
+                } else {
+                    gaps.push('Decision process lacks specific timeline - get commitment dates');
+                }
+                
+                if (/(step|stage|phase)/i.test(dealData.decisionProcess)) {
+                    strengths.push('Decision process stages identified');
+                } else {
+                    gaps.push('Decision stages unclear - map out their buying process');
+                }
+                
+                if (!/(legal|procurement|security|compliance)/i.test(dealData.decisionProcess)) {
+                    gaps.push('No mention of legal/procurement - these can delay deals');
+                }
+            } else {
+                gaps.push('Decision process not documented - you\'re flying blind');
+                redFlags.push('High risk of unexpected delays or derailment');
+            }
+            
+            // Analyze Pain
+            if (dealData.identifyPain) {
+                if (/(cost|lose|losing|risk|waste|fail|failing)/i.test(dealData.identifyPain)) {
+                    strengths.push('Pain includes impact/consequence language - strong urgency');
+                } else {
+                    gaps.push('Pain lacks urgency or business impact - what happens if they do nothing?');
+                }
+                
+                if (!/(current|today|now)/i.test(dealData.identifyPain)) {
+                    gaps.push('Pain may not be current - confirm this is an active problem');
+                }
+            } else {
+                gaps.push('Business pain not articulated - why buy now?');
+                redFlags.push('Without pain, there\'s no urgency to change');
+            }
+            
+            // Analyze Champion
+            if (dealData.champion) {
+                if (/(advocate|promote|sell|champion|support)/i.test(dealData.champion)) {
+                    strengths.push('Champion is actively advocating internally');
+                } else {
+                    gaps.push('Champion role unclear - are they actually selling for you?');
+                }
+                
+                if (/(access|relationship|close|credibility)/i.test(dealData.champion)) {
+                    strengths.push('Champion has documented access/credibility with stakeholders');
+                } else {
+                    gaps.push('Champion influence unclear - can they reach the Economic Buyer?');
+                    redFlags.push('Weak champion may not be able to navigate internal politics');
+                }
+            } else {
+                gaps.push('No champion identified - who is selling internally for you?');
+                redFlags.push('Deals without champions have <20% win rate');
+            }
+            
+            // Analyze Competition
+            if (dealData.competition) {
+                if (dealData.competition.length > 50) {
+                    strengths.push('Competition thoroughly understood with specific details');
+                } else {
+                    gaps.push('Competition understanding is superficial - need deeper intel');
+                }
+                
+                if (/(status quo|do nothing|current|existing)/i.test(dealData.competition)) {
+                    strengths.push('Status quo acknowledged as competition - shows realistic thinking');
+                } else {
+                    gaps.push('Don\'t forget status quo - it\'s the biggest competitor');
+                }
+            } else {
+                gaps.push('Competition not assessed - you don\'t know what you\'re up against');
+                redFlags.push('Blindness to competition = lost deals');
+            }
+            
+            // Deal-level red flags
+            if (dealData.dealStage === 'negotiation' && score < 70) {
+                redFlags.push('Deal in Negotiation but qualification is weak - high risk of falling apart');
+            }
+            
+            if (dealData.forecastCategory === 'commit' && score < 75) {
+                redFlags.push('Forecasted as Commit but doesn\'t meet 75% threshold');
+            }
+            
+            const closeDate = new Date(dealData.closeDate);
+            const daysToClose = Math.floor((closeDate - new Date()) / (1000 * 60 * 60 * 24));
+            if (daysToClose < 30 && score < 60) {
+                redFlags.push(`Only ${daysToClose} days to close but qualification is weak - unlikely to close on time`);
+            }
+            
+            return { status, strengths, gaps, redFlags };
+        }
+
+        function generateQuestions() {
+            const questions = [];
+            
+            // Metrics questions
+            if (!dealData.metrics || !/\d+/.test(dealData.metrics)) {
+                questions.push('1. "What specific business metrics are you trying to improve? Can you quantify that?"');
+                questions.push('2. "If this problem persists for another quarter, what does that cost you?"');
+            } else if (!/[$€£]/.test(dealData.metrics)) {
+                questions.push('1. "You mentioned [metric] - what\'s the financial impact of that?"');
+            }
+            
+            // Economic Buyer questions
+            if (!dealData.economicBuyer) {
+                questions.push('3. "Who ultimately has to approve this purchase? What\'s their spending authority?"');
+            } else if (!/(access|meeting)/i.test(dealData.economicBuyer)) {
+                questions.push('3. "When can we get [Economic Buyer] involved in the conversation?"');
+                questions.push('4. "What are [Economic Buyer]\'s top 3 priorities this year?"');
+            }
+            
+            // Decision Criteria questions
+            if (!dealData.decisionCriteria) {
+                questions.push('5. "What criteria will you use to evaluate vendors? What must we prove?"');
+                questions.push('6. "Are there any deal-breakers - things that would eliminate a vendor from consideration?"');
+            }
+            
+            // Decision Process questions
+            if (!dealData.decisionProcess) {
+                questions.push('7. "Walk me through your buying process - what are the steps from here to contract?"');
+                questions.push('8. "Who else needs to be involved? Legal? Procurement? IT Security?"');
+            } else if (!/\d+\s*(week|month)/i.test(dealData.decisionProcess)) {
+                questions.push('7. "What\'s the realistic timeline for each step in your process?"');
+            }
+            
+            // Pain questions
+            if (!dealData.identifyPain) {
+                questions.push('9. "What happens if you don\'t solve this problem?"');
+                questions.push('10. "Why is this a priority right now vs. 6 months from now?"');
+            } else if (!/(cost|lose|risk|fail)/i.test(dealData.identifyPain)) {
+                questions.push('9. "What\'s at risk if this situation continues?"');
+            }
+            
+            // Champion questions
+            if (!dealData.champion) {
+                questions.push('11. "Who internally will champion this solution? Who benefits most from success?"');
+            } else if (!/(access|credibility)/i.test(dealData.champion)) {
+                questions.push('11. "How will [Champion] communicate this to [Economic Buyer]? What\'s their relationship?"');
+            }
+            
+            // Competition questions
+            if (!dealData.competition) {
+                questions.push('12. "What alternatives are you considering? Even if it\'s doing nothing?"');
+            } else if (!/(status quo|current)/i.test(dealData.competition)) {
+                questions.push('12. "What would have to happen for you to stick with your current solution?"');
+            }
+            
+            return questions.slice(0, 5); // Return top 5 most relevant
+        }
+
+        function generateNextActions() {
+            const actions = [];
+            const score = calculateDealScore();
+            
+            if (score < 40) {
+                actions.push('URGENT: Schedule discovery call to fill critical qualification gaps');
+                actions.push('Do NOT progress this deal until basic MEDDICC is complete');
+            }
+            
+            if (!dealData.metrics || !/\d+/.test(dealData.metrics)) {
+                actions.push('Get quantified metrics - send ROI calculator or TCO analysis');
+            }
+            
+            if (!dealData.economicBuyer) {
+                actions.push('Identify Economic Buyer through org chart research or Champion');
+            } else if (!/(access|meeting)/i.test(dealData.economicBuyer)) {
+                actions.push('Request Executive Briefing with Economic Buyer before proposal');
+            }
+            
+            if (!dealData.champion || dealData.champion.length < 30) {
+                actions.push('Develop Champion - provide them with internal selling materials');
+            }
+            
+            if (!dealData.decisionProcess) {
+                actions.push('Map decision process with Champion - identify all stakeholders');
+            }
+            
+            if (!dealData.competition) {
+                actions.push('Research competition - check G2, LinkedIn, recent wins/losses');
+            }
+            
+            if (dealData.dealStage === 'proposal' && score < 60) {
+                actions.push('HOLD: Do not send proposal until qualification reaches 60%+');
+            }
+            
+            if (dealData.dealStage === 'negotiation' && score < 70) {
+                actions.push('RISK: Re-qualify before finalizing terms - weak foundation');
+            }
+            
+            return actions.slice(0, 4); // Return top 4 most critical
+        }
+
+        function generateChampionEmail() {
+            if (!dealData.champion) {
+                alert('Please fill in Champion information first');
+                return;
+            }
+            
+            const championName = dealData.champion.split(/[,\n]/)[0].trim();
+            const companyName = dealData.dealName.split('-')[0].trim();
+            
+            let email = `**CHAMPION ENABLEMENT EMAIL**\n\n`;
+            email += `Subject: Helping You Make the Case for [Solution]\n\n`;
+            email += `Hi ${championName},\n\n`;
+            
+            if (dealData.identifyPain) {
+                email += `Thanks for the great conversation about the challenges ${companyName} is facing around ${dealData.identifyPain.substring(0, 100)}${dealData.identifyPain.length > 100 ? '...' : ''}.\n\n`;
+            }
+            
+            if (dealData.metrics && /\d+/.test(dealData.metrics)) {
+                email += `Based on our discussion, I've put together a one-pager showing how we can help you achieve ${dealData.metrics}. `;
+            } else {
+                email += `I've put together a one-pager showing how we can address your key priorities. `;
+            }
+            
+            email += `This should help when you discuss this with ${dealData.economicBuyer ? dealData.economicBuyer.split(/[,\n]/)[0].trim() : 'your leadership team'}.\n\n`;
+            
+            email += `**Key points to emphasize:**\n`;
+            if (dealData.metrics) {
+                email += `• Business impact: ${dealData.metrics.substring(0, 80)}\n`;
+            }
+            if (dealData.identifyPain) {
+                email += `• Current pain point: ${dealData.identifyPain.substring(0, 80)}\n`;
+            }
+            if (dealData.decisionCriteria) {
+                email += `• Meets your criteria: ${dealData.decisionCriteria.substring(0, 80)}\n`;
+            }
+            
+            email += `\n`;
+            
+            if (dealData.economicBuyer) {
+                email += `Would it be helpful to set up a brief call with ${dealData.economicBuyer.split(/[,\n]/)[0].trim()} to walk through the business case?\n\n`;
+            } else {
+                email += `What questions do you anticipate from your leadership team? Happy to help you prepare.\n\n`;
+            }
+            
+            email += `Best regards,\n[Your Name]\n\n`;
+            email += `---\n*Customize this email with specific details from your conversations*`;
+            
+            showInsights(email);
+        }
+
+        function generateEBEmail() {
+            if (!dealData.economicBuyer) {
+                alert('Please fill in Economic Buyer information first');
+                return;
+            }
+            
+            const ebName = dealData.economicBuyer.split(/[,\n]/)[0].trim();
+            const companyName = dealData.dealName.split('-')[0].trim();
+            
+            let email = `**ECONOMIC BUYER EMAIL**\n\n`;
+            email += `Subject: ${companyName} - ${dealData.metrics ? 'Business Impact' : 'Executive Summary'}\n\n`;
+            email += `Hi ${ebName},\n\n`;
+            
+            if (dealData.champion) {
+                const championName = dealData.champion.split(/[,\n]/)[0].trim();
+                email += `I've been working with ${championName} on ${companyName}'s `;
+            } else {
+                email += `I wanted to reach out regarding ${companyName}'s `;
+            }
+            
+            if (dealData.identifyPain) {
+                email += `${dealData.identifyPain.substring(0, 100).toLowerCase()}${dealData.identifyPain.length > 100 ? '...' : ''}.\n\n`;
+            } else {
+                email += `business priorities.\n\n`;
+            }
+            
+            email += `**Business Impact:**\n`;
+            if (dealData.metrics) {
+                email += `${dealData.metrics}\n\n`;
+            } else {
+                email += `[Insert quantified ROI/business impact here]\n\n`;
+            }
+            
+            if (dealData.decisionCriteria) {
+                email += `**Alignment with Your Criteria:**\n`;
+                dealData.decisionCriteria.split(/[,;]/).slice(0, 3).forEach(criteria => {
+                    email += `• ${criteria.trim()}\n`;
+                });
+                email += `\n`;
+            }
+            
+            if (dealData.decisionProcess && /\d+\s*(week|month)/i.test(dealData.decisionProcess)) {
+                const timeline = dealData.decisionProcess.match(/\d+\s*(week|month)/i)[0];
+                email += `**Next Steps:**\n`;
+                email += `I understand your team is working toward a decision within ${timeline}. `;
+            } else {
+                email += `**Next Steps:**\n`;
+            }
+            
+            if (dealData.closeDate) {
+                email += `I'd welcome the opportunity to discuss this before your ${new Date(dealData.closeDate).toLocaleDateString()} target date.\n\n`;
+            } else {
+                email += `I'd welcome the opportunity to discuss how this aligns with your strategic priorities.\n\n`;
+            }
+            
+            email += `Would you have 15 minutes this week for a brief conversation?\n\n`;
+            email += `Best regards,\n[Your Name]\n\n`;
+            email += `---\n*Keep it concise - executives skim emails. Lead with business value.*`;
+            
+            showInsights(email);
+        }
+
+        function showInsights(text) {
+            document.getElementById('insights-container').innerHTML = `
+                <div style="padding: 1.5rem; background: rgba(10,22,40,0.95); border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); white-space: pre-wrap; line-height: 1.6; color: rgba(255,255,255,0.9); box-shadow: 0 12px 28px rgba(0,0,0,0.45);">
+                    ${text}
+                </div>
+            `;
+        }
+
+        function showRiskScore() {
+            const score = calculateDealScore();
+            const status = score >= 75 ? 'Well Qualified' : score >= 50 ? 'Moderate Risk' : 'High Risk';
+            const requirements = getMissingRequirements(75);
+            
+            const insights = `**DEAL RISK ANALYSIS**
+
+Score: ${score}% - ${status}
+
+Requirements Status:
+${requirements.map(req => `${req.met ? '✓' : '✗'} ${req.text}`).join('\n')}
+
+${score < 75 ? '\nRecommendation: Address missing requirements before advancing deal stage.' : '\nDeal meets qualification standards for progression.'}`;
+            
+            document.getElementById('insights-container').innerHTML = `<div style="padding: 1.5rem; background: #f8fafc; border-radius: 8px; border: 2px solid #e2e8f0; white-space: pre-wrap;">${insights}</div>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standardised Sales Playbooks &amp; Leadership Cadence | BearOps</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #48bb78;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        .back-link:hover { gap: 0.75rem; color: #6ee7b7; }
+        .hero {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            border: 2px solid rgba(72, 187, 120, 0.6);
+            padding: 60px 50px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(72, 187, 120, 0.15), transparent 70%);
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .pillar-badge {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(72, 187, 120, 0.4);
+            display: inline-block;
+        }
+        h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-size: 1.3rem; color: #cbd5f5; margin-bottom: 2rem; }
+        .problem-statement {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            border-radius: 8px;
+            color: #fbb6ce;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+        .content-section {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        .content-section h2 { font-size: 1.8rem; color: #a5b4fc; margin-bottom: 1.5rem; }
+        .content-section h3 { font-size: 1.4rem; color: #48bb78; margin-bottom: 1rem; margin-top: 2rem; }
+        .content-section p { color: #e2e8f0; line-height: 1.8; margin-bottom: 1.5rem; }
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .framework-card {
+            background: rgba(10, 22, 40, 0.8);
+            border: 2px solid rgba(72, 187, 120, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .framework-card h4 { color: #48bb78; font-size: 1.2rem; margin-bottom: 1rem; }
+        .key-deliverables {
+            background: rgba(72, 187, 120, 0.1);
+            border: 2px solid rgba(72, 187, 120, 0.4);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .key-deliverables h3 { color: #48bb78; margin-top: 0; }
+        .deliverable-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+        .deliverable-item::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .cta-section {
+            background: rgba(72, 187, 120, 0.1);
+            border: 2px solid rgba(72, 187, 120, 0.4);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 32px;
+            background: rgba(72, 187, 120, 0.2);
+            border: 2px solid #48bb78;
+            color: #48bb78;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        ul { color: #e2e8f0; margin-left: 1.5rem; margin-bottom: 1.5rem; }
+        li { margin-bottom: 0.8rem; }
+
+.tool-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: rgba(72, 187, 120, 0.18);
+    border: 2px solid #48bb78;
+    color: #e2fbe9;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tool-button:hover {
+    background: rgba(72, 187, 120, 0.35);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 25px rgba(76, 187, 120, 0.35);
+}
+
+    </style>
+</head>
+<body>
+<!-- Overlaid logo (doesn't change layout) -->
+    <img src="../assets/images/BearOps_Logo_Default.png" alt="BearOps Logo">
+
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link">← Back to Revenue Framework</a>
+
+        <div class="hero">
+            <div class="pillar-badge">Process & Execution</div>
+            <h1>Standardised Sales Playbooks &amp; Leadership Cadence</h1>
+            <p class="hero-subtitle">One way to sell. Consistent discovery. Repeatable deal progression. No more "winging it."</p>
+            
+            <div class="problem-statement">
+                <strong>The Problem:</strong> Every rep sells differently. Your best rep closes at 40%, your worst at 12%. You can't coach or scale what isn't documented. Marketing hands off leads, Sales says they're garbage, CS inherits broken customer expectations. Nothing connects.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Why This Matters</h2>
+            <p>
+                Founder-led sales works because founders are brilliant improvisers. They read the room, pivot the pitch, 
+                close on instinct. But you can't hire 10 more founders. You need a repeatable methodology that average 
+                performers can execute at high success rates.
+            </p>
+            <p>
+                Without documented playbooks, every rep reinvents the wheel. Discovery calls are random. Demo flow depends 
+                on mood. Deal progression is guesswork. Managers can't coach because there's no standard to coach to.
+            </p>
+
+            <h3>What We Build Together</h3>
+            <div class="framework-grid">
+                <div class="framework-card">
+                    <h4>Discovery Framework</h4>
+                    <p>MEDDICC, Miller Heiman, or custom—consistent qualification methodology. Every rep asks the same critical questions.</p>
+                </div>
+
+                <div class="framework-card">
+                    <h4>Sales Stage Definitions</h4>
+                    <p>What does "Discovery" actually mean? What's required to move to "Proposal"? Clear exit criteria for each stage.</p>
+                </div>
+
+                <div class="framework-card">
+                    <h4>Lead-To-Cash Process Map</h4>
+                    <p>End-to-end workflow: Marketing → SDR → AE → Implementation → CS. Every handoff documented, every drop-off point visible.</p>
+                </div>
+
+                <div class="framework-card">
+                    <h4>Pitch & Demo Structure</h4>
+                    <p>Core value prop, discovery-driven demo flow, objection handling scripts. Not rigid scripts but flexible frameworks.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="key-deliverables">
+            <h3>What You'll Gain</h3>
+            <div class="deliverable-item">
+                <div><strong>Sales Playbook Document:</strong> Your complete methodology—discovery questions, qualification criteria, objection responses</div>
+            </div>
+            <div class="deliverable-item">
+                <div><strong>Lead-To-Cash Workflow Map:</strong> Visual process showing every touchpoint from first contact to renewal</div>
+            </div>
+            <div class="deliverable-item">
+                <div><strong>Stage Gate Checklists:</strong> What must be true to advance a deal? Prevents premature stage progression</div>
+            </div>
+            <div class="deliverable-item">
+                <div><strong>CRM Configuration:</strong> Sales stages, required fields, automation rules—CRM enforces the process</div>
+            </div>
+            <div class="deliverable-item">
+                <div><strong>Certification Program:</strong> How to train new reps on the playbook. Role plays, assessments, manager sign-off</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>How We Build It</h2>
+            
+            <h3>Capture What's Working</h3>
+            <ul>
+                <li>Ride-along with your top 2 reps: Record calls, shadow demos, debrief wins/losses</li>
+                <li>Review recent customer Win: Why did they buy? What was impWhat questions mattered most?</li>
+                <li>Map current state: Where do leads come from? What happens at each handoff?</li>
+            </ul>
+
+            <h3>Design & Validate</h3>
+            <ul>
+                <li>Draft discovery framework based on what actually predicts closed-won</li>
+                <li>Workshop with sales team: "Does this feel right? What's missing?"</li>
+                <li>Build stage definitions: Exit criteria, required fields, typical duration</li>
+                <li>Create lead-to-cash map showing all touchpoints and handoffs</li>
+            </ul>
+
+            <h3>Implement & Train</h3>
+            <ul>
+                <li>Configure CRM to match the new process (stages, fields, automations)</li>
+                <li>Train entire team: 2-day workshop on new methodology</li>
+                <li>Pilot with 2 reps for 30 days, gather feedback, refine</li>
+                <li>Roll out to full team with ongoing manager coaching support</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <div class="tools-grid">
+            <!-- Sales Engine Architecture - Featured -->
+            <div class="tool-card featured">
+               
+                <span class="tool-icon">🎯</span>
+                <h2 class="tool-title">Sales Playbooks & Cadences</h2>
+                <p class="tool-description">
+                    Complete 5-stage framework transforming complex B2B SaaS sales into structured, repeatable systems. From smart prospecting to account expansion.
+                </p>
+                <ul class="tool-features">
+                    <li>Interactive stage-by-stage methodology
+                    <li>Coaching tips and best practices for each stage</li>
+                    <li>MEDDIC, BANT, and Miller Heiman qualification tools</li>
+                    <li>Trigger-based messaging framework</li>
+                    <li>Strategic territory design and account segmentation </li>
+                    
+                </ul>
+                <a href="sales-playbook-hub/sales-enablement-dashboard.html" class="tool-button">Launch Sales Engine</a>
+            </div>
+
+        </div>
+
+        <div class="cta-section">
+            <h3>Ready to Build a Repeatable Sales Process?</h3>
+            <p style="color: #cbd5f5; margin-bottom: 2rem;">Stop relying on hero reps. Start building a system that scales.</p>
+            <a href="/cdn-cgi/l/email-protection#563b3724223f3816343337243926257835393b692523343c3335226b05373a332576063a372f3439393d761f3827233f242f" class="btn-primary

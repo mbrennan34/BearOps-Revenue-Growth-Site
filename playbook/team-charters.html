@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Charters Hub - BearOps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #cbd5f5;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-btn:hover {
+            background: rgba(99, 179, 237, 0.2);
+            border-color: #63b3ed;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            background: rgba(10, 22, 40, 0.9);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #a5b4fc;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #63b3ed 0%, #a5b4fc 30%, #fbb6ce 70%, #f6e05e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #cbd5f5;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(72, 187, 120, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 5px;
+        }
+
+        /* Department Cards Grid */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Department Card */
+        .department-card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 24px;
+            border: 3px solid;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .department-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .department-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+        }
+
+        .department-card:hover::before {
+            opacity: 1;
+        }
+
+        .department-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Department Colors */
+        .dept-sales {
+            border-color: rgba(99, 179, 237, 0.6);
+        }
+        .dept-sales::before {
+            background: radial-gradient(circle at center, rgba(99, 179, 237, 0.25), transparent 70%);
+        }
+
+        .dept-marketing {
+            border-color: rgba(251, 113, 113, 0.6);
+        }
+        .dept-marketing::before {
+            background: radial-gradient(circle at center, rgba(251, 113, 113, 0.25), transparent 70%);
+        }
+
+        .dept-engineering {
+            border-color: rgba(72, 187, 120, 0.6);
+        }
+        .dept-engineering::before {
+            background: radial-gradient(circle at center, rgba(72, 187, 120, 0.25), transparent 70%);
+        }
+
+        .dept-product {
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .dept-product::before {
+            background: radial-gradient(circle at center, rgba(251, 191, 36, 0.25), transparent 70%);
+        }
+
+        .dept-customer {
+            border-color: rgba(165, 180, 252, 0.6);
+        }
+        .dept-customer::before {
+            background: radial-gradient(circle at center, rgba(165, 180, 252, 0.25), transparent 70%);
+        }
+
+        .dept-operations {
+            border-color: rgba(72, 187, 120, 0.6);
+        }
+        .dept-operations::before {
+            background: radial-gradient(circle at center, rgba(72, 187, 120, 0.25), transparent 70%);
+        }
+
+        /* Card Content */
+        .dept-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dept-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .dept-sales .dept-title { color: #63b3ed; }
+        .dept-marketing .dept-title { color: #fb7185; }
+        .dept-engineering .dept-title { color: #48bb78; }
+        .dept-product .dept-title { color: #fbbf24; }
+        .dept-customer .dept-title { color: #a5b4fc; }
+        .dept-operations .dept-title { color: #48bb78; }
+
+        .dept-description {
+            font-size: 1.05rem;
+            color: #cbd5f5;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .dept-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .dept-sales .stat-value { color: #63b3ed; }
+        .dept-marketing .stat-value { color: #fb7185; }
+        .dept-engineering .stat-value { color: #48bb78; }
+        .dept-product .stat-value { color: #fbbf24; }
+        .dept-customer .stat-value { color: #a5b4fc; }
+        .dept-operations .stat-value { color: #48bb78; }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(203, 213, 245, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dept-cta {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .cta-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #cbd5f5;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .cta-arrow {
+            display: inline-block;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .department-card:hover .cta-arrow {
+            transform: translateX(6px);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            z-index: 2;
+        }
+
+        .status-complete {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+            border: 1px solid rgba(72, 187, 120, 0.6);
+        }
+
+        .status-draft {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.6);
+        }
+
+        .status-empty {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+        }
+
+        /* Instructions */
+        .instructions {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            padding: 35px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .instructions h3 {
+            font-size: 1.4rem;
+            color: #63b3ed;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .instructions p {
+            color: #cbd5f5;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .departments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dept-icon {
+                font-size: 4rem;
+            }
+
+            .dept-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.98);
+            border-radius: 24px;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #63b3ed;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .modal-close {
+            background: rgba(248, 113, 113, 0.2);
+            border: 2px solid rgba(248, 113, 113, 0.4);
+            color: #f87171;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(248, 113, 113, 0.3);
+            border-color: #f87171;
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #a5b4fc;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(10, 22, 40, 0.95);
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: #63b3ed;
+            box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.15);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .emoji-picker {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: rgba(10, 22, 40, 0.95);
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .emoji-option {
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .emoji-option:hover {
+            background: rgba(99, 179, 237, 0.2);
+            border-color: #63b3ed;
+            transform: scale(1.2);
+        }
+
+        .emoji-option.selected {
+            background: rgba(99, 179, 237, 0.3);
+            border-color: #63b3ed;
+        }
+
+        .color-picker {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: rgba(10, 22, 40, 0.95);
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+        }
+
+        .color-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 3px solid transparent;
+        }
+
+        .color-option:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .color-option.selected {
+            border-color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.2);
+            color: #cbd5f5;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.3);
+            border-color: #94a3b8;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(248, 113, 113, 0.4);
+        }
+
+        /* Edit Button on Cards */
+        .edit-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(99, 179, 237, 0.2);
+            border: 2px solid rgba(99, 179, 237, 0.4);
+            color: #63b3ed;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .edit-btn:hover {
+            background: rgba(99, 179, 237, 0.3);
+            border-color: #63b3ed;
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .delete-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(248, 113, 113, 0.2);
+            border: 2px solid rgba(248, 113, 113, 0.4);
+            color: #f87171;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 2;
+        }
+
+        .delete-btn:hover {
+            background: rgba(248, 113, 113, 0.3);
+            border-color: #f87171;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-controls">
+            <a class="nav-btn" href="sales-enablement-dashboard.html">← Dashboard</a>
+            <a class="nav-btn" href="team-charter-hub.html">Charter Hub</a>
+        </div>
+
+        <header class="header">
+            <div class="logo">BearOps</div>
+            <h1 class="title">Department Charters</h1>
+            <p class="subtitle">Click any department to create or edit their team charter</p>
+            <div>
+                <span class="badge">6 Departments</span>
+                <span class="badge"> New Clear Design</span>
+            </div>
+        </header>
+
+        <div class="instructions">
+            <h3>📋 How It Works</h3>
+            <p>Each department has its own dedicated charter page. Click any card below to open that department's charter and start filling it out. Each charter auto-saves and can be edited anytime.</p>
+        </div>
+
+        <!-- Action Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+            <h2 style="font-size: 1.8rem; font-weight: 700; color: #cbd5f5; margin: 0;">Your Departments</h2>
+            <button class="nav-btn" onclick="openCreateModal()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); border-color: #48bb78; padding: 14px 28px;">
+                ➕ Create New Department
+            </button>
+        </div>
+
+        <div class="departments-grid">
+            <!-- Sales Department -->
+            <div class="department-card dept-sales" onclick="openDepartment('sales')">
+                <span class="status-badge status-empty" id="sales-status">Not Started</span>
+                <div class="dept-icon"></div>
+                <h2 class="dept-title">Sales</h2>
+                <p class="dept-description">Revenue generation through customer relationships and strategic selling</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="sales-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="sales-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+
+            <!-- Marketing Department -->
+            <div class="department-card dept-marketing" onclick="openDepartment('marketing')">
+                <span class="status-badge status-empty" id="marketing-status">Not Started</span>
+                <div class="dept-icon"></div>
+                <h2 class="dept-title">Marketing</h2>
+                <p class="dept-description">Brand awareness, demand generation, and customer engagement</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="marketing-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="marketing-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+
+            <!-- Engineering Department -->
+            <div class="department-card dept-engineering" onclick="openDepartment('engineering')">
+                <span class="status-badge status-empty" id="engineering-status">Not Started</span>
+                <div class="dept-icon">⚙️</div>
+                <h2 class="dept-title">Engineering</h2>
+                <p class="dept-description">Building scalable, reliable technology infrastructure and products</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="engineering-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="engineering-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+
+            <!-- Product Department -->
+            <div class="department-card dept-product" onclick="openDepartment('product')">
+                <span class="status-badge status-empty" id="product-status">Not Started</span>
+                <div class="dept-icon"></div>
+                <h2 class="dept-title">Product</h2>
+                <p class="dept-description">Product vision, strategy, and roadmap aligned with market needs</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="product-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="product-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+
+            <!-- Customer Success Department -->
+            <div class="department-card dept-customer" onclick="openDepartment('customer')">
+                <span class="status-badge status-empty" id="customer-status">Not Started</span>
+                <div class="dept-icon"></div>
+                <h2 class="dept-title">Customer Success</h2>
+                <p class="dept-description">Customer value realization, retention, and growth</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="customer-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="customer-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+
+            <!-- Operations Department -->
+            <div class="department-card dept-operations" onclick="openDepartment('operations')">
+                <span class="status-badge status-empty" id="operations-status">Not Started</span>
+                <div class="dept-icon"></div>
+                <h2 class="dept-title">Operations</h2>
+                <p class="dept-description">Operational efficiency, processes, and business infrastructure</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="operations-team-size">—</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="operations-completion">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Department Modal -->
+    <div id="departmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Create New Department</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+
+            <form id="departmentForm" onsubmit="saveDepartment(event)">
+                <div class="form-group">
+                    <label class="form-label">Department Name *</label>
+                    <input type="text" id="deptName" class="form-input" placeholder="e.g., Finance, HR, Legal" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="deptDescription" class="form-textarea" placeholder="Brief description of what this department does"></textarea>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label class="form-label">Border Color *</label>
+                    <div class="color-picker" id="colorPicker">
+                        <div class="color-option" style="background: #63b3ed;" data-color="#63b3ed" onclick="selectColor('#63b3ed')"></div>
+                        <div class="color-option" style="background: #fb7185;" data-color="#fb7185" onclick="selectColor('#fb7185')"></div>
+                        <div class="color-option" style="background: #48bb78;" data-color="#48bb78" onclick="selectColor('#48bb78')"></div>
+                        <div class="color-option" style="background: #fbbf24;" data-color="#fbbf24" onclick="selectColor('#fbbf24')"></div>
+                        <div class="color-option" style="background: #a5b4fc;" data-color="#a5b4fc" onclick="selectColor('#a5b4fc')"></div>
+                        <div class="color-option" style="background: #f472b6;" data-color="#f472b6" onclick="selectColor('#f472b6')"></div>
+                        <div class="color-option" style="background: #34d399;" data-color="#34d399" onclick="selectColor('#34d399')"></div>
+                        <div class="color-option" style="background: #f59e0b;" data-color="#f59e0b" onclick="selectColor('#f59e0b')"></div>
+                        <div class="color-option" style="background: #8b5cf6;" data-color="#8b5cf6" onclick="selectColor('#8b5cf6')"></div>
+                        <div class="color-option" style="background: #ef4444;" data-color="#ef4444" onclick="selectColor('#ef4444')"></div>
+                        <div class="color-option" style="background: #06b6d4;" data-color="#06b6d4" onclick="selectColor('#06b6d4')"></div>
+                        <div class="color-option" style="background: #84cc16;" data-color="#84cc16" onclick="selectColor('#84cc16')"></div>
+                    </div>
+                    <input type="hidden" id="selectedColor" required>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="modal-btn btn-primary" id="saveBtn">Create Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let departments = [];
+        let editingDeptId = null;
+        const DEPARTMENTS_KEY = 'bearops_departments_list';
+
+        // Default departments
+        const defaultDepartments = [
+            {
+                id: 'sales',
+                name: 'Sales',
+                description: 'Revenue generation through customer relationships and strategic selling',
+                icon: '💼',
+                color: '#63b3ed',
+                isDefault: true
+            },
+            {
+                id: 'marketing',
+                name: 'Marketing',
+                description: 'Brand awareness, demand generation, and customer engagement',
+                icon: '📢',
+                color: '#fb7185',
+                isDefault: true
+            },
+            {
+                id: 'engineering',
+                name: 'Engineering',
+                description: 'Building scalable, reliable technology infrastructure and products',
+                icon: '⚙️',
+                color: '#48bb78',
+                isDefault: true
+            },
+            {
+                id: 'product',
+                name: 'Product',
+                description: 'Product vision, strategy, and roadmap aligned with market needs',
+                icon: '🚀',
+                color: '#fbbf24',
+                isDefault: true
+            },
+            {
+                id: 'customer',
+                name: 'Customer Success',
+                description: 'Customer value realization, retention, and growth',
+                icon: '🤝',
+                color: '#a5b4fc',
+                isDefault: true
+            },
+            {
+                id: 'operations',
+                name: 'Operations',
+                description: 'Operational efficiency, processes, and business infrastructure',
+                icon: '🔧',
+                color: '#48bb78',
+                isDefault: true
+            }
+        ];
+
+        // Load on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDepartments();
+            renderDepartments();
+        });
+
+        // Load departments from localStorage
+        function loadDepartments() {
+            const saved = localStorage.getItem(DEPARTMENTS_KEY);
+            if (saved) {
+                departments = JSON.parse(saved);
+            } else {
+                departments = [...defaultDepartments];
+                saveDepartmentsList();
+            }
+        }
+
+        // Save departments list to localStorage
+        function saveDepartmentsList() {
+            localStorage.setItem(DEPARTMENTS_KEY, JSON.stringify(departments));
+        }
+
+        // Render all department cards
+        function renderDepartments() {
+            const grid = document.querySelector('.departments-grid');
+            grid.innerHTML = '';
+
+            departments.forEach(dept => {
+                const card = createDepartmentCard(dept);
+                grid.appendChild(card);
+            });
+        }
+
+        // Create department card element
+        function createDepartmentCard(dept) {
+            const saved = localStorage.getItem(`bearops_dept_${dept.id}`);
+            let teamSize = '—';
+            let completion = 0;
+            let status = 'Not Started';
+            let statusClass = 'status-empty';
+
+            if (saved) {
+                const charter = JSON.parse(saved);
+                teamSize = charter.teamSize || '—';
+
+                const fields = [
+                    charter.teamName,
+                    charter.purpose,
+                    charter.peopleRoles,
+                    charter.goals,
+                    charter.values,
+                    charter.rulesActivities,
+                    charter.personalGoals,
+                    charter.needsExpectations,
+                    charter.strengthsAssets,
+                    charter.weaknessesRisks
+                ];
+
+                const filled = fields.filter(f => f && f.trim()).length;
+                completion = Math.round((filled / fields.length) * 100);
+
+                if (completion === 100) {
+                    status = 'Complete';
+                    statusClass = 'status-complete';
+                } else if (completion > 0) {
+                    status = 'In Progress';
+                    statusClass = 'status-draft';
+                }
+            }
+
+            const card = document.createElement('div');
+            card.className = 'department-card';
+            card.style.borderColor = dept.color + '99'; // Add transparency
+            
+            card.innerHTML = `
+                ${!dept.isDefault ? `<button class="edit-btn" onclick="event.stopPropagation(); openEditModal('${dept.id}')" title="Edit Department">✏️</button>` : ''}
+                <span class="status-badge ${statusClass}">${status}</span>
+                <div class="dept-icon">${dept.icon}</div>
+                <h2 class="dept-title" style="color: ${dept.color};">${dept.name}</h2>
+                <p class="dept-description">${dept.description}</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <span class="stat-value" style="color: ${dept.color};">${teamSize}</span>
+                        <span class="stat-label">Team Size</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" style="color: ${dept.color};">${completion}%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+                <div class="dept-cta">
+                    <span class="cta-text">Open Charter <span class="cta-arrow">→</span></span>
+                </div>
+                ${!dept.isDefault ? `<button class="delete-btn" onclick="event.stopPropagation(); deleteDepartment('${dept.id}')">🗑️ Delete</button>` : ''}
+            `;
+
+            // Add before pseudo-element glow
+            const style = document.createElement('style');
+            style.textContent = `
+                .department-card[data-dept-id="${dept.id}"]::before {
+                    background: radial-gradient(circle at center, ${dept.color}40, transparent 70%);
+                }
+            `;
+            document.head.appendChild(style);
+
+            card.setAttribute('data-dept-id', dept.id);
+            card.onclick = () => openDepartment(dept.id);
+
+            return card;
+        }
+
+        // Open department charter
+        function openDepartment(deptId) {
+            sessionStorage.setItem('current_department', deptId);
+            window.location.href = `department-charter.html?dept=${deptId}`;
+        }
+
+        // Open create modal
+        function openCreateModal() {
+            editingDeptId = null;
+            document.getElementById('modalTitle').textContent = 'Create New Department';
+            document.getElementById('saveBtn').textContent = 'Create Department';
+            document.getElementById('departmentForm').reset();
+            document.querySelectorAll('.emoji-option').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+            document.getElementById('departmentModal').classList.add('active');
+        }
+
+        // Open edit modal
+        function openEditModal(deptId) {
+            const dept = departments.find(d => d.id === deptId);
+            if (!dept) return;
+
+            editingDeptId = deptId;
+            document.getElementById('modalTitle').textContent = 'Edit Department';
+            document.getElementById('saveBtn').textContent = 'Save Changes';
+            document.getElementById('deptName').value = dept.name;
+            document.getElementById('deptDescription').value = dept.description || '';
+            
+            // Select emoji
+            document.querySelectorAll('.emoji-option').forEach(el => {
+                if (el.dataset.emoji === dept.icon) {
+                    el.classList.add('selected');
+                }
+            });
+            document.getElementById('selectedEmoji').value = dept.icon;
+            
+            // Select color
+            document.querySelectorAll('.color-option').forEach(el => {
+                if (el.dataset.color === dept.color) {
+                    el.classList.add('selected');
+                }
+            });
+            document.getElementById('selectedColor').value = dept.color;
+
+            document.getElementById('departmentModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('departmentModal').classList.remove('active');
+            editingDeptId = null;
+        }
+
+        // Select emoji
+        function selectEmoji(emoji) {
+            document.querySelectorAll('.emoji-option').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('selectedEmoji').value = emoji;
+        }
+
+        // Select color
+        function selectColor(color) {
+            document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('selectedColor').value = color;
+        }
+
+        // Save department (create or update)
+        function saveDepartment(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('deptName').value.trim();
+            const description = document.getElementById('deptDescription').value.trim();
+            const icon = document.getElementById('selectedEmoji').value;
+            const color = document.getElementById('selectedColor').value;
+
+            if (!name || !icon || !color) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            if (editingDeptId) {
+                // Update existing
+                const index = departments.findIndex(d => d.id === editingDeptId);
+                if (index !== -1) {
+                    departments[index] = {
+                        ...departments[index],
+                        name,
+                        description,
+                        icon,
+                        color
+                    };
+                }
+            } else {
+                // Create new
+                const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_') + '_' + Date.now();
+                departments.push({
+                    id,
+                    name,
+                    description,
+                    icon,
+                    color,
+                    isDefault: false
+                });
+            }
+
+            saveDepartmentsList();
+            renderDepartments();
+            closeModal();
+        }
+
+        // Delete department
+        function deleteDepartment(deptId) {
+            const dept = departments.find(d => d.id === deptId);
+            if (!dept) return;
+
+            if (confirm(`Are you sure you want to delete the "${dept.name}" department? This will also delete its charter data.`)) {
+                // Remove from list
+                departments = departments.filter(d => d.id !== deptId);
+                saveDepartmentsList();
+
+                // Delete charter data
+                localStorage.removeItem(`bearops_dept_${deptId}`);
+
+                renderDepartments();
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('departmentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

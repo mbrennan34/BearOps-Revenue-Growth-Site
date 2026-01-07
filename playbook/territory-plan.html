@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Territory Plan 2025 – Whitespace & Coverage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1f2933;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 0.98rem;
+            opacity: 0.9;
+        }
+
+        .app-shell {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 18px;
+            padding: 18px 18px 28px 18px;
+            box-shadow: 0 22px 45px rgba(15, 23, 42, 0.45);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .tab {
+            border: none;
+            background: transparent;
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            font-size: 0.9rem;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab.active {
+            background: #ffffff;
+            color: #111827;
+            box-shadow: 0 -1px 0 #ffffff;
+            position: relative;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #8b5cf6);
+        }
+
+        .content {
+            padding-top: 12px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px 18px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-group label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            padding: 8px 10px;
+            border-radius: 9px;
+            border: 1px solid #d1d5db;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.35);
+        }
+
+        .input-group textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.05s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-secondary {
+            background: #f3f4ff;
+            color: #4338ca;
+        }
+
+        .btn-outline {
+            background: #ffffff;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-success {
+            background: #16a34a;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.75rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15);
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fed7aa;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .stat-item {
+            padding: 10px 11px;
+            border-radius: 12px;
+            background: #f9fafb;
+            border: 1px dashed rgba(148, 163, 184, 0.8);
+        }
+
+        .stat-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        thead {
+            background: #f3f4f6;
+        }
+
+        th, td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            font-weight: 600;
+            color: #4b5563;
+            font-size: 0.78rem;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .segment-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .segment-strategic {
+            background: #eef2ff;
+            color: #4c1d95;
+        }
+
+        .segment-growth {
+            background: #ecfdf3;
+            color: #166534;
+        }
+
+        .segment-maintain {
+            background: #fefce8;
+            color: #854d0e;
+        }
+
+        .segment-harvest {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.7rem;
+            }
+
+            .app-shell {
+                padding: 14px;
+            }
+
+            th, td {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Territory Plan 2025 – Whitespace & Coverage</h1>
+        <p>Upload your book of business, segment the territory, and surface whitespace & priority accounts.</p>
+    </header>
+
+    <div class="app-shell">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('checklist', this)">📋 Checklist</button>
+            <button class="tab" onclick="showTab('forecast', this)">📊 Forecast Alignment</button>
+            <button class="tab" onclick="showTab('analysis', this)">🔍 Customer Analysis</button>
+            <button class="tab" onclick="showTab('segmentation', this)">🗂️ Segmentation</button>
+            <button class="tab" onclick="showTab('whitespace', this)">🧩 Whitespace & Coverage</button>
+            <button class="tab" onclick="showTab('accounts', this)">📈 Accounts</button>
+        </div>
+
+        <div class="content">
+            <!-- CHECKLIST TAB -->
+            <div id="checklist" class="tab-content active">
+                <div class="section">
+                    <h2 class="section-title">Territory Readiness Checklist</h2>
+                    <p class="section-subtitle">
+                        Use this as a simple guide. The real power lives in the Accounts, Segmentation and Whitespace tabs.
+                    </p>
+
+                    <div class="card">
+                        <h3>Key Questions</h3>
+                        <ul style="font-size:0.85rem; color:#4b5563; margin-left:18px; margin-top:6px; line-height:1.6;">
+                            <li>Have you imported your full book of business from CRM?</li>
+                            <li>Are accounts segmented into Strategic / Growth / Maintain / Harvest using clear rules?</li>
+                            <li>Have you identified your top whitespace accounts by ARR gap?</li>
+                            <li>Do you know which accounts are high ARR but low engagement (risk)?</li>
+                            <li>Is your quota aligned with bottom-up territory potential?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORECAST TAB -->
+            <div id="forecast" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">Forecast & Coverage</h2>
+                    <p class="section-subtitle">
+                        Rough link between your quota and the territory's bottom-up potential (driven by imported data).
+                    </p>
+
+                    <div class="card">
+                        <h3>Top-Down Targets</h3>
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Annual Quota ($)</label>
+                                <input type="number" id="quota" placeholder="e.g., 2000000" oninput="updateForecastView()">
+                            </div>
+                            <div class="input-group">
+                                <label>Current YTD Closed ARR ($)</label>
+                                <input type="number" id="ytdArr" placeholder="e.g., 850000" oninput="updateForecastView()">
+                            </div>
+                            <div class="input-group">
+                                <label>Remaining Months in Year</label>
+                                <input type="number" id="monthsRemaining" value="6" oninput="updateForecastView()">
+                            </div>
+                        </div>
+                        <p class="helper-text" style="margin-top:8px;">
+                            Tip: after importing your accounts, compare quota vs total Potential ARR to see if the book
+                            realistically supports your target.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Bottom-Up View (from Accounts)</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="fcTotalPotential">-</div>
+                                <div class="stat-label">Total Potential ARR (All Accounts)</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="fcTotalCurrent">-</div>
+                                <div class="stat-label">Current ARR (All Accounts)</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="fcQuotaCoverage">-</div>
+                                <div class="stat-label">Quota as % of Potential</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="fcRunRateNeeded">-</div>
+                                <div class="stat-label">Avg Monthly ARR Needed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYSIS TAB (placeholder) -->
+            <div id="analysis" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">Customer & Territory Analysis</h2>
+                    <p class="section-subtitle">
+                        Use the data-driven tabs (Segmentation, Whitespace, Accounts) to drive your analysis.
+                        This section is intentionally light – treat it as your working area for notes.
+                    </p>
+
+                    <div class="card">
+                        <h3>Observations & Insights</h3>
+                        <p class="helper-text">
+                            You can print this page and annotate, or copy/paste into your QBR / territory review deck.
+                        </p>
+                        <ul style="font-size:0.85rem; color:#4b5563; margin-left:18px; margin-top:6px; line-height:1.6;">
+                            <li>Which industries hold the largest whitespace in your territory?</li>
+                            <li>Which regions are under-penetrated vs potential?</li>
+                            <li>How concentrated is your potential in the top 20 accounts?</li>
+                            <li>Where do you need marketing or partner help to unlock the biggest gaps?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEGMENTATION TAB -->
+            <div id="segmentation" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">Territory Segmentation</h2>
+                    <p class="section-subtitle">
+                        Use simple rules to auto-tag accounts as Strategic, Growth, Maintain, or Harvest – then refine manually if needed.
+                    </p>
+
+                    <div class="card">
+                        <h3>Segment Definitions (Suggested)</h3>
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Strategic</label>
+                                <p class="helper-text">
+                                    High potential ARR, strong fit, typically 5–15% of accounts. High-touch, multi-threaded, exec engagement.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label>Growth</label>
+                                <p class="helper-text">
+                                    Solid potential with room to grow. Ideal for proactive prospecting & expansion plays.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label>Maintain</label>
+                                <p class="helper-text">
+                                    Lower potential or smaller accounts to be managed efficiently – mostly inbound & renewal.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label>Harvest</label>
+                                <p class="helper-text">
+                                    Very low potential or poor fit / repeatedly lost. Minimal effort; keep an eye out but don’t over-invest.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Segmentation Rules (Auto)</h3>
+                        <p class="helper-text" style="margin-bottom:10px;">
+                            These rules are applied to imported accounts using Potential ARR, Engagement Score, and Closed Lost history.
+                        </p>
+
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Strategic – Min Potential ARR ($)</label>
+                                <input type="number" id="segStrategicMinPotential" value="250000">
+                            </div>
+                            <div class="input-group">
+                                <label>Strategic – Min Engagement Score</label>
+                                <input type="number" id="segStrategicMinEngagement" value="60">
+                            </div>
+                            <div class="input-group">
+                                <label>Growth – Min Potential ARR ($)</label>
+                                <input type="number" id="segGrowthMinPotential" value="100000">
+                            </div>
+                            <div class="input-group">
+                                <label>Maintain – Min Potential ARR ($)</label>
+                                <input type="number" id="segMaintainMinPotential" value="25000">
+                            </div>
+                            <div class="input-group">
+                                <label>Max Closed Lost (last 2 years) for Strategic/Growth</label>
+                                <input type="number" id="segMaxClosedLost" value="2">
+                            </div>
+                        </div>
+
+                        <div class="action-buttons" style="margin-top:14px;">
+                            <button class="btn btn-primary" onclick="applySegmentationRules()">⚙️ Apply Rules & Re-Segment Accounts</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Segment Mix (from Accounts)</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="segCountStrategic">-</div>
+                                <div class="stat-label">Strategic Accounts</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="segCountGrowth">-</div>
+                                <div class="stat-label">Growth Accounts</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="segCountMaintain">-</div>
+                                <div class="stat-label">Maintain Accounts</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="segCountHarvest">-</div>
+                                <div class="stat-label">Harvest Accounts</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHITESPACE TAB -->
+            <div id="whitespace" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">Whitespace & Coverage Analysis</h2>
+                    <p class="section-subtitle">
+                        Calculate the ARR gap between Potential and Current, and surface the accounts with the biggest whitespace.
+                    </p>
+
+                    <div class="card">
+                        <h3>Territory Whitespace Summary</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="wsTotalPotential">-</div>
+                                <div class="stat-label">Total Potential ARR</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="wsTotalCurrent">-</div>
+                                <div class="stat-label">Current ARR</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="wsTotalWhitespace">-</div>
+                                <div class="stat-label">Whitespace ARR</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="wsPenetration">-</div>
+                                <div class="stat-label">Territory Penetration (%)</div>
+                            </div>
+                        </div>
+
+                        <div id="wsInsightBanner" class="alert alert-warning" style="margin-top: 12px; display: none;"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Filters</h3>
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Segment</label>
+                                <select id="wsFilterSegment" onchange="renderWhitespaceAccounts()">
+                                    <option value="">All</option>
+                                    <option value="Strategic">Strategic</option>
+                                    <option value="Growth">Growth</option>
+                                    <option value="Maintain">Maintain</option>
+                                    <option value="Harvest">Harvest</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Industry</label>
+                                <input type="text" id="wsFilterIndustry" placeholder="e.g., Financial Services" oninput="renderWhitespaceAccounts()">
+                            </div>
+                            <div class="input-group">
+                                <label>Region</label>
+                                <input type="text" id="wsFilterRegion" placeholder="e.g., UK & Ireland" oninput="renderWhitespaceAccounts()">
+                            </div>
+                            <div class="input-group">
+                                <label>Min Whitespace ARR ($)</label>
+                                <input type="number" id="wsFilterMinWhitespace" value="50000" oninput="renderWhitespaceAccounts()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Top Whitespace Accounts</h3>
+                        <p class="helper-text" style="margin-bottom:8px;">
+                            Sorted by highest whitespace ARR (Potential – Current). Use this as your "work these first" list.
+                        </p>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Industry</th>
+                                    <th>Region</th>
+                                    <th>Segment</th>
+                                    <th>Current ARR</th>
+                                    <th>Potential ARR</th>
+                                    <th>Whitespace ARR</th>
+                                    <th>Penetration %</th>
+                                    <th>Days Since Last Activity</th>
+                                    <th>Has Open Opp?</th>
+                                </tr>
+                                </thead>
+                                <tbody id="wsAccountsTableBody">
+                                <tr>
+                                    <td colspan="10" style="text-align: center; color: #6b7280; padding: 30px;">
+                                        No accounts loaded yet. Import a CSV or add accounts manually.
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCOUNTS TAB -->
+            <div id="accounts" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">Target Account List</h2>
+                    <p class="section-subtitle">
+                        Import your book of business, then segment, filter and prioritize based on whitespace and risk.
+                    </p>
+
+                    <div class="card">
+                        <h3>Import Accounts from CSV</h3>
+                        <p class="helper-text" style="margin-bottom:8px;">
+                            Recommended columns: Company Name, Industry, Region, Owner, Current ARR, Revenue Potential,
+                            Employee Count, Products Adopted, Has Open Opportunity, Days Since Last Activity,
+                            Closed Lost Last 2 Years, Segment, Status, Key Contacts, Notes.
+                        </p>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="downloadTemplate()">⬇️ Download CSV Template</button>
+                            <label class="btn btn-primary" style="cursor:pointer;">
+                                📤 Upload CSV
+                                <input type="file" id="csvFileInput" accept=".csv" style="display:none" onchange="handleCSVUpload(event)">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Add Account Manually</h3>
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Company Name</label>
+                                <input type="text" id="companyName" placeholder="e.g., Acme Corporation">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Industry</label>
+                                <input type="text" id="industry" placeholder="e.g., Financial Services">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Region</label>
+                                <input type="text" id="accountRegion" placeholder="e.g., UK & Ireland">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Account Owner</label>
+                                <input type="text" id="accountOwner" placeholder="e.g., Alice Smith">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Current ARR ($)</label>
+                                <input type="number" id="currentARR" placeholder="e.g., 150000">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Revenue Potential ($)</label>
+                                <input type="number" id="revenuePotential" placeholder="e.g., 300000">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Employee Count</label>
+                                <input type="number" id="employeeCount" placeholder="e.g., 5000">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Products Adopted (count)</label>
+                                <input type="number" id="productsAdopted" placeholder="e.g., 2">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Has Open Opportunity?</label>
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                                    <input type="checkbox" id="hasOpenOpp">
+                                    <span class="helper-text">Tick if there is an active opportunity</span>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Days Since Last Activity</label>
+                                <input type="number" id="daysSinceActivity" placeholder="e.g., 45">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Closed Lost in Last 2 Years</label>
+                                <input type="number" id="closedLostLast2Years" placeholder="e.g., 1">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Segment</label>
+                                <select id="accountSegment">
+                                    <option value="Strategic">Strategic</option>
+                                    <option value="Growth">Growth</option>
+                                    <option value="Maintain">Maintain</option>
+                                    <option value="Harvest">Harvest</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Status</label>
+                                <select id="accountStatus">
+                                    <option value="Prospect">Prospect</option>
+                                    <option value="Engaged">Engaged</option>
+                                    <option value="Opportunity">Opportunity</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group" style="margin-top:10px;">
+                            <label>Key Contacts</label>
+                            <input type="text" id="keyContacts" placeholder="e.g., John Smith (CFO), Jane Doe (VP IT)">
+                        </div>
+
+                        <div class="input-group" style="margin-top:8px;">
+                            <label>Notes</label>
+                            <textarea id="accountNotes" placeholder="Context, risks, next steps..."></textarea>
+                        </div>
+
+                        <div class="action-buttons" style="margin-top:12px;">
+                            <button class="btn btn-success" onclick="addAccount()">➕ Add Account</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Account List</h3>
+                        <div class="action-buttons" style="margin-bottom: 10px;">
+                            <button class="btn btn-outline btn-small" onclick="filterAccounts('all')">All Accounts</button>
+                            <button class="btn btn-outline btn-small" onclick="filterAccounts('Strategic')">Strategic</button>
+                            <button class="btn btn-outline btn-small" onclick="filterAccounts('Growth')">Growth</button>
+                            <button class="btn btn-outline btn-small" onclick="filterAccounts('Maintain')">Maintain</button>
+                            <button class="btn btn-outline btn-small" onclick="filterAccounts('Harvest')">Harvest</button>
+                        </div>
+
+                        <div class="action-buttons" style="margin-bottom: 10px; flex-wrap: wrap; gap: 8px; margin-top: -4px;">
+                            <button class="btn btn-outline btn-small" onclick="setQuickView('default')">
+                                Default View
+                            </button>
+                            <button class="btn btn-outline btn-small" onclick="setQuickView('highWhitespaceLowActivity')">
+                                High Whitespace – Low Activity
+                            </button>
+                            <button class="btn btn-outline btn-small" onclick="setQuickView('highPotentialNoOpp')">
+                                High Potential – No Opps
+                            </button>
+                            <button class="btn btn-outline btn-small" onclick="setQuickView('riskHighArrLowEngagement')">
+                                Risk: High ARR, Low Engagement
+                            </button>
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 10px;">
+                            <label>Search Accounts</label>
+                            <input type="text" id="searchAccounts" placeholder="Search by company, industry, region, owner, segment or status" oninput="searchAccounts()">
+                        </div>
+
+                        <div style="overflow-x:auto;">
+                            <table id="accountsTable">
+                                <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Industry</th>
+                                    <th>Region</th>
+                                    <th>Owner</th>
+                                    <th>Segment</th>
+                                    <th>Status</th>
+                                    <th>Current ARR</th>
+                                    <th>Potential ARR</th>
+                                    <th>Whitespace ARR</th>
+                                    <th>Last Activity (days)</th>
+                                    <th>Open Opp?</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody id="accountsTableBody">
+                                <tr>
+                                    <td colspan="12" style="text-align: center; color: #6b7280; padding: 40px;">
+                                        No accounts added yet. Add accounts manually or import from CSV.
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- GLOBAL STATE ---
+    let accounts = [];
+    let currentFilter = 'all'; // segment filter
+    let currentQuickView = 'default'; // quick view mode
+
+    // --- TAB LOGIC ---
+    function showTab(id, btn) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+
+        const buttons = document.querySelectorAll('.tab');
+        buttons.forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        // When switching, refresh some derived views
+        if (id === 'whitespace') updateWhitespaceSummary();
+        if (id === 'segmentation') updateAccountStats();
+        if (id === 'forecast') updateForecastView();
+    }
+
+    // --- UTILS ---
+    function formatNumber(num) {
+        if (isNaN(num)) return '0';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // --- CSV TEMPLATE & IMPORT ---
+    function downloadFile(filename, content) {
+        const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function downloadTemplate() {
+        const template = `Company Name,Industry,Region,Owner,Current ARR,Revenue Potential,Employee Count,Products Adopted,Has Open Opportunity,Days Since Last Activity,Closed Lost Last 2 Years,Segment,Status,Key Contacts,Notes
+Acme Corporation,Financial Services,UK & Ireland,Alice Smith,150000,300000,5000,2,true,45,1,Strategic,Engaged,"John Smith (CFO); Jane Doe (VP IT)","Strong relationship with CFO"
+TechStart Inc,Technology,EMEA Mid-Market,Bob Jones,0,120000,500,1,false,120,0,Growth,Prospect,"Mike Johnson (CTO)","Warm intro from partner"
+Global Enterprises,Manufacturing,DACH,Charlie Green,80000,180000,2000,3,true,20,2,Maintain,Customer,"Sarah Williams (Director)","Annual renewal coming up"`;
+        downloadFile('account_import_template.csv', template);
+    }
+
+    function handleCSVUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            parseCSV(e.target.result);
+        };
+        reader.readAsText(file);
+    }
+
+    function parseCSV(text) {
+        const lines = text.split('\n').filter(l => l.trim().length > 0);
+        if (lines.length <= 1) {
+            alert('CSV seems to be empty.');
+            return;
+        }
+
+        const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const getIndex = name => header.indexOf(name.toLowerCase());
+
+        const idxCompany    = getIndex('company name');
+        const idxIndustry   = getIndex('industry');
+        const idxRegion     = getIndex('region');
+        const idxOwner      = getIndex('owner');
+        const idxCurrentArr = getIndex('current arr');
+        const idxPotential  = getIndex('revenue potential');
+        const idxEmployees  = getIndex('employee count');
+        const idxProducts   = getIndex('products adopted');
+        const idxHasOpp     = getIndex('has open opportunity');
+        const idxDaysAct    = getIndex('days since last activity');
+        const idxClosedLost = getIndex('closed lost last 2 years');
+        const idxSegment    = getIndex('segment');
+        const idxStatus     = getIndex('status');
+        const idxContacts   = getIndex('key contacts');
+        const idxNotes      = getIndex('notes');
+
+        accounts = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const raw = lines[i].trim();
+            if (!raw) continue;
+            const cols = raw.split(',');
+
+            const companyName = idxCompany >= 0 ? cols[idxCompany] || '' : '';
+            if (!companyName) continue;
+
+            const revenuePotential = idxPotential >= 0 ? parseFloat(cols[idxPotential]) || 0 : 0;
+            const currentARR       = idxCurrentArr >= 0 ? parseFloat(cols[idxCurrentArr]) || 0 : 0;
+
+            const account = {
+                id: Date.now() + i,
+                companyName,
+                industry:      idxIndustry   >= 0 ? cols[idxIndustry]   || '' : '',
+                region:        idxRegion     >= 0 ? cols[idxRegion]     || '' : '',
+                owner:         idxOwner      >= 0 ? cols[idxOwner]      || '' : '',
+                currentARR,
+                revenuePotential,
+                employeeCount: idxEmployees  >= 0 ? (parseFloat(cols[idxEmployees]) || 0) : 0,
+                productsAdopted: idxProducts >= 0 ? (parseInt(cols[idxProducts]) || 0) : 0,
+                hasOpenOpp:    idxHasOpp     >= 0 ? String(cols[idxHasOpp]).toLowerCase().trim() === 'true' : false,
+                daysSinceLastActivity: idxDaysAct >= 0 ? (parseInt(cols[idxDaysAct]) || 0) : null,
+                closedLostLast2Years:  idxClosedLost >= 0 ? (parseInt(cols[idxClosedLost]) || 0) : 0,
+                segment:       idxSegment    >= 0 ? (cols[idxSegment] || 'Unassigned') : 'Unassigned',
+                status:        idxStatus     >= 0 ? (cols[idxStatus]  || 'Prospect')   : 'Prospect',
+                keyContacts:   idxContacts   >= 0 ? cols[idxContacts] || '' : '',
+                notes:         idxNotes      >= 0 ? cols[idxNotes]    || '' : ''
+            };
+
+            computeAccountDerivedFields(account);
+            accounts.push(account);
+        }
+
+        renderAccounts();
+        updateAccountStats();
+        updateWhitespaceSummary();
+        updateForecastView();
+        alert(`✅ Successfully imported ${accounts.length} accounts!`);
+    }
+
+    // --- ACCOUNT DERIVED FIELDS ---
+    function computeAccountDerivedFields(account) {
+        const potential = account.revenuePotential || 0;
+        const current   = account.currentARR || 0;
+        const whitespace = Math.max(potential - current, 0);
+
+        account.whitespaceARR = whitespace;
+        account.penetrationPct = potential > 0 ? Math.round((current / potential) * 100) : 0;
+
+        let engagementScore = 50;
+        if (account.daysSinceLastActivity != null) {
+            if (account.daysSinceLastActivity <= 30) engagementScore += 20;
+            else if (account.daysSinceLastActivity > 90) engagementScore -= 20;
+        }
+        if (account.hasOpenOpp) engagementScore += 20;
+        engagementScore -= (account.closedLostLast2Years || 0) * 5;
+        account.engagementScore = Math.max(0, Math.min(100, engagementScore));
+    }
+
+    // --- ADD ACCOUNT MANUALLY ---
+    function addAccount() {
+        const account = {
+            id: Date.now(),
+            companyName: document.getElementById('companyName').value,
+            industry: document.getElementById('industry').value,
+            region: document.getElementById('accountRegion').value,
+            owner: document.getElementById('accountOwner').value,
+            currentARR: parseFloat(document.getElementById('currentARR').value || 0) || 0,
+            revenuePotential: parseFloat(document.getElementById('revenuePotential').value || 0) || 0,
+            employeeCount: parseFloat(document.getElementById('employeeCount').value || 0) || 0,
+            productsAdopted: parseInt(document.getElementById('productsAdopted').value || 0) || 0,
+            hasOpenOpp: document.getElementById('hasOpenOpp').checked,
+            daysSinceLastActivity: parseInt(document.getElementById('daysSinceActivity').value || 0) || null,
+            closedLostLast2Years: parseInt(document.getElementById('closedLostLast2Years').value || 0) || 0,
+            segment: document.getElementById('accountSegment').value,
+            status: document.getElementById('accountStatus').value,
+            keyContacts: document.getElementById('keyContacts').value,
+            notes: document.getElementById('accountNotes').value
+        };
+
+        if (!account.companyName) {
+            alert('Please enter a company name.');
+            return;
+        }
+
+        computeAccountDerivedFields(account);
+        accounts.push(account);
+        renderAccounts();
+        updateAccountStats();
+        updateWhitespaceSummary();
+        updateForecastView();
+        clearAccountForm();
+    }
+
+    function clearAccountForm() {
+        const ids = [
+            'companyName','industry','accountRegion','accountOwner','currentARR','revenuePotential',
+            'employeeCount','productsAdopted','daysSinceActivity','closedLostLast2Years','keyContacts','accountNotes'
+        ];
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        const hasOpp = document.getElementById('hasOpenOpp');
+        if (hasOpp) hasOpp.checked = false;
+        document.getElementById('accountSegment').value = 'Strategic';
+        document.getElementById('accountStatus').value = 'Prospect';
+    }
+
+    // --- SEGMENTATION RULES ---
+    function applySegmentationRules() {
+        if (!accounts.length) {
+            alert('No accounts loaded. Import a CSV or add accounts first.');
+            return;
+        }
+
+        const strategicMinPot = parseFloat(document.getElementById('segStrategicMinPotential').value) || 0;
+        const strategicMinEng = parseFloat(document.getElementById('segStrategicMinEngagement').value) || 0;
+        const growthMinPot    = parseFloat(document.getElementById('segGrowthMinPotential').value) || 0;
+        const maintainMinPot  = parseFloat(document.getElementById('segMaintainMinPotential').value) || 0;
+        const maxClosedLost   = parseInt(document.getElementById('segMaxClosedLost').value) || 0;
+
+        accounts.forEach(acc => {
+            const pot  = acc.revenuePotential || 0;
+            const eng  = acc.engagementScore || 0;
+            const lost = acc.closedLostLast2Years || 0;
+
+            if (pot >= strategicMinPot && eng >= strategicMinEng && lost <= maxClosedLost) {
+                acc.segment = 'Strategic';
+            } else if (pot >= growthMinPot && lost <= maxClosedLost) {
+                acc.segment = 'Growth';
+            } else if (pot >= maintainMinPot) {
+                acc.segment = 'Maintain';
+            } else {
+                acc.segment = 'Harvest';
+            }
+        });
+
+        renderAccounts();
+        updateAccountStats();
+        updateWhitespaceSummary();
+        alert('✅ Segmentation rules applied to all accounts.');
+    }
+
+    function updateAccountStats() {
+        const counts = { Strategic: 0, Growth: 0, Maintain: 0, Harvest: 0 };
+        accounts.forEach(a => {
+            const seg = a.segment || 'Maintain';
+            if (counts[seg] != null) counts[seg]++;
+        });
+        document.getElementById('segCountStrategic').innerText = counts.Strategic;
+        document.getElementById('segCountGrowth').innerText = counts.Growth;
+        document.getElementById('segCountMaintain').innerText = counts.Maintain;
+        document.getElementById('segCountHarvest').innerText = counts.Harvest;
+    }
+
+    // --- WHITESPACE SUMMARY ---
+    function updateWhitespaceSummary() {
+        if (!accounts.length) {
+            const ids = ['wsTotalPotential', 'wsTotalCurrent', 'wsTotalWhitespace', 'wsPenetration'];
+            ids.forEach(id => document.getElementById(id).innerText = '-');
+            const banner = document.getElementById('wsInsightBanner');
+            if (banner) banner.style.display = 'none';
+            return;
+        }
+
+        let totalPotential = 0;
+        let totalCurrent = 0;
+
+        accounts.forEach(acc => {
+            totalPotential += acc.revenuePotential || 0;
+            totalCurrent   += acc.currentARR || 0;
+        });
+
+        const totalWhitespace = Math.max(totalPotential - totalCurrent, 0);
+        const penetration = totalPotential > 0 ? Math.round((totalCurrent / totalPotential) * 100) : 0;
+
+        document.getElementById('wsTotalPotential').innerText = '$' + formatNumber(Math.round(totalPotential));
+        document.getElementById('wsTotalCurrent').innerText = '$' + formatNumber(Math.round(totalCurrent));
+        document.getElementById('wsTotalWhitespace').innerText = '$' + formatNumber(Math.round(totalWhitespace));
+        document.getElementById('wsPenetration').innerText = penetration + '%';
+
+        const banner = document.getElementById('wsInsightBanner');
+        if (!banner) return;
+
+        if (penetration < 30) {
+            banner.innerText = `💡 Large whitespace detected: only ${penetration}% of territory potential is currently captured. Focus on Strategic & Growth segments.`;
+            banner.style.display = 'block';
+        } else if (penetration > 70) {
+            banner.innerText = `✅ Strong penetration: ${penetration}% of potential captured. Prioritize expansion & retention in Strategic accounts.`;
+            banner.style.display = 'block';
+        } else {
+            banner.style.display = 'none';
+        }
+
+        renderWhitespaceAccounts();
+    }
+
+    function renderWhitespaceAccounts() {
+        const tbody = document.getElementById('wsAccountsTableBody');
+        if (!tbody) return;
+
+        if (!accounts.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" style="text-align: center; color: #6b7280; padding: 30px;">
+                        No accounts loaded yet. Import a CSV or add accounts manually.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        const segFilter  = document.getElementById('wsFilterSegment').value;
+        const indFilter  = document.getElementById('wsFilterIndustry').value.toLowerCase();
+        const regFilter  = document.getElementById('wsFilterRegion').value.toLowerCase();
+        const minWs      = parseFloat(document.getElementById('wsFilterMinWhitespace').value) || 0;
+
+        const filtered = accounts
+            .filter(acc => {
+                if (segFilter && acc.segment !== segFilter) return false;
+                if (indFilter && !(acc.industry || '').toLowerCase().includes(indFilter)) return false;
+                if (regFilter && !(acc.region || '').toLowerCase().includes(regFilter)) return false;
+                if ((acc.whitespaceARR || 0) < minWs) return false;
+                return true;
+            })
+            .sort((a, b) => (b.whitespaceARR || 0) - (a.whitespaceARR || 0))
+            .slice(0, 50);
+
+        if (!filtered.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" style="text-align: center; color: #6b7280; padding: 30px;">
+                        No accounts match the current filters.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(acc => `
+            <tr>
+                <td><strong>${acc.companyName}</strong></td>
+                <td>${acc.industry || ''}</td>
+                <td>${acc.region || ''}</td>
+                <td>${acc.segment || ''}</td>
+                <td>$${formatNumber(Math.round(acc.currentARR || 0))}</td>
+                <td>$${formatNumber(Math.round(acc.revenuePotential || 0))}</td>
+                <td>$${formatNumber(Math.round(acc.whitespaceARR || 0))}</td>
+                <td>${acc.penetrationPct != null ? acc.penetrationPct + '%' : '-'}</td>
+                <td>${acc.daysSinceLastActivity != null ? acc.daysSinceLastActivity : '-'}</td>
+                <td>${acc.hasOpenOpp ? 'Yes' : 'No'}</td>
+            </tr>
+        `).join('');
+    }
+
+    // --- ACCOUNTS TABLE & FILTERS ---
+    function passesQuickView(account) {
+        if (currentQuickView === 'default') return true;
+
+        const whitespace = account.whitespaceARR || 0;
+        const currentArr = account.currentARR || 0;
+        const engScore   = account.engagementScore != null ? account.engagementScore : 50;
+        const daysSince  = account.daysSinceLastActivity != null ? account.daysSinceLastActivity : 9999;
+        const hasOpp     = !!account.hasOpenOpp;
+
+        switch (currentQuickView) {
+            case 'highWhitespaceLowActivity':
+                return whitespace >= 50000 && daysSince >= 60;
+            case 'highPotentialNoOpp':
+                return account.revenuePotential >= 100000 && !hasOpp;
+            case 'riskHighArrLowEngagement':
+                return currentArr >= 100000 && engScore <= 40;
+            default:
+                return true;
+        }
+    }
+
+    function setQuickView(mode) {
+        currentQuickView = mode || 'default';
+        renderAccounts();
+    }
+
+    function filterAccounts(segment) {
+        currentFilter = segment;
+        renderAccounts();
+    }
+
+    function renderAccounts() {
+        const tbody = document.getElementById('accountsTableBody');
+        if (!tbody) return;
+
+        let filteredAccounts = currentFilter === 'all'
+            ? accounts.slice()
+            : accounts.filter(a => a.segment === currentFilter);
+
+        filteredAccounts = filteredAccounts.filter(passesQuickView);
+
+        if (!filteredAccounts.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="12" style="text-align: center; color: #6b7280; padding: 40px;">
+                        No accounts found for the current filters.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filteredAccounts.map(account => `
+            <tr>
+                <td><strong>${account.companyName}</strong></td>
+                <td>${account.industry || ''}</td>
+                <td>${account.region || ''}</td>
+                <td>${account.owner || ''}</td>
+                <td>
+                    <span class="segment-tag segment-${(account.segment || 'Maintain').toLowerCase()}">
+                        ${account.segment || 'Maintain'}
+                    </span>
+                </td>
+                <td>${account.status || ''}</td>
+                <td>$${formatNumber(Math.round(account.currentARR || 0))}</td>
+                <td>$${formatNumber(Math.round(account.revenuePotential || 0))}</td>
+                <td>$${formatNumber(Math.round(account.whitespaceARR || 0))}</td>
+                <td>${account.daysSinceLastActivity != null ? account.daysSinceLastActivity : '-'}</td>
+                <td>${account.hasOpenOpp ? 'Yes' : 'No'}</td>
+                <td>
+                    <button class="btn btn-secondary btn-small" onclick="viewAccount(${account.id})">View</button>
+                    <button class="btn btn-danger btn-small" onclick="deleteAccount(${account.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function searchAccounts() {
+        const tbody = document.getElementById('accountsTableBody');
+        if (!tbody) return;
+
+        const term = document.getElementById('searchAccounts').value.toLowerCase().trim();
+        if (!term) {
+            renderAccounts();
+            return;
+        }
+
+        const filteredAccounts = accounts.filter(a =>
+            (a.companyName || '').toLowerCase().includes(term) ||
+            (a.industry || '').toLowerCase().includes(term) ||
+            (a.region || '').toLowerCase().includes(term) ||
+            (a.owner || '').toLowerCase().includes(term) ||
+            (a.status || '').toLowerCase().includes(term) ||
+            (a.segment || '').toLowerCase().includes(term)
+        );
+
+        if (!filteredAccounts.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="12" style="text-align: center; color: #6b7280; padding: 40px;">
+                        No matching accounts found.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filteredAccounts.map(account => `
+            <tr>
+                <td><strong>${account.companyName}</strong></td>
+                <td>${account.industry || ''}</td>
+                <td>${account.region || ''}</td>
+                <td>${account.owner || ''}</td>
+                <td>
+                    <span class="segment-tag segment-${(account.segment || 'Maintain').toLowerCase()}">
+                        ${account.segment || 'Maintain'}
+                    </span>
+                </td>
+                <td>${account.status || ''}</td>
+                <td>$${formatNumber(Math.round(account.currentARR || 0))}</td>
+                <td>$${formatNumber(Math.round(account.revenuePotential || 0))}</td>
+                <td>$${formatNumber(Math.round(account.whitespaceARR || 0))}</td>
+                <td>${account.daysSinceLastActivity != null ? account.daysSinceLastActivity : '-'}</td>
+                <td>${account.hasOpenOpp ? 'Yes' : 'No'}</td>
+                <td>
+                    <button class="btn btn-secondary btn-small" onclick="viewAccount(${account.id})">View</button>
+                    <button class="btn btn-danger btn-small" onclick="deleteAccount(${account.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function viewAccount(id) {
+        const account = accounts.find(a => a.id === id);
+        if (!account) return;
+
+        alert(
+            `Company: ${account.companyName}\n` +
+            `Industry: ${account.industry || ''}\n` +
+            `Region: ${account.region || ''}\n` +
+            `Owner: ${account.owner || ''}\n` +
+            `Segment: ${account.segment || ''}\n` +
+            `Status: ${account.status || ''}\n\n` +
+            `Current ARR: $${formatNumber(Math.round(account.currentARR || 0))}\n` +
+            `Potential ARR: $${formatNumber(Math.round(account.revenuePotential || 0))}\n` +
+            `Whitespace ARR: $${formatNumber(Math.round(account.whitespaceARR || 0))}\n` +
+            `Penetration: ${account.penetrationPct != null ? account.penetrationPct + '%' : '-'}\n` +
+            `Engagement Score: ${account.engagementScore != null ? account.engagementScore : '-'}\n` +
+            `Days Since Last Activity: ${account.daysSinceLastActivity != null ? account.daysSinceLastActivity : '-'}\n` +
+            `Has Open Opportunity: ${account.hasOpenOpp ? 'Yes' : 'No'}\n` +
+            `Closed Lost (2 yrs): ${account.closedLostLast2Years != null ? account.closedLostLast2Years : 0}\n\n` +
+            `Key Contacts: ${account.keyContacts || ''}\n\n` +
+            `Notes: ${account.notes || ''}`
+        );
+    }
+
+    function deleteAccount(id) {
+        if (!confirm('Delete this account?')) return;
+        accounts = accounts.filter(a => a.id !== id);
+        renderAccounts();
+        updateAccountStats();
+        updateWhitespaceSummary();
+        updateForecastView();
+    }
+
+    // --- FORECAST VIEW ---
+    function updateForecastView() {
+        let totalPotential = 0;
+        let totalCurrent = 0;
+        accounts.forEach(acc => {
+            totalPotential += acc.revenuePotential || 0;
+            totalCurrent   += acc.currentARR || 0;
+        });
+
+        document.getElementById('fcTotalPotential').innerText =
+            totalPotential ? '$' + formatNumber(Math.round(totalPotential)) : '-';
+        document.getElementById('fcTotalCurrent').innerText =
+            totalCurrent ? '$' + formatNumber(Math.round(totalCurrent)) : '-';
+
+        const quota = parseFloat(document.getElementById('quota').value || 0) || 0;
+        const monthsRemaining = parseInt(document.getElementById('monthsRemaining').value || 0) || 0;
+
+        if (quota > 0 && totalPotential > 0) {
+            const coverage = Math.round((quota / totalPotential) * 100);
+            document.getElementById('fcQuotaCoverage').innerText = coverage + '%';
+        } else {
+            document.getElementById('fcQuotaCoverage').innerText = '-';
+        }
+
+        if (quota > 0 && monthsRemaining > 0) {
+            const ytdArr = parseFloat(document.getElementById('ytdArr').value || 0) || 0;
+            const remaining = Math.max(quota - ytdArr, 0);
+            const monthly = Math.round(remaining / monthsRemaining);
+            document.getElementById('fcRunRateNeeded').innerText = '$' + formatNumber(monthly);
+        } else {
+            document.getElementById('fcRunRateNeeded').innerText = '-';
+        }
+    }
+</script>
+</body>
+</html>
